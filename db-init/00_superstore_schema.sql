@@ -25,8 +25,11 @@ CREATE TABLE products (
     ProductBaseMargin DECIMAL(4,2)
 );
 
+-- OrderID is NOT unique here: a single order can contain multiple product
+-- line items (one row per line item), so LineID is the real primary key.
 CREATE TABLE orders (
-    OrderID INT PRIMARY KEY,
+    LineID INT AUTO_INCREMENT PRIMARY KEY,
+    OrderID INT NOT NULL,
     ProductID INT,
     CustomerID INT,
     OrderDate DATE,
@@ -39,11 +42,13 @@ CREATE TABLE orders (
     UnitPrice DECIMAL(15,2),
     ShippingCost DECIMAL(15,2),
     FOREIGN KEY (CustomerID) REFERENCES customers(CustomerID),
-    FOREIGN KEY (ProductID) REFERENCES products(ProductID)
+    FOREIGN KEY (ProductID) REFERENCES products(ProductID),
+    INDEX idx_orders_orderid (OrderID)
 );
 
+-- No FOREIGN KEY to orders(OrderID): MySQL requires FK targets to be
+-- uniquely indexed, and OrderID repeats in orders (see above).
 CREATE TABLE returns (
     OrderID INT PRIMARY KEY,
-    Status VARCHAR(20),
-    FOREIGN KEY (OrderID) REFERENCES orders(OrderID)
+    Status VARCHAR(20)
 );
