@@ -44,7 +44,7 @@ For students already comfortable with git/Docker:
 git clone https://github.com/paesdan/sql-bootcamp-labs.git
 cd sql-bootcamp-labs
 docker compose up -d
-docker exec -it some-mysql mysql -uroot -pmy-secret-pw
+docker exec -it mysql-lan mysql -uroot -p123456
 ```
 Then jump to [Doing the exercises](#doing-the-exercises).
 
@@ -69,7 +69,7 @@ A quick glossary, since the rest of this guide uses these words a lot:
 - **Container** — a running instance of an application (here: our MySQL
   server), isolated from the rest of your machine.
 - **Image** — the packaged blueprint a container is started from (here:
-  `mysql:8.0`, downloaded from Docker Hub the first time you run it).
+  `mysql:latest`, downloaded from Docker Hub the first time you run it).
 - **`docker compose`** — a tool for describing "start this container with
   these settings" in a file (`docker-compose.yml`) instead of one long
   command.
@@ -185,20 +185,25 @@ docker compose logs -f mysql
 *Prefer not to use docker compose?* The equivalent plain `docker run`,
 matching the style used in class:
 ```bash
-docker run --name some-mysql \
-  -e MYSQL_ROOT_PASSWORD=my-secret-pw \
-  -p 3306:3306 \
+docker run --name mysql-lan \
+  -p 0.0.0.0:3306:3306 \
+  -e MYSQL_ROOT_PASSWORD=123456 \
   -v "$(pwd)/db-init:/docker-entrypoint-initdb.d" \
-  -d mysql:8.0
+  -d mysql:latest
 ```
-Replace `mysql:8.0` with whatever tag your class is standardizing on —
-the schema and lab SQL work with any current MySQL 5.7+/8.x tag.
+`-p 0.0.0.0:3306:3306` binds MySQL to every network interface on the
+host, not just `localhost` — that's deliberate here: it lets students on
+the same classroom LAN connect to one shared instance (the instructor's
+laptop) instead of each running their own container. Anyone on that
+network who knows the port can attempt to connect, so only do this on a
+network you trust (e.g. an isolated classroom Wi-Fi, not a public one),
+and treat `123456` as a throwaway lab password, never a real one.
 
 ### Step 5 — Connect and run your first query
 
 **Option A — no extra install, using the container's own client:**
 ```bash
-docker exec -it some-mysql mysql -uroot -pmy-secret-pw
+docker exec -it mysql-lan mysql -uroot -p123456
 ```
 You should land on a `mysql>` prompt. Try:
 ```sql
@@ -219,18 +224,21 @@ sudo pacman -S mysql-clients
 Then:
 ```bash
 mysql -h 127.0.0.1 -P 3306 -u root -p
-# password: my-secret-pw
+# password: 123456
 ```
+Students connecting over the classroom LAN (instead of running their own
+container) use the instructor's machine's IP instead of `127.0.0.1`,
+e.g. `mysql -h 192.168.1.42 -P 3306 -u root -p`.
 
 **Option C — a graphical tool (recommended if you're new to SQL):**
 [DBeaver](https://dbeaver.io/) (free) or [TablePlus](https://tableplus.com/)
 let you browse tables, click around the schema, and see results in a
 spreadsheet-like grid instead of a terminal. Create a new MySQL
 connection with:
-- Host: `127.0.0.1`
+- Host: `127.0.0.1` (or the instructor's LAN IP, if connecting remotely)
 - Port: `3306`
 - Username: `root`
-- Password: `my-secret-pw`
+- Password: `123456`
 
 Then open a SQL editor against the `superstore` or `company` database and
 run any query in this repo.
