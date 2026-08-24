@@ -25,6 +25,7 @@ services:
       - "0.0.0.0:8888:8888"
     volumes:
       - sql-console-work:/home/jovyan/work
+      - ./exercises:/home/jovyan/work/exercises
     depends_on:
       mysql:
         condition: service_healthy

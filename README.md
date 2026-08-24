@@ -9,6 +9,12 @@ manual database setup required.
 [Step-by-Step Onboarding](#step-by-step-onboarding) — it assumes nothing.
 Already comfortable with Docker? Use the [Quick Start](#quick-start) below.
 
+**Just want to write SQL, no installs?** Once the lab is running
+(`docker compose up -d`), open `http://<instructor-ip>:8888` in any
+browser — that's a shared JupyterLab instance with the database connection
+and the `exercises/` folder already there. See
+[Option A in Step 5](#step-5--connect-and-run-your-first-query).
+
 ## What's in here
 
 Two databases, auto-created and auto-seeded the first time the container
@@ -28,8 +34,8 @@ sql-bootcamp-labs/
 ├── README.md
 ├── docker-compose.yml        # recommended way to run the lab
 ├── db-init/                  # schema + seed SQL, auto-run on first container start
-├── exercises/                # student worksheets (no answers) + sample CSVs
-├── solutions/                # reference solutions
+├── exercises/                # student worksheets (no answers) + sample CSVs — also mounted into jupyter-sql
+├── solutions/                # reference solutions (not exposed in the shared Jupyter console — see note below)
 ├── jupyter-sql/               # shared browser SQL console (JupyterLab + jupysql), pre-wired to mysql-lan
 └── scripts/generate_superstore_data.py   # regenerates the superstore seed data
 ```
@@ -49,6 +55,11 @@ For students already comfortable with git/Docker:
 git clone https://github.com/paesdan/sql-bootcamp-labs.git
 cd sql-bootcamp-labs
 docker compose up -d
+```
+Then either open `http://localhost:8888` in a browser for the shared
+Jupyter SQL console (no login, `exercises/` is already there — see
+[Option A](#step-5--connect-and-run-your-first-query)), or:
+```bash
 docker exec -it mysql-lan mysql -uroot -p123456
 ```
 Then jump to [Doing the exercises](#doing-the-exercises).
@@ -79,8 +90,9 @@ A quick glossary, since the rest of this guide uses these words a lot:
   these settings" in a file (`docker-compose.yml`) instead of one long
   command.
 - **Client** — a program you use to talk to the database and run SQL
-  queries (either the `mysql` command-line tool, or a graphical app like
-  DBeaver).
+  queries: the `mysql` command-line tool, a graphical app like DBeaver, or
+  (recommended if this is all new) the browser-based Jupyter SQL console
+  this lab ships with — no install required.
 
 ### Step 1 — Install Git (if you don't have it)
 
@@ -206,7 +218,39 @@ and treat `123456` as a throwaway lab password, never a real one.
 
 ### Step 5 — Connect and run your first query
 
-**Option A — no extra install, using the container's own client:**
+**Option A — the shared Jupyter SQL console (recommended, no install at
+all):** `docker-compose.yml` runs a small JupyterLab instance
+(`jupyter-sql/`) pre-wired to `mysql-lan`, so you can run queries and do
+the exercises from a browser without installing anything. It comes up
+automatically with `docker compose up -d`.
+
+Open `http://localhost:8888` (or the instructor machine's LAN IP, port
+`8888`) — no login required. In the file browser on the left:
+- `SQL_Console.ipynb` — the database connection is already configured in
+  the first cell. Run it once, then write queries in `%%sql` cells below
+  it, e.g.:
+  ```
+  %%sql
+  SELECT * FROM superstore.products LIMIT 5;
+  ```
+- `exercises/` — the same worksheets described in
+  [Doing the exercises](#doing-the-exercises), opened directly from the
+  repo. Open one, read a task comment, then run your answer as a `%%sql`
+  cell in `SQL_Console.ipynb` (or paste it into a new cell right in the
+  exercise file's own scratch space).
+
+Everything in this lab can be done in SQL — you shouldn't need any other
+Python here. This JupyterLab instance is **shared** across everyone on the
+classroom LAN (same as the database), not one-per-student: edits to
+`exercises/` or `SQL_Console.ipynb` are visible to everyone connected. If
+you'd rather keep your own private copy of your work, edit the exercise
+files in your local git clone instead and run queries against
+`mysql-lan` with any client below.
+
+✅ **Checkpoint:** running `SELECT COUNT(*) FROM superstore.customers;`
+returns `1832`.
+
+**Option B — no extra install, using the container's own client:**
 ```bash
 docker exec -it mysql-lan mysql -uroot -p123456
 ```
@@ -215,9 +259,9 @@ You should land on a `mysql>` prompt. Try:
 USE superstore;
 SELECT COUNT(*) FROM customers;
 ```
-✅ **Checkpoint:** it returns `250`.
+✅ **Checkpoint:** it returns `1832`.
 
-**Option B — a `mysql` client installed on your own machine:**
+**Option C — a `mysql` client installed on your own machine:**
 ```bash
 # macOS
 brew install mysql-client
@@ -235,7 +279,7 @@ Students connecting over the classroom LAN (instead of running their own
 container) use the instructor's machine's IP instead of `127.0.0.1`,
 e.g. `mysql -h 192.168.1.42 -P 3306 -u root -p`.
 
-**Option C — a graphical tool (recommended if you're new to SQL):**
+**Option D — a graphical tool:**
 [DBeaver](https://dbeaver.io/) (free) or [TablePlus](https://tableplus.com/)
 let you browse tables, click around the schema, and see results in a
 spreadsheet-like grid instead of a terminal. Create a new MySQL
@@ -248,26 +292,9 @@ connection with:
 Then open a SQL editor against the `superstore` or `company` database and
 run any query in this repo.
 
-**Option D — the shared SQL console (no install at all):**
-`docker-compose.yml` also runs a small JupyterLab instance
-(`jupyter-sql/`) pre-wired to `mysql-lan`, so students can run queries from
-a browser instead of installing anything. It comes up automatically with
-`docker compose up -d`.
-
-Open `http://localhost:8888` (or the instructor machine's LAN IP, port
-`8888`) — no login required. Open `work/SQL_Console.ipynb`: the connection
-is already configured in the first cell. Run it once, then write queries in
-`%%sql` cells below it, e.g.:
-```
-%%sql
-SELECT * FROM superstore.products LIMIT 5;
-```
-Everything in this lab can be done in SQL — you shouldn't need any other
-Python in that notebook.
-
 ### Step 6 — Confirm both databases seeded correctly
 
-Run this (any of the three clients above work) and compare against the
+Run this (any client from Step 5 works) and compare against the
 expected counts:
 ```sql
 USE superstore;
@@ -293,8 +320,10 @@ You're fully set up — move on to the exercises below.
 ## Doing the exercises
 
 Work through `exercises/` in order. Each file has the task prompts as SQL
-comments with blank space underneath for you to write your own query.
-Suggested workflow per file:
+comments with blank space underneath for you to write your own query. Open
+these files either from your local git clone, or straight from the
+`exercises/` folder in the Jupyter SQL console (Option A in Step 5) — same
+files either way. Suggested workflow per file:
 
 1. Read the comment describing the task.
 2. Write your query underneath it and run it against the live database
@@ -310,8 +339,9 @@ Suggested workflow per file:
    databases are already built for you by `db-init/`, so this is purely
    for practicing `CREATE TABLE`, primary/foreign keys, and `LOAD DATA
    LOCAL INFILE`). Run this one from a mysql client on your **host**
-   machine, not inside the container, since `LOCAL INFILE` reads files
-   from the client's filesystem.
+   machine (Option B or C), not inside the container and not from the
+   Jupyter console, since `LOCAL INFILE` reads files from the client's
+   filesystem.
 2. `Part2_Exercise_Joins.sql` — `INNER`/`LEFT`/`RIGHT`/`FULL` joins on `company`.
 3. `Part3_Exercise_CaseWhen_Pivot.sql` — `CASE WHEN` and pivot tables on `superstore`.
 4. `Part3_Exercise_Subqueries.sql` — subqueries on `company` and `superstore`.
