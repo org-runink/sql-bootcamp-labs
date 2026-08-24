@@ -1,0 +1,61 @@
+ProductID	ProductName	ProductCategory	ProductSubCategory	ProductContainer	ProductBaseMargin
+10000	Wireless Desktop Copier	Technology	Copiers	Jumbo Box	0.33
+10001	Deluxe Keyboard	Technology	Accessories	Medium Box	0.53
+10002	Economy Desk Lamp	Furniture	Furnishings	Jumbo Drum	0.48
+10003	Deluxe Wall Clock	Furniture	Furnishings	Large Box	0.37
+10004	Wireless Computer Desk	Furniture	Tables	Jumbo Drum	0.34
+10005	Executive Conference Table	Furniture	Tables	Large Box	0.49
+10006	Standard Desk Lamp	Furniture	Furnishings	Jumbo Box	0.46
+10007	Executive Desk Fan	Office Supplies	Appliances	Wrap Bag	0.48
+10008	Economy Laser Printer	Technology	Copiers	Large Box	0.46
+10009	Premium Staples	Office Supplies	Fasteners	Small Box	0.6
+10010	Deluxe Laser Printer	Technology	Copiers	Large Box	0.4
+10011	Wireless Laser Printer	Technology	Copiers	Medium Box	0.42
+10012	Economy Wall Clock	Furniture	Furnishings	Jumbo Drum	0.64
+10013	Deluxe Paper Clips	Office Supplies	Fasteners	Small Box	0.41
+10014	Wireless Desktop Copier	Technology	Copiers	Large Box	0.64
+10015	Standard File Labels	Office Supplies	Labels	Small Box	0.48
+10016	Heavy-Duty Cordless Phone	Technology	Phones	Jumbo Box	0.6
+10017	Compact Report Cover	Office Supplies	Binders	Wrap Bag	0.52
+10018	Heavy-Duty Answering Machine	Technology	Phones	Large Box	0.63
+10019	Standard Desk Lamp	Furniture	Furnishings	Large Box	0.38
+10020	Heavy-Duty Bookcase	Furniture	Bookcases	Jumbo Box	0.64
+10021	Executive Task Chair	Furniture	Chairs	Jumbo Drum	0.62
+10022	Compact File Labels	Office Supplies	Labels	Small Box	0.43
+10023	Premium Storage Box	Office Supplies	Storage	Small Pack	0.36
+10024	Economy Staples	Office Supplies	Fasteners	Small Pack	0.47
+10025	Executive Computer Desk	Furniture	Tables	Jumbo Box	0.46
+10026	Premium Executive Chair	Furniture	Chairs	Jumbo Drum	0.33
+10027	Executive Keyboard	Technology	Accessories	Jumbo Box	0.46
+10028	Standard Desktop PC	Technology	Computers	Large Box	0.38
+10029	Executive Wall Shelf	Furniture	Bookcases	Large Box	0.31
+10030	Deluxe Desk Lamp	Furniture	Furnishings	Jumbo Drum	0.62
+10031	Compact Desk Lamp	Furniture	Furnishings	Jumbo Drum	0.38
+10032	Standard Mailing Envelopes	Office Supplies	Envelopes	Small Pack	0.62
+10033	Deluxe Executive Chair	Furniture	Chairs	Jumbo Drum	0.5
+10034	Compact Computer Desk	Furniture	Tables	Jumbo Box	0.56
+10035	Compact Literature Rack	Office Supplies	Storage	Small Box	0.49
+10036	Executive Desktop PC	Technology	Computers	Large Box	0.56
+10037	Premium Cordless Phone	Technology	Phones	Large Box	0.56
+10038	Standard Paper Clips	Office Supplies	Fasteners	Small Pack	0.58
+10039	Wireless Mailing Envelopes	Office Supplies	Envelopes	Small Pack	0.43
+10040	Compact Wall Shelf	Furniture	Bookcases	Large Box	0.34
+10041	Compact Pencils	Office Supplies	Art	Small Box	0.62
+10042	Executive Report Cover	Office Supplies	Binders	Small Pack	0.53
+10043	Executive Surge Protector	Office Supplies	Appliances	Small Box	0.65
+10044	Premium Clipboard	Office Supplies	Binders	Small Box	0.44
+10045	Heavy-Duty Desktop Copier	Technology	Copiers	Jumbo Box	0.53
+10046	Compact Desktop Copier	Technology	Copiers	Large Box	0.38
+10047	Compact Laptop	Technology	Computers	Large Box	0.49
+10048	Executive Wall Shelf	Furniture	Bookcases	Jumbo Box	0.37
+10049	Economy Pencils	Office Supplies	Art	Small Box	0.52
+10050	Economy Executive Chair	Furniture	Chairs	Jumbo Box	0.65
+10051	Economy Side Table	Furniture	Tables	Jumbo Box	0.51
+10052	Executive Address Labels	Office Supplies	Labels	Small Box	0.6
+10053	Premium Paper Shredder	Office Supplies	Appliances	Small Pack	0.34
+10054	Economy Paper Shredder	Office Supplies	Appliances	Small Box	0.51
+10055	Premium Surge Protector	Office Supplies	Appliances	Wrap Bag	0.56
+10056	Wireless Task Chair	Furniture	Chairs	Large Box	0.46
+10057	Economy Answering Machine	Technology	Phones	Large Box	0.63
+10058	Deluxe Mailing Envelopes	Office Supplies	Envelopes	Wrap Bag	0.65
+10059	Wireless Desktop Copier	Technology	Copiers	Jumbo Box	0.55
