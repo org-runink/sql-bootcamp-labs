@@ -15,6 +15,12 @@ browser — that's a shared JupyterLab instance with the database connection
 and the `exercises/` folder already there. See
 [Option A in Step 5](#step-5--connect-and-run-your-first-query).
 
+**Repo maintenance:** this repo is managed by `core session` — the
+org-runink platform's own sovereign coding agent (`core` CLI, see
+`~/Documents/core`) — via the `runink-core-agents` GitHub App, rather than
+by ad hoc AI-assistant edits. It always lands changes as a draft PR on a
+`core-session/*` branch for human review, never a direct push to `main`.
+
 ## What's in here
 
 Two databases, auto-created and auto-seeded the first time the container
