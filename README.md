@@ -5,6 +5,10 @@ Hands-on SQL labs for the Data Engineering bootcamp: aggregate functions,
 subqueries. Everything runs against a local MySQL instance in Docker — no
 manual database setup required.
 
+**New to Docker, the terminal, or SQL entirely?** Skip straight to
+[Step-by-Step Onboarding](#step-by-step-onboarding) — it assumes nothing.
+Already comfortable with Docker? Use the [Quick Start](#quick-start) below.
+
 ## What's in here
 
 Two databases, auto-created and auto-seeded the first time the container
@@ -32,7 +36,81 @@ counts are intentionally small and intentionally sparse (not every
 employee has a hire record, hobby, or review) so `LEFT`/`RIGHT`/`FULL`
 joins produce visibly different, meaningful results.
 
-## Prerequisites
+## Quick Start
+
+For students already comfortable with git/Docker:
+
+```bash
+git clone https://github.com/paesdan/sql-bootcamp-labs.git
+cd sql-bootcamp-labs
+docker compose up -d
+docker exec -it some-mysql mysql -uroot -pmy-secret-pw
+```
+Then jump to [Doing the exercises](#doing-the-exercises).
+
+---
+
+## Step-by-Step Onboarding
+
+A complete walkthrough from zero. Every step has a checkpoint so you know
+whether it worked before moving to the next one. If a step's checkpoint
+doesn't match, see [Troubleshooting](#troubleshooting) before continuing.
+
+### Step 0 — What you'll be using
+
+A quick glossary, since the rest of this guide uses these words a lot:
+
+- **Terminal** — a text-based window where you type commands instead of
+  clicking. macOS: `Terminal.app` or `iTerm2`. Windows: `Git Bash` (installed
+  with Git) or `WSL`. Linux: whatever terminal your desktop ships with.
+- **Docker** — a tool that runs pre-packaged applications ("containers")
+  without you having to install and configure them yourself. We use it to
+  run MySQL so nobody has to install MySQL by hand.
+- **Container** — a running instance of an application (here: our MySQL
+  server), isolated from the rest of your machine.
+- **Image** — the packaged blueprint a container is started from (here:
+  `mysql:8.0`, downloaded from Docker Hub the first time you run it).
+- **`docker compose`** — a tool for describing "start this container with
+  these settings" in a file (`docker-compose.yml`) instead of one long
+  command.
+- **Client** — a program you use to talk to the database and run SQL
+  queries (either the `mysql` command-line tool, or a graphical app like
+  DBeaver).
+
+### Step 1 — Install Git (if you don't have it)
+
+Check first:
+```bash
+git --version
+```
+If that prints a version number, skip to Step 2. Otherwise:
+
+- **macOS**: `xcode-select --install` (installs Git via Apple's Command
+  Line Tools), or `brew install git` if you have Homebrew.
+- **Windows**: download and run the installer from
+  https://git-scm.com/download/win — accept the defaults. This also
+  installs **Git Bash**, a terminal you can use for every command below.
+- **Linux (Debian/Ubuntu)**: `sudo apt install git`
+- **Linux (Arch/CachyOS)**: `sudo pacman -S git`
+
+✅ **Checkpoint:** `git --version` prints something like `git version 2.43.0`.
+
+### Step 2 — Get the lab files onto your machine
+
+"Cloning" downloads a copy of this repository to your computer.
+```bash
+git clone https://github.com/paesdan/sql-bootcamp-labs.git
+cd sql-bootcamp-labs
+```
+
+✅ **Checkpoint:** `ls` (or `dir` on Windows) shows `README.md`,
+`docker-compose.yml`, `db-init/`, `exercises/`, `solutions/`.
+
+*Don't want to use git at all?* Click the green "Code" button on the
+GitHub repo page → "Download ZIP" → unzip it → open a terminal inside
+the unzipped folder. Everything below works the same either way.
+
+### Step 3 — Install Docker
 
 You need Docker installed and running. Pick your OS:
 
@@ -41,60 +119,71 @@ You need Docker installed and running. Pick your OS:
 brew install --cask docker
 open -a Docker   # first launch finishes setup; wait for the whale icon in the menu bar
 ```
-Or download Docker Desktop from https://www.docker.com/products/docker-desktop/
+Or download Docker Desktop directly from
+https://www.docker.com/products/docker-desktop/ and drag it into
+Applications like any other app. Open it and wait for the whale icon in
+the menu bar to stop animating — that means it's ready.
 
 **Windows**
 Download and install Docker Desktop from
-https://www.docker.com/products/docker-desktop/ (requires WSL2, which the
-installer sets up for you). Launch Docker Desktop and wait until it says
-"Docker Desktop is running".
+https://www.docker.com/products/docker-desktop/ (it will offer to set up
+WSL2 for you — accept that). Launch Docker Desktop from the Start menu
+and wait until it says "Docker Desktop is running" in the bottom left.
 
 **Linux (Debian/Ubuntu)**
 ```bash
 curl -fsSL https://get.docker.com | sh
-sudo usermod -aG docker $USER   # log out/in afterward so `docker` works without sudo
+sudo usermod -aG docker $USER
 ```
+Then **log all the way out and back in** (or reboot) — Linux only applies
+new group memberships to *new* login sessions, so this step is easy to
+think you've done when you haven't.
 
 **Linux (Arch/CachyOS)**
 ```bash
 sudo pacman -S docker docker-compose
 sudo systemctl enable --now docker
-sudo usermod -aG docker $USER   # log out/in afterward
+sudo usermod -aG docker $USER
 ```
+Same as above: log out and back in afterward.
 
-Verify it worked:
+✅ **Checkpoint:** run both of these —
 ```bash
 docker --version
 docker run hello-world
 ```
+The second command should print a paragraph starting with `"Hello from
+Docker!"`. If you instead see `permission denied` or `Cannot connect to
+the Docker daemon`, see [Troubleshooting](#troubleshooting).
 
-You'll also want a MySQL client to run queries. Any of these work:
-- `mysql` CLI (`brew install mysql-client` / `apt install mysql-client` / `pacman -S mysql-clients`)
-- [DBeaver](https://dbeaver.io/) / [TablePlus](https://tableplus.com/) / MySQL Workbench (GUI)
-- `docker exec` straight into the container (no local client needed — see below)
+### Step 4 — Start the lab
 
-## Spin up the lab
-
-### Option A — docker compose (recommended)
-
-From the repo root:
+From inside the `sql-bootcamp-labs` folder:
 ```bash
 docker compose up -d
 ```
-This builds a container named `some-mysql`, publishes MySQL on
-`localhost:3306`, and runs every `.sql` file in `db-init/` in order the
-first time it starts — creating and seeding both `superstore` and
-`company` automatically. Data persists in a Docker volume across restarts.
+The first run downloads MySQL (a few hundred MB — can take a couple of
+minutes on a slow connection) and then automatically builds and fills in
+both databases. You'll see a wall of output; that's normal.
 
-Check it's healthy:
+Check that it's actually up and healthy:
 ```bash
 docker compose ps
-docker compose logs -f mysql   # watch the seed scripts run on first boot
 ```
 
-### Option B — plain `docker run`
+✅ **Checkpoint:** the `STATUS` column says something like
+`Up X seconds (healthy)`. If it says `(health: starting)`, wait a few
+seconds and run the command again — first-time seeding of 3,000+ rows
+takes a little while.
 
-Same result, no compose file, using the image/flags style from class:
+Want to watch it happen instead of waiting blind?
+```bash
+docker compose logs -f mysql
+```
+(Press `Ctrl+C` to stop watching — this does not stop the container.)
+
+*Prefer not to use docker compose?* The equivalent plain `docker run`,
+matching the style used in class:
 ```bash
 docker run --name some-mysql \
   -e MYSQL_ROOT_PASSWORD=my-secret-pw \
@@ -102,22 +191,54 @@ docker run --name some-mysql \
   -v "$(pwd)/db-init:/docker-entrypoint-initdb.d" \
   -d mysql:8.0
 ```
-Replace `mysql:8.0` with whatever tag your class is standardizing on
-(`mysql:8.4`, `mysql:5.7`, etc.) — the schema and lab SQL are compatible
-with any current MySQL 5.7+/8.x tag.
+Replace `mysql:8.0` with whatever tag your class is standardizing on —
+the schema and lab SQL work with any current MySQL 5.7+/8.x tag.
 
-### Connect
+### Step 5 — Connect and run your first query
 
-```bash
-mysql -h 127.0.0.1 -P 3306 -u root -p     # password: my-secret-pw
-```
-or, without installing a client locally:
+**Option A — no extra install, using the container's own client:**
 ```bash
 docker exec -it some-mysql mysql -uroot -pmy-secret-pw
 ```
+You should land on a `mysql>` prompt. Try:
+```sql
+USE superstore;
+SELECT COUNT(*) FROM customers;
+```
+✅ **Checkpoint:** it returns `250`.
 
-### Verify the seed worked
+**Option B — a `mysql` client installed on your own machine:**
+```bash
+# macOS
+brew install mysql-client
+# Debian/Ubuntu
+sudo apt install mysql-client
+# Arch/CachyOS
+sudo pacman -S mysql-clients
+```
+Then:
+```bash
+mysql -h 127.0.0.1 -P 3306 -u root -p
+# password: my-secret-pw
+```
 
+**Option C — a graphical tool (recommended if you're new to SQL):**
+[DBeaver](https://dbeaver.io/) (free) or [TablePlus](https://tableplus.com/)
+let you browse tables, click around the schema, and see results in a
+spreadsheet-like grid instead of a terminal. Create a new MySQL
+connection with:
+- Host: `127.0.0.1`
+- Port: `3306`
+- Username: `root`
+- Password: `my-secret-pw`
+
+Then open a SQL editor against the `superstore` or `company` database and
+run any query in this repo.
+
+### Step 6 — Confirm both databases seeded correctly
+
+Run this (any of the three clients above work) and compare against the
+expected counts:
 ```sql
 USE superstore;
 SELECT COUNT(*) FROM customers;  -- 250
@@ -132,12 +253,27 @@ SELECT COUNT(*) FROM hobby;      -- 4
 SELECT COUNT(*) FROM review;     -- 6
 ```
 
+✅ **Checkpoint:** all eight numbers match. If they don't, see
+[Troubleshooting](#troubleshooting).
+
+You're fully set up — move on to the exercises below.
+
+---
+
 ## Doing the exercises
 
-Work through `exercises/` in order — each file has the task prompts as
-comments with a blank space underneath for your query. Check your answer
-against the matching file in `solutions/` once you've given it a real
-attempt.
+Work through `exercises/` in order. Each file has the task prompts as SQL
+comments with blank space underneath for you to write your own query.
+Suggested workflow per file:
+
+1. Read the comment describing the task.
+2. Write your query underneath it and run it against the live database
+   (any client from Step 5 works).
+3. Sanity-check your result against the row counts/values described in
+   the comment, or against the matching file in `solutions/`.
+4. If you're stuck for more than a few minutes, peek at just the next
+   line of the matching solution file rather than the whole thing — it's
+   more useful to unstick yourself than to solve it end-to-end.
 
 1. `Part1_Exercise_Build_Database_and_Tables.sql` — DDL practice: build a
    scratch database from CSVs by hand (the main `superstore`/`company`
@@ -149,6 +285,53 @@ attempt.
 2. `Part2_Exercise_Joins.sql` — `INNER`/`LEFT`/`RIGHT`/`FULL` joins on `company`.
 3. `Part3_Exercise_CaseWhen_Pivot.sql` — `CASE WHEN` and pivot tables on `superstore`.
 4. `Part3_Exercise_Subqueries.sql` — subqueries on `company` and `superstore`.
+
+## Troubleshooting
+
+**`permission denied while trying to connect to the Docker daemon socket`**
+Your user was added to the `docker` group, but the *current* terminal
+session predates that change — Linux only picks up new group memberships
+on new logins. Close and reopen your terminal (or fully log out and back
+in). If you're in a rush and don't want to restart your session, prefix
+commands with `sg docker -c "..."`, e.g. `sg docker -c "docker compose up -d"`.
+
+**`Cannot connect to the Docker daemon. Is the docker daemon running?`**
+Docker Desktop (macOS/Windows) isn't open yet — launch it and wait for
+the whale icon to settle. On Linux, the background service isn't running:
+`sudo systemctl enable --now docker`.
+
+**Image pull fails with `network is unreachable` mentioning an IPv6 address**
+Some networks/VPNs advertise IPv6 without actually routing it. Docker
+tried IPv6 first and failed — just retry `docker compose up -d`; it falls
+back to IPv4 automatically, and layers already downloaded are cached.
+
+**`port is already allocated` / `address already in use` for port 3306**
+Something else on your machine (a previous MySQL install, another lab
+container) is already using port 3306. Either stop that service, or
+change the host port in `docker-compose.yml` — under `ports:`, change
+`"3306:3306"` to e.g. `"3307:3306"` and connect on port 3307 instead.
+
+**Row counts don't match after `docker compose up -d`**
+The seed scripts only run the *first* time a container's data volume is
+created — if you previously started a container (even one that failed
+partway), the volume may already exist with partial data. Wipe it and
+start clean:
+```bash
+docker compose down -v
+docker compose up -d
+```
+
+**Windows: `docker-entrypoint-initdb.d` mount doesn't seem to run anything**
+Make sure Docker Desktop's WSL2 integration is enabled for the distro
+you're running commands from (Docker Desktop → Settings → Resources →
+WSL Integration), and that you're running `docker compose up -d` from
+inside that WSL distro's filesystem, not a path under `/mnt/c/...` shared
+from Windows — the latter can have file-permission quirks with bind
+mounts.
+
+**Still stuck?** Run `docker compose logs mysql` and read the last ~30
+lines — MySQL prints a clear error near the bottom when something in
+`db-init/` fails to apply. Share that output with your instructor.
 
 ## Resetting the lab
 
