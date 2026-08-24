@@ -16,5 +16,19 @@ services:
       timeout: 5s
       retries: 20
 
+  sql-console:
+    build: ./jupyter-sql
+    container_name: sql-console-lan
+    restart: unless-stopped
+    command: start-notebook.py --ServerApp.token='' --ServerApp.password=''
+    ports:
+      - "0.0.0.0:8888:8888"
+    volumes:
+      - sql-console-work:/home/jovyan/work
+    depends_on:
+      mysql:
+        condition: service_healthy
+
 volumes:
   mysql-data:
+  sql-console-work:
