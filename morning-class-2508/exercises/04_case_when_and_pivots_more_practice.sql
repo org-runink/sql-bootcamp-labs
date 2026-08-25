@@ -34,7 +34,7 @@ USE superstore;
 -- 4. Conditional counting. Per ProductCategory, count how many order lines
 --    were profitable (Profit > 0) and how many were not.
 --    One of the three categories loses money on MORE lines than it makes it
---    on — which, and does that match what you found in Extra 01 Q6?
+--    on — which, and does that match what you found in worksheet 02 of the afternoon class (aggregates) Q6?
 
 
 -- 5. Does discounting pay? Bucket each line by discount —

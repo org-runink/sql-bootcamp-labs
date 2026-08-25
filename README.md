@@ -12,7 +12,7 @@ Already comfortable with containers? Use the [Quick Start](#quick-start) below.
 **Just want to write SQL, no installs?** Once the lab is running
 (`podman-compose up -d`), open `http://<instructor-ip>:8888` in any
 browser — that's a shared JupyterLab instance with the database connection
-and the `exercises/` folder already there. See
+and the worksheets already there. See
 [Option A in Step 5](#step-5--connect-and-run-your-first-query).
 
 **Repo maintenance:** this repo is managed by `core session` — the
@@ -52,7 +52,7 @@ by default — the format is an open spec, the name is just history.
 The two places rootless genuinely differs are called out in
 `docker-compose.yml` with comments: images must be **fully qualified**
 (`docker.io/library/mysql:latest`, not `mysql:latest`), and the
-`exercises/` bind mount needs `userns_mode: keep-id` so Jupyter can save your
+`exercises/` bind mounts need `userns_mode: keep-id` so Jupyter can save your
 work. Both are already configured for you.
 
 ## What's in here
@@ -69,18 +69,29 @@ starts:
 product line item, so `OrderID` repeats when an order has multiple
 products — `LineID` (`AUTO_INCREMENT`) is the actual primary key.
 
+Worksheets are organised **by class session**, in teaching order within each:
+
 ```
 sql-bootcamp-labs/
 ├── README.md
 ├── docker-compose.yml        # recommended way to run the lab (via podman-compose)
 ├── db-init/                  # schema + seed SQL, auto-run on first container start
-├── exercises/                # student worksheets (no answers) + sample CSVs — also mounted into jupyter-sql
-│   └── extra/                # optional extra practice, one file per lecture
-├── solutions/                # reference solutions (not exposed in the shared Jupyter console — see note below)
-│   └── extra/                # solutions for the extra practice, with expected results
+├── afternoon-class-2408/     # building tables, aggregates, joins
+│   ├── README.md             #   what this session covers, and its gotchas
+│   ├── exercises/            #   01–04, no answers — mounted into the Jupyter console
+│   │   └── data/             #   CSVs for worksheet 01
+│   └── solutions/            #   01–04, with the actual expected results
+├── morning-class-2508/       # subqueries, CASE WHEN/pivots, views, cross-database, ER modelling
+│   ├── README.md
+│   ├── exercises/            #   01–07 (07 is a Jupyter notebook)
+│   └── solutions/            #   01–07
 ├── jupyter-sql/               # shared browser SQL console (JupyterLab + jupysql), pre-wired to mysql-lan
 └── scripts/generate_superstore_data.py   # regenerates the superstore seed data
 ```
+
+Each class folder is self-contained — start from its own `README.md`. The
+Jupyter console mounts only the `exercises/` folders, never `solutions/`, so
+answers don't appear in the shared browser console.
 
 The `superstore` schema and its entity relationships (`customers` →
 `orders` ← `products`, `orders` → `returns`) follow the ERD from the
@@ -99,7 +110,7 @@ cd sql-bootcamp-labs
 podman-compose up -d
 ```
 Then either open `http://localhost:8888` in a browser for the shared
-Jupyter SQL console (no login, `exercises/` is already there — see
+Jupyter SQL console (no login, the worksheets are already there — see
 [Option A](#step-5--connect-and-run-your-first-query)), or:
 ```bash
 podman exec -it mysql-lan mysql -uroot -p123456
@@ -169,7 +180,8 @@ cd sql-bootcamp-labs
 ```
 
 ✅ **Checkpoint:** `ls` (or `dir` on Windows) shows `README.md`,
-`docker-compose.yml`, `db-init/`, `exercises/`, `solutions/`.
+`docker-compose.yml`, `db-init/`, `afternoon-class-2408/`,
+`morning-class-2508/`.
 
 *Don't want to use git at all?* Click the green "Code" button on the
 GitHub repo page → "Download ZIP" → unzip it → open a terminal inside
@@ -283,17 +295,18 @@ Open `http://localhost:8888` (or the instructor machine's LAN IP, port
   %%sql
   SELECT * FROM superstore.products LIMIT 5;
   ```
-- `exercises/` — the same worksheets described in
-  [Doing the exercises](#doing-the-exercises), opened directly from the
-  repo. Open one, read a task comment, then run your answer as a `%%sql`
-  cell in `SQL_Console.ipynb` (or paste it into a new cell right in the
-  exercise file's own scratch space).
+- `afternoon-class-2408/` and `morning-class-2508/` — the worksheets for
+  each session, described in [Doing the exercises](#doing-the-exercises).
+  Open one, read a task comment, then run your answer as a `%%sql` cell in
+  `SQL_Console.ipynb` (or paste it into a new cell right in the worksheet's
+  own scratch space). Only `exercises/` is mounted, so you won't find the
+  solutions here.
 
 Everything in this lab can be done in SQL — you shouldn't need any other
 Python here. This JupyterLab instance is **shared** across everyone on the
 classroom LAN (same as the database), not one-per-student: edits to
-`exercises/` or `SQL_Console.ipynb` are visible to everyone connected. If
-you'd rather keep your own private copy of your work, edit the exercise
+the worksheets or `SQL_Console.ipynb` are visible to everyone connected. If
+you'd rather keep your own private copy of your work, edit the worksheet
 files in your local git clone instead and run queries against
 `mysql-lan` with any client below.
 
@@ -369,11 +382,23 @@ You're fully set up — move on to the exercises below.
 
 ## Doing the exercises
 
-Work through `exercises/` in order. Each file has the task prompts as SQL
-comments with blank space underneath for you to write your own query. Open
-these files either from your local git clone, or straight from the
-`exercises/` folder in the Jupyter SQL console (Option A in Step 5) — same
-files either way. Suggested workflow per file:
+Go to your class's folder and start from its `README.md`:
+
+- **[`afternoon-class-2408/`](afternoon-class-2408/README.md)** — building
+  tables, aggregate functions, joins (worksheets 01–04)
+- **[`morning-class-2508/`](morning-class-2508/README.md)** — subqueries,
+  `CASE WHEN`/pivots, then views, cross-database queries and ER modelling
+  (worksheets 01–07)
+
+Each folder holds `exercises/` and its matching `solutions/`, numbered in
+teaching order. Within a session, worksheets 01 and 03 are the main lab and
+the even-numbered ones are extra repetitions on the same topic — use them
+when something didn't land, or after class.
+
+Every file has the task prompts as SQL comments with blank space underneath
+for you to write your own query. Open them either from your local git clone,
+or straight from the Jupyter SQL console (Option A in Step 5) — same files
+either way. Suggested workflow per worksheet:
 
 1. Read the comment describing the task.
 2. Write your query underneath it and run it against the live database
@@ -384,37 +409,19 @@ files either way. Suggested workflow per file:
    line of the matching solution file rather than the whole thing — it's
    more useful to unstick yourself than to solve it end-to-end.
 
-1. `Part1_Exercise_Build_Database_and_Tables.sql` — DDL practice: build a
-   scratch database from CSVs by hand (the main `superstore`/`company`
-   databases are already built for you by `db-init/`, so this is purely
-   for practicing `CREATE TABLE`, primary/foreign keys, and `LOAD DATA
-   LOCAL INFILE`). Run this one from a mysql client on your **host**
-   machine (Option B or C), not inside the container and not from the
-   Jupyter console, since `LOCAL INFILE` reads files from the client's
-   filesystem.
-2. `Part2_Exercise_Joins.sql` — `INNER`/`LEFT`/`RIGHT`/`FULL` joins on `company`.
-3. `Part3_Exercise_CaseWhen_Pivot.sql` — `CASE WHEN` and pivot tables on `superstore`.
-4. `Part3_Exercise_Subqueries.sql` — subqueries on `company` and `superstore`.
+Two worksheets need a word of warning, both covered in their class README:
 
-### Extra practice
-
-`exercises/extra/` holds optional reinforcement exercises, one file per
-lecture (aggregates, joins & set operators, subqueries, CASE WHEN/pivots),
-plus three that go beyond the lectures (views and what "materialized" really
-means here, cross-database queries and runtime objects, and ER modelling).
-Solutions are in `solutions/extra/` and quote the actual expected results so
-you can check yourself. See
-[`exercises/extra/README.md`](exercises/extra/README.md) — it also flags the
-places where the slides and MySQL disagree (`FULL OUTER JOIN` doesn't exist;
-`INTERSECT`/`EXCEPT` do work; materialized views silently aren't).
-
-**Extra 07 is a Jupyter notebook**, not a `.sql` file, because its ER
-diagrams are written in [Mermaid](https://mermaid.js.org/) and JupyterLab
-renders them as actual pictures inside the notebook. You read the problem,
-draw your answer by editing a Markdown cell, run it to see the diagram, and
-write the DDL in a `%%sql` cell directly underneath — all in one place.
-Open it from the `exercises/extra/` folder in the Jupyter console (Option A
-in Step 5).
+- **`afternoon-class-2408/exercises/01_build_database_and_tables.sql`** must
+  run from a mysql client on your **host** machine (Option B or C), not from
+  the Jupyter console — `LOAD DATA LOCAL INFILE` reads files from the
+  *client's* filesystem, and the console runs in a container that can't see
+  your disk.
+- **`morning-class-2508/exercises/07_er_modelling_challenges.ipynb`** is a
+  Jupyter notebook, not a `.sql` file, because its ER diagrams are written in
+  [Mermaid](https://mermaid.js.org/) and JupyterLab renders them as actual
+  pictures. You read the problem, draw your answer by editing a Markdown
+  cell, run it to see the diagram, and write the DDL in a `%%sql` cell
+  underneath — all in one place.
 
 ## Troubleshooting
 
@@ -425,7 +432,7 @@ registry a bare image name means. Use the fully qualified name —
 does; you'll only hit this if you type your own `podman run` or `podman pull`
 with a short name.
 
-**Jupyter says `Permission denied` when saving a notebook under `exercises/`**
+**Jupyter says `Permission denied` when saving a notebook in a class folder**
 Rootless Podman maps your host user to a different UID inside the container,
 so a bind-mounted folder is read-only to the container user by default. The
 `userns_mode: "keep-id:uid=1000,gid=100"` line on the `sql-console` service
@@ -484,8 +491,8 @@ files in order against the running container: `podman exec -i mysql-lan
 mysql -uroot -p123456 < db-init/00_superstore_schema.sql`, then the
 `01`–`04` files the same way.
 
-`exercises/data/*.csv` (used only by the standalone Part 1 DDL-practice
-exercise, against a separate `superstore_practice` database) is still
+`afternoon-class-2408/exercises/data/*.csv` (used only by worksheet 01,
+against a separate `superstore_practice` database) is still
 synthetic, generated by `scripts/generate_superstore_data.py` (fixed random
 seed, so output is reproducible). Edit constants at the top of the script
 (row counts, date range, categories) and re-run:

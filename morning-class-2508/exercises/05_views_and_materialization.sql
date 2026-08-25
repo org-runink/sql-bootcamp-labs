@@ -18,7 +18,7 @@
 --
 -- Replace `yourname` everywhere below. Your objects live in your database;
 -- the shared `superstore` data is read cross-database as
--- `superstore.orders`, which is also the topic of Extra 06.
+-- `superstore.orders`, which is also the topic of worksheet 06 (cross-database).
 --
 -- Never CREATE or DROP anything inside `superstore` itself.
 -- ==========================================================================

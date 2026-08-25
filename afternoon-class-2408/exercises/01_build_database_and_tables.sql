@@ -1,14 +1,14 @@
 -- ==========================================================================
--- Part 1 Exercise: Build Database and Tables (superstore-data)
+-- Afternoon class 24/08 — Worksheet 01: Build Database and Tables (superstore-data)
 -- ==========================================================================
 --
 -- The `superstore` database in this lab is already created and seeded
 -- automatically when the MySQL container starts (see db-init/ and the
--- README). You do NOT need to build it to use it for Part 2/3 exercises.
+-- README). You do NOT need to build it to use it for the other worksheets.
 --
 -- This exercise instead has you practice the DDL + data-loading workflow
 -- from scratch, against a separate `superstore_practice` database, using
--- the CSV files in exercises/data/. Run these from a `mysql` client on
+-- the CSV files in afternoon-class-2408/exercises/data/. Run these from a `mysql` client on
 -- your HOST machine (not inside the container) so LOAD DATA LOCAL INFILE
 -- can see the CSV files at their local path.
 --
@@ -41,7 +41,7 @@
  *****************************************************************/
 -- Task: Create and load the `customers` table
 --   Columns: CustomerID (PK), CustomerName, Province, Region, CustomerSegment
---   Data:    exercises/data/customers.csv (tab-delimited, header row)
+--   Data:    afternoon-class-2408/exercises/data/customers.csv (tab-delimited, header row)
 
 -- Step 1: List all tables in the current database
 
@@ -55,7 +55,7 @@
 -- Step 4: DESCRIBE the table to check your column types
 
 
--- Step 5: Load exercises/data/customers.csv into `customers`
+-- Step 5: Load afternoon-class-2408/exercises/data/customers.csv into `customers`
 --   Hint: LOAD DATA LOCAL INFILE '<absolute-path-to-csv>' INTO TABLE customers
 --         FIELDS TERMINATED BY '\t' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
 
@@ -66,14 +66,14 @@
 -- Task: Create and load the `products` table
 --   Columns: ProductID (PK), ProductName, ProductCategory, ProductSubCategory,
 --            ProductContainer, ProductBaseMargin
---   Data:    exercises/data/products.csv
+--   Data:    afternoon-class-2408/exercises/data/products.csv
 
 
 -- Task: Create and load the `orders` table
 --   Columns: OrderID (PK), ProductID (FK -> products), CustomerID (FK -> customers),
 --            OrderDate, OrderPriority, OrderQuantity, Sales, Discount, ShipMode,
 --            Profit, UnitPrice, ShippingCost
---   Data:    exercises/data/orders.csv
+--   Data:    afternoon-class-2408/exercises/data/orders.csv
 --   Hint: create products and customers first so the foreign keys resolve
 
 
@@ -81,7 +81,7 @@
  *       Exercise: Create and load the returns table       *
  ***********************************************************/
 -- Columns: OrderID (PK, FK -> orders), Status
--- Data:    exercises/data/returns.csv
+-- Data:    afternoon-class-2408/exercises/data/returns.csv
 
 
 /***********************************************************

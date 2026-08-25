@@ -1,5 +1,5 @@
 -- ==========================================================================
--- Part 1 Exercise: Build Database and Tables (superstore-data) — SOLUTION
+-- Afternoon class 24/08 — Worksheet 01: Build Database and Tables (superstore-data) — SOLUTION
 -- ==========================================================================
 -- Run against a `superstore_practice` database from a HOST mysql client
 -- (LOAD DATA LOCAL INFILE reads files from the *client's* filesystem):
@@ -26,7 +26,7 @@ CREATE TABLE customers (
 );
 DESCRIBE customers;
 
-LOAD DATA LOCAL INFILE '/absolute/path/to/sql-bootcamp-labs/exercises/data/customers.csv'
+LOAD DATA LOCAL INFILE '/absolute/path/to/sql-bootcamp-labs/afternoon-class-2408/exercises/data/customers.csv'
 INTO TABLE customers
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n'
@@ -45,7 +45,7 @@ CREATE TABLE products (
     ProductBaseMargin DECIMAL(4,2)
 );
 
-LOAD DATA LOCAL INFILE '/absolute/path/to/sql-bootcamp-labs/exercises/data/products.csv'
+LOAD DATA LOCAL INFILE '/absolute/path/to/sql-bootcamp-labs/afternoon-class-2408/exercises/data/products.csv'
 INTO TABLE products
 CHARACTER SET 'latin1'
 FIELDS TERMINATED BY '\t'
@@ -73,7 +73,7 @@ CREATE TABLE orders (
     FOREIGN KEY (ProductID) REFERENCES products(ProductID)
 );
 
-LOAD DATA LOCAL INFILE '/absolute/path/to/sql-bootcamp-labs/exercises/data/orders.csv'
+LOAD DATA LOCAL INFILE '/absolute/path/to/sql-bootcamp-labs/afternoon-class-2408/exercises/data/orders.csv'
 INTO TABLE orders
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n'
@@ -89,7 +89,7 @@ CREATE TABLE returns (
     FOREIGN KEY (OrderID) REFERENCES orders(OrderID)
 );
 
-LOAD DATA LOCAL INFILE '/absolute/path/to/sql-bootcamp-labs/exercises/data/returns.csv'
+LOAD DATA LOCAL INFILE '/absolute/path/to/sql-bootcamp-labs/afternoon-class-2408/exercises/data/returns.csv'
 INTO TABLE returns
 FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n'

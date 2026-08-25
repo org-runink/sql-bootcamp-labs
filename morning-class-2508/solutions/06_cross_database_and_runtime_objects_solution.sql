@@ -125,7 +125,7 @@ JOIN superstore.products p ON pr.ProductID = p.ProductID
 WHERE pr.Revenue > (SELECT AVG(Revenue) FROM product_revenue)
 ORDER BY Revenue DESC
 LIMIT 10;
---    THE WIN over Extra 03 Q7: the aggregation is written ONCE. In the
+--    THE WIN over worksheet 02 (subqueries) Q7: the aggregation is written ONCE. In the
 --    derived-table version the same SELECT appeared twice, and if you edited
 --    one copy and not the other the query would still run — and be wrong.
 
@@ -180,7 +180,7 @@ WHERE EXISTS (SELECT 1 FROM superstore.orders o WHERE o.CustomerID = c.CustomerI
 SELECT c.CustomerID, c.CustomerName, c.Province
 FROM superstore.customers c
 WHERE NOT EXISTS (SELECT 1 FROM superstore.orders o WHERE o.CustomerID = c.CustomerID);
---    Matches Extra 02 Q3's LEFT JOIN … IS NULL exactly: 1812 + 20 = 1832.
+--    Matches worksheet 04 of the afternoon class (joins & unions) Q3's LEFT JOIN … IS NULL exactly: 1812 + 20 = 1832.
 
 -- B8. THE NULL TRAP.  -> NOT IN gives 0.  NOT EXISTS gives 1832.
 --
@@ -198,7 +198,7 @@ WHERE NOT EXISTS (SELECT 1 FROM superstore.orders o WHERE o.CustomerID = c.Custo
 --    THE RULE: use NOT EXISTS for anti-joins unless you can guarantee the
 --    subquery column is NOT NULL. If you must use NOT IN, either add
 --    `WHERE col IS NOT NULL` to the subquery or rely on a NOT NULL
---    constraint you have actually checked — as in Extra 03 Q3, where
+--    constraint you have actually checked — as in worksheet 02 (subqueries) Q3, where
 --    returns.OrderID is the primary key. A query that silently returns
 --    nothing is far more dangerous than one that fails.
 

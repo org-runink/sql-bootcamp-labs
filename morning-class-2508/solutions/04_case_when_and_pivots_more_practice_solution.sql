@@ -34,7 +34,7 @@ GROUP BY p.ProductCategory;
 
 -- 3. Quarterly pivot.
 --    -> 2009 Q1 is the standout quarter (1,198,204) — it contains the record
---       day found in Extra 03 Q4 (2009-03-21).
+--       day found in worksheet 02 (subqueries) Q4 (2009-03-21).
 SELECT YEAR(OrderDate) AS OrderYear,
        ROUND(SUM(CASE WHEN QUARTER(OrderDate) = 1 THEN Sales ELSE 0 END), 0) AS Q1,
        ROUND(SUM(CASE WHEN QUARTER(OrderDate) = 2 THEN Sales ELSE 0 END), 0) AS Q2,
@@ -48,7 +48,7 @@ ORDER BY OrderYear;
 --    -> Office Supplies 2134 profitable / 2448 loss-making  <-- the answer
 --       Technology 1102 / 800 | Furniture 754 / 822
 --    Office Supplies loses money on more lines than it makes it on. Note this
---    does NOT contradict Extra 01 Q6, where the loss-making SUB-categories
+--    does NOT contradict worksheet 02 of the afternoon class (aggregates) Q6, where the loss-making SUB-categories
 --    were Tables and Bookcases (both Furniture): Office Supplies loses on many
 --    small lines but still nets positive overall, while Furniture's losses are
 --    concentrated in a few heavy, expensive-to-ship sub-categories. Counting

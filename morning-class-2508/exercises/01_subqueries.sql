@@ -1,5 +1,5 @@
 -- ==========================================================================
--- Part 3 Exercise: Subqueries (company-data, superstore-data)
+-- Morning class 25/08 — Worksheet 01: Subqueries (company-data, superstore-data)
 -- ==========================================================================
 
 /********************************
