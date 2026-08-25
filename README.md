@@ -81,10 +81,10 @@ sql-bootcamp-labs/
 │   ├── exercises/            #   01–10, no answers — mounted into the Jupyter console
 │   │   └── data/             #   CSVs for worksheet 01
 │   └── solutions/            #   01–10, with the actual expected results
-├── morning-class-2508/       # beyond the lectures: views, cross-database, ER modelling
+├── morning-class-2508/       # beyond the lectures: views, cross-database, modelling, keys, reports, windows
 │   ├── README.md
-│   ├── exercises/            #   01–03 (03 is a Jupyter notebook)
-│   └── solutions/            #   01–03
+│   ├── exercises/            #   01–07 (03 is a Jupyter notebook)
+│   └── solutions/            #   01–07
 ├── jupyter-sql/               # shared browser SQL console (JupyterLab + jupysql), pre-wired to mysql-lan
 └── scripts/generate_superstore_data.py   # regenerates the superstore seed data
 ```
@@ -388,8 +388,9 @@ Go to your class's folder and start from its `README.md`:
   taught syllabus: building tables and constraints, aggregate functions,
   joins, subqueries, `CASE WHEN`/pivots (worksheets 01–10)
 - **[`morning-class-2508/`](morning-class-2508/README.md)** — past the
-  lectures: views and materialization, cross-database queries and run-time
-  objects, ER modelling (worksheets 01–03)
+  lectures: views and materialization, cross-database queries, ER modelling,
+  key design, subquery reports, window functions, and a combined analytical
+  capstone (worksheets 01–07)
 
 Each folder holds `exercises/` and its matching `solutions/`, numbered in
 teaching order. In the afternoon set the even-numbered sheets from 04 on are
