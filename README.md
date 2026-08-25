@@ -10,10 +10,17 @@ no manual database setup required.
 Already comfortable with containers? Use the [Quick Start](#quick-start) below.
 
 **Just want to write SQL, no installs?** Once the lab is running
-(`podman-compose up -d`), open `http://<instructor-ip>:8888` in any
-browser — that's a shared JupyterLab instance with the database connection
-and the worksheets already there. See
+(`podman-compose up -d`, or `docker compose up -d`), open
+`http://<instructor-ip>:8888` in any browser — that's a shared JupyterLab
+instance with the database connection and the worksheets already there. See
 [Option A in Step 5](#step-5--connect-and-run-your-first-query).
+
+**Podman or Docker?** Either works — the same `docker-compose.yml` runs under
+both, and both are verified against this lab. Podman is the default
+recommendation ([why](#why-podman-and-not-docker)), but if it's fighting you,
+use Docker and move on; nothing in the coursework depends on the choice.
+**Just never run both at once** — see
+[Running both at once](#running-both-at-once).
 
 **Repo maintenance:** this repo is managed by `core session` — the
 org-runink platform's own sovereign coding agent (`core` CLI, see
@@ -46,8 +53,39 @@ a detail worth knowing early if you're heading into data engineering.
 Practically, nothing you type changes much: Podman implements the same
 Compose file format and the same CLI verbs. `podman` is a drop-in for
 `docker` in almost every command in this guide, and the file is still called
-`docker-compose.yml` because that's the filename `podman-compose` looks for
-by default — the format is an open spec, the name is just history.
+`docker-compose.yml` because that's the filename BOTH tools look for by
+default — the format is an open spec, the name is just history.
+
+**If Podman gives you trouble, use Docker.** This is a SQL course, not a
+containers course. The same `docker-compose.yml` runs unchanged under
+`docker compose up -d` — verified end to end: the databases seed identically,
+Jupyter serves, and saving your work in the worksheet folders works. Docker
+simply ignores the one Podman-specific line (`userns_mode`), and because the
+container user and your host user share uid 1000, the bind mount is writable
+without it. Every `podman` command below has a `docker` equivalent — swap the
+word.
+
+### Running both at once
+
+Don't. They compete for ports 3306 and 8888, and the failure is confusing
+rather than obvious: whichever starts second loses the port, and it's usually
+the Jupyter console, which then sits in `Created` and never starts **while the
+database still looks healthy**. You get a lab that appears to be up but serves
+nothing.
+
+Switching runtimes? Stop the other one first:
+
+```bash
+podman-compose down     # before using docker
+docker compose down     # before using podman
+```
+
+To check what you actually have running:
+
+```bash
+podman ps -a
+docker ps -a
+```
 
 The two places rootless genuinely differs are called out in
 `docker-compose.yml` with comments: images must be **fully qualified**
@@ -107,7 +145,7 @@ For students already comfortable with git and containers:
 ```bash
 git clone https://github.com/org-runink/sql-bootcamp-labs.git
 cd sql-bootcamp-labs
-podman-compose up -d
+podman-compose up -d      # or: docker compose up -d
 ```
 Then either open `http://localhost:8888` in a browser for the shared
 Jupyter SQL console (no login, the worksheets are already there — see
@@ -223,6 +261,36 @@ sudo pacman -S podman podman-compose
 No group membership, no daemon to enable, no logging out and back in — that
 whole class of Docker setup problem doesn't exist here.
 
+#### Or install Docker instead
+
+Perfectly fine, and the rest of this guide works with `docker` substituted for
+`podman`.
+
+- **macOS**: `brew install --cask docker`, then open Docker Desktop and wait
+  for the whale icon to stop animating.
+- **Windows**: install Docker Desktop from
+  https://www.docker.com/products/docker-desktop/ (accept the WSL2 setup),
+  launch it, and wait for "Docker Desktop is running".
+- **Linux (Debian/Ubuntu)**:
+  ```bash
+  curl -fsSL https://get.docker.com | sh
+  sudo usermod -aG docker $USER
+  ```
+  Then **log all the way out and back in** — Linux only applies new group
+  memberships to new login sessions, so this step is easy to think you've
+  done when you haven't.
+- **Linux (Arch/CachyOS)**:
+  ```bash
+  sudo pacman -S docker docker-compose
+  sudo systemctl enable --now docker
+  sudo usermod -aG docker $USER
+  ```
+  Same as above: log out and back in afterward.
+
+Note Docker Desktop's licensing on macOS/Windows — see
+[Why Podman and not Docker](#why-podman-and-not-docker). For a class it's free;
+it's your employer that may need a subscription.
+
 ✅ **Checkpoint:** run both of these —
 ```bash
 podman --version
@@ -247,6 +315,19 @@ Check that it's actually up and healthy:
 ```bash
 podman ps
 ```
+
+Using Docker? Every command in this guide translates directly:
+
+| Podman | Docker |
+|---|---|
+| `podman-compose up -d` | `docker compose up -d` |
+| `podman-compose down` | `docker compose down` |
+| `podman-compose down -v` | `docker compose down -v` |
+| `podman ps` | `docker ps` |
+| `podman logs -f mysql-lan` | `docker logs -f mysql-lan` |
+| `podman exec -it mysql-lan mysql -uroot -p123456` | `docker exec -it mysql-lan mysql -uroot -p123456` |
+
+Container names, ports and data are identical either way.
 
 ✅ **Checkpoint:** the `STATUS` column says something like
 `Up X seconds (healthy)` for `mysql-lan`. If it says `(starting)`, wait a few
@@ -451,9 +532,15 @@ Some networks/VPNs advertise IPv6 without actually routing it. The pull tried
 IPv6 first and failed — just retry `podman-compose up -d`; it falls back to
 IPv4 automatically, and layers already downloaded are cached.
 
+**`address already in use`, or Jupyter stuck in `Created`**
+Almost always both runtimes running at once — see
+[Running both at once](#running-both-at-once). Check with `podman ps -a` AND
+`docker ps -a`; stop whichever you're not using. The giveaway is a healthy
+database with a console that never starts.
+
 **`port is already allocated` / `address already in use` for port 3306**
-Something else on your machine (a previous MySQL install, a leftover Docker
-container from before this lab moved to Podman) is already using port 3306.
+Something else on your machine (a previous MySQL install, a leftover
+container from the other runtime) is already using port 3306.
 Either stop that service, or change the host port in `docker-compose.yml` —
 under `ports:`, change `"0.0.0.0:3306:3306"` to e.g. `"0.0.0.0:3307:3306"`
 and connect on port 3307 instead.

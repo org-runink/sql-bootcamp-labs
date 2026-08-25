@@ -1,10 +1,17 @@
-# Runs under rootless Podman:  podman-compose up -d
+# Works with EITHER runtime — pick one and stick to it:
 #
-# The filename stays `docker-compose.yml` because that is the name
-# podman-compose looks for by default. The Compose *file format* is an open
-# spec that Podman implements — the name is history, not a dependency.
+#     podman-compose up -d      (recommended, rootless, no licence tier)
+#     docker compose up -d      (if Podman is giving you trouble)
 #
-# Two lines below are Podman-specific; see the comments on each.
+# DO NOT RUN BOTH. They fight over ports 3306 and 8888, and the loser fails
+# with "address already in use" — usually the Jupyter console, which then sits
+# in "Created" and never starts while the database looks fine. If you switch
+# runtimes, stop the other one first:
+#     podman-compose down       (before using docker)
+#     docker compose down       (before using podman)
+#
+# The filename stays `docker-compose.yml` because that is what BOTH tools look
+# for by default. The Compose file format is an open spec; the name is history.
 
 services:
   mysql:
