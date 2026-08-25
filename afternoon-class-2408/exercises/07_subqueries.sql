@@ -1,5 +1,5 @@
 -- ==========================================================================
--- Morning class 25/08 — Worksheet 01: Subqueries (company-data, superstore-data)
+-- Afternoon class 24/08 — Worksheet 07: Subqueries (company-data, superstore-data)   (L08)
 -- ==========================================================================
 
 /********************************

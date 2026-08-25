@@ -1,5 +1,5 @@
 -- ==========================================================================
--- EXTRA 05 — SOLUTIONS: views and materialization
+-- Morning class 25/08 — Worksheet 01 SOLUTIONS: views and materialization
 -- ==========================================================================
 -- Every result below was produced on this lab's MySQL. Replace `yourname`.
 -- ==========================================================================

@@ -1,5 +1,5 @@
 -- ==========================================================================
--- Afternoon class 24/08 — Worksheet 03: Joins (company-data)
+-- Afternoon class 24/08 — Worksheet 05: Joins (company-data)   (L07)
 -- ==========================================================================
 -- Uses the `company` database (employee, hire, hobby, review), already
 -- seeded by db-init/. Expected row counts, so you can sanity-check your

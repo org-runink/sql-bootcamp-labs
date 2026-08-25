@@ -1,5 +1,5 @@
 -- ==========================================================================
--- EXTRA 03 — Subqueries                                       (reinforces L08)
+-- Afternoon class 24/08 — Worksheet 08: Subqueries, second pass   (L08)
 -- ==========================================================================
 -- Database: superstore.  Tables: customers, products, orders, returns.
 --

@@ -1,5 +1,5 @@
 -- ==========================================================================
--- EXTRA 01 — Aggregate functions, GROUP BY, HAVING            (reinforces L06)
+-- Afternoon class 24/08 — Worksheet 03: Aggregate functions, GROUP BY, HAVING   (L06)
 -- ==========================================================================
 -- Database: superstore.  Tables: customers, products, orders, returns.
 --

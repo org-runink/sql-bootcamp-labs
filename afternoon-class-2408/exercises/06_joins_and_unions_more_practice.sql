@@ -1,5 +1,5 @@
 -- ==========================================================================
--- EXTRA 02 — Joins and set operators                          (reinforces L07)
+-- Afternoon class 24/08 — Worksheet 06: Joins and set operators   (L07)
 -- ==========================================================================
 -- Database: superstore.  Tables: customers, products, orders, returns.
 --
@@ -25,7 +25,7 @@ USE superstore;
 
 -- 3. Anti-join. List the customers who have NEVER placed an order.
 --    HINT: LEFT JOIN from customers and keep the rows where the right side is
---    NULL. (There is also a NOT IN form — worksheet 02 of the morning class (subqueries) revisits it.)
+--    NULL. (There is also a NOT IN form — worksheet 08 (subqueries, second pass) revisits it.)
 --    Then check: does the same trick find products that were never ordered?
 --    Report what you get and what that tells you about this dataset.
 

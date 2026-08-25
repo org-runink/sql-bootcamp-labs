@@ -1,5 +1,5 @@
 -- ==========================================================================
--- EXTRA 05 — Views, and what "materialized" really means
+-- Morning class 25/08 — Worksheet 01: Views, and what "materialized" really means
 -- ==========================================================================
 -- A VIEW is a stored QUERY, not stored DATA. Nothing is precomputed: every
 -- time you select from a view, the database runs the underlying query again.
@@ -18,7 +18,7 @@
 --
 -- Replace `yourname` everywhere below. Your objects live in your database;
 -- the shared `superstore` data is read cross-database as
--- `superstore.orders`, which is also the topic of worksheet 06 (cross-database).
+-- `superstore.orders`, which is also the topic of worksheet 02 (cross-database).
 --
 -- Never CREATE or DROP anything inside `superstore` itself.
 -- ==========================================================================
