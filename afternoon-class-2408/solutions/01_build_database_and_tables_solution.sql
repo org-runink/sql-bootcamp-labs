@@ -1,5 +1,5 @@
 -- ==========================================================================
--- Afternoon class 24/08 — Worksheet 01: Build Database and Tables (superstore-data) — SOLUTION
+-- Afternoon class 24/08 — Worksheet 01 SOLUTIONS: Build Database and Tables (superstore-data)
 -- ==========================================================================
 -- Run against a `superstore_practice` database from a HOST mysql client
 -- (LOAD DATA LOCAL INFILE reads files from the *client's* filesystem):

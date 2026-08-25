@@ -1,5 +1,5 @@
 -- ==========================================================================
--- EXTRA 03 — SOLUTIONS: subqueries                            (reinforces L08)
+-- Afternoon class 24/08 — Worksheet 08 SOLUTIONS: subqueries, second pass   (L08)
 -- ==========================================================================
 
 USE superstore;

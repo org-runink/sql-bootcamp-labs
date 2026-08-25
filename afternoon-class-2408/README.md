@@ -1,35 +1,57 @@
 # Afternoon class — 24/08
 
-Building tables, aggregate functions, and joins.
+The full taught syllabus: building tables, aggregate functions, joins,
+subqueries and `CASE WHEN`.
 
 Work through `exercises/` in order; the numbers are the teaching order.
 Answers are in `solutions/`, same numbering.
 
 | # | Worksheet | Covers | Lecture |
 |---|---|---|---|
-| 01 | `01_build_database_and_tables.sql` | `CREATE TABLE`, primary/foreign keys, `LOAD DATA LOCAL INFILE` | DDL foundation |
-| 02 | `02_aggregates_group_by_having.sql` | `COUNT`/`SUM`/`AVG`/`MIN`/`MAX`, `GROUP BY`, `HAVING` vs `WHERE` | L06 |
-| 03 | `03_joins.sql` | `INNER`/`LEFT`/`RIGHT`/`FULL` joins on `company` | L07 |
-| 04 | `04_joins_and_unions_more_practice.sql` | anti-joins, self joins, `UNION`/`UNION ALL`, `INTERSECT`, `EXCEPT` | L07 |
+| 01 | `01_build_database_and_tables.sql` | `CREATE TABLE`, primary/foreign keys, `LOAD DATA LOCAL INFILE` | DDL |
+| 02 | `02_constraints_and_data_types.sql` | data types, `NOT NULL`/`UNIQUE`/`DEFAULT`/`CHECK`, FK delete actions | DDL |
+| 03 | `03_aggregates_group_by_having.sql` | `COUNT`/`SUM`/`AVG`/`MIN`/`MAX`, `GROUP BY`, `HAVING` vs `WHERE` | L06 |
+| 04 | `04_aggregates_more_practice.sql` | the three `COUNT`s, `GROUP_CONCAT`, `ROLLUP`, grain traps | L06 |
+| 05 | `05_joins.sql` | `INNER`/`LEFT`/`RIGHT`/`FULL` joins on `company` | L07 |
+| 06 | `06_joins_and_unions_more_practice.sql` | anti-joins, self joins, `UNION`/`UNION ALL`, `INTERSECT`, `EXCEPT` | L07 |
+| 07 | `07_subqueries.sql` | scalar subqueries, `IN`, `EXISTS`, derived tables | L08 |
+| 08 | `08_subqueries_more_practice.sql` | more of the same, incl. the `NOT IN` NULL trap | L08 |
+| 09 | `09_case_when_and_pivots.sql` | `CASE WHEN`, conditional aggregation, pivots | L09 |
+| 10 | `10_case_when_and_pivots_more_practice.sql` | more pivots and bucketing | L09 |
 
-Worksheets 01 and 03 are the main lab; 02 and 04 are extra repetitions on the
-same material — use them when a topic didn't land, or after class.
+The odd-numbered sheets from 05 on are the course's own exercises; the
+even-numbered ones are extra repetitions on the same topic — use them when a
+topic didn't land, or after class.
 
-## Running worksheet 01
+## Two worksheets need setup
 
-Run this one from a `mysql` client on your **host** machine, not from the
+**01** must run from a `mysql` client on your **host** machine, not from the
 Jupyter console: `LOAD DATA LOCAL INFILE` reads files from the *client's*
 filesystem, and the console runs inside a container that can't see your disk.
 Its CSVs are in `exercises/data/`.
 
-Every other worksheet runs fine in the Jupyter console.
+```bash
+mysql --local-infile=1 -h 127.0.0.1 -P 3306 -u root -p
+```
+
+**02** creates tables. Everyone shares one MySQL server, so it asks you to
+work in your own scratch database and drop it at the end:
+
+```sql
+CREATE DATABASE practice_yourname;
+USE practice_yourname;
+```
+
+Never create or drop anything inside `superstore` or `company`.
+
+Every other worksheet is read-only and runs fine in the Jupyter console.
 
 ## Two things that trip people up
 
 **`orders` is one row per ORDER LINE, not per order.** One `OrderID` appears
 once per product in that order, so `COUNT(*)` counts lines (8,060) while
 `COUNT(DISTINCT OrderID)` counts orders (5,361). Most wrong answers come from
-this one distinction.
+this one distinction — worksheet 04 is largely built around it.
 
 **Table names are plural here.** The lecture slides say `superstore.customer`
 and `superstore.product`; this lab uses `customers`, `products`, `orders`,
@@ -39,11 +61,17 @@ and `superstore.product`; this lab uses `customers`, `products`, `orders`,
 
 - **`FULL OUTER JOIN` does not exist in MySQL.** The slides show it; writing
   one is a syntax error. Emulate it with `LEFT JOIN … UNION … RIGHT JOIN`
-  (worksheet 04 walks through this, and measures how many rows it really adds
+  (worksheet 06 walks through this, and measures how many rows it really adds
   on this data — the answer is surprising).
 - **`INTERSECT` and `EXCEPT` do work** on the version this lab runs. Don't
   assume from older MySQL documentation that they're unavailable — worksheet
-  04 uses them.
+  06 uses them.
+- **`NOT IN` with NULLs silently returns nothing.** Not an error, not a
+  warning — zero rows. Worksheet 08 makes you hit it, then fixes it with
+  `NOT EXISTS`.
+- **`CHECK` was ignored before MySQL 8.0.16.** It is enforced on this server
+  (worksheet 02 proves it), but the same DDL silently enforces nothing on an
+  older one.
 
 ## How to use the solutions
 

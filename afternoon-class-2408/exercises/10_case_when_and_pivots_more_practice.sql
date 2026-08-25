@@ -1,5 +1,5 @@
 -- ==========================================================================
--- EXTRA 04 — CASE WHEN and pivot tables                       (reinforces L09)
+-- Afternoon class 24/08 — Worksheet 10: CASE WHEN and pivots, second pass   (L09)
 -- ==========================================================================
 -- Database: superstore.  Tables: customers, products, orders, returns.
 --
@@ -34,7 +34,7 @@ USE superstore;
 -- 4. Conditional counting. Per ProductCategory, count how many order lines
 --    were profitable (Profit > 0) and how many were not.
 --    One of the three categories loses money on MORE lines than it makes it
---    on — which, and does that match what you found in worksheet 02 of the afternoon class (aggregates) Q6?
+--    on — which, and does that match what you found in worksheet 03 (aggregates) Q6?
 
 
 -- 5. Does discounting pay? Bucket each line by discount —

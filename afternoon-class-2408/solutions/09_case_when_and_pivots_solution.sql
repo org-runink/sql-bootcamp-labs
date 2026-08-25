@@ -9,6 +9,7 @@
 --
 -- ==========================================================================================================
 --
+-- Afternoon class 24/08 — Worksheet 09 SOLUTIONS: CASE WHEN and pivot tables   (L09)
 -- File: Case When and Pivot Table
 -- Developed by: WeCloudData
 --

@@ -1,5 +1,5 @@
 -- ==========================================================================
--- EXTRA 01 — SOLUTIONS: aggregates, GROUP BY, HAVING          (reinforces L06)
+-- Afternoon class 24/08 — Worksheet 03 SOLUTIONS: aggregates, GROUP BY, HAVING   (L06)
 -- ==========================================================================
 -- Every query below was run against the seeded superstore database; the
 -- expected results are quoted so you can check yourself without guessing.

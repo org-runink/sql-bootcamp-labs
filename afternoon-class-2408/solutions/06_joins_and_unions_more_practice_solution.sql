@@ -1,5 +1,5 @@
 -- ==========================================================================
--- EXTRA 02 — SOLUTIONS: joins and set operators               (reinforces L07)
+-- Afternoon class 24/08 — Worksheet 06 SOLUTIONS: joins and set operators   (L07)
 -- ==========================================================================
 -- All results below were produced against the seeded superstore database.
 -- ==========================================================================

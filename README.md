@@ -76,15 +76,15 @@ sql-bootcamp-labs/
 ├── README.md
 ├── docker-compose.yml        # recommended way to run the lab (via podman-compose)
 ├── db-init/                  # schema + seed SQL, auto-run on first container start
-├── afternoon-class-2408/     # building tables, aggregates, joins
+├── afternoon-class-2408/     # the taught syllabus: DDL, aggregates, joins, subqueries, CASE WHEN
 │   ├── README.md             #   what this session covers, and its gotchas
-│   ├── exercises/            #   01–04, no answers — mounted into the Jupyter console
+│   ├── exercises/            #   01–10, no answers — mounted into the Jupyter console
 │   │   └── data/             #   CSVs for worksheet 01
-│   └── solutions/            #   01–04, with the actual expected results
-├── morning-class-2508/       # subqueries, CASE WHEN/pivots, views, cross-database, ER modelling
+│   └── solutions/            #   01–10, with the actual expected results
+├── morning-class-2508/       # beyond the lectures: views, cross-database, ER modelling
 │   ├── README.md
-│   ├── exercises/            #   01–07 (07 is a Jupyter notebook)
-│   └── solutions/            #   01–07
+│   ├── exercises/            #   01–03 (03 is a Jupyter notebook)
+│   └── solutions/            #   01–03
 ├── jupyter-sql/               # shared browser SQL console (JupyterLab + jupysql), pre-wired to mysql-lan
 └── scripts/generate_superstore_data.py   # regenerates the superstore seed data
 ```
@@ -384,16 +384,17 @@ You're fully set up — move on to the exercises below.
 
 Go to your class's folder and start from its `README.md`:
 
-- **[`afternoon-class-2408/`](afternoon-class-2408/README.md)** — building
-  tables, aggregate functions, joins (worksheets 01–04)
-- **[`morning-class-2508/`](morning-class-2508/README.md)** — subqueries,
-  `CASE WHEN`/pivots, then views, cross-database queries and ER modelling
-  (worksheets 01–07)
+- **[`afternoon-class-2408/`](afternoon-class-2408/README.md)** — the full
+  taught syllabus: building tables and constraints, aggregate functions,
+  joins, subqueries, `CASE WHEN`/pivots (worksheets 01–10)
+- **[`morning-class-2508/`](morning-class-2508/README.md)** — past the
+  lectures: views and materialization, cross-database queries and run-time
+  objects, ER modelling (worksheets 01–03)
 
 Each folder holds `exercises/` and its matching `solutions/`, numbered in
-teaching order. Within a session, worksheets 01 and 03 are the main lab and
-the even-numbered ones are extra repetitions on the same topic — use them
-when something didn't land, or after class.
+teaching order. In the afternoon set the even-numbered sheets from 04 on are
+extra repetitions on the topic before them — use them when something didn't
+land, or after class.
 
 Every file has the task prompts as SQL comments with blank space underneath
 for you to write your own query. Open them either from your local git clone,
@@ -416,7 +417,7 @@ Two worksheets need a word of warning, both covered in their class README:
   the Jupyter console — `LOAD DATA LOCAL INFILE` reads files from the
   *client's* filesystem, and the console runs in a container that can't see
   your disk.
-- **`morning-class-2508/exercises/07_er_modelling_challenges.ipynb`** is a
+- **`morning-class-2508/exercises/03_er_modelling_challenges.ipynb`** is a
   Jupyter notebook, not a `.sql` file, because its ER diagrams are written in
   [Mermaid](https://mermaid.js.org/) and JupyterLab renders them as actual
   pictures. You read the problem, draw your answer by editing a Markdown
