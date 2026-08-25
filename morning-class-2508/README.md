@@ -13,20 +13,26 @@ numbering.
 
 | # | Worksheet | Covers |
 |---|---|---|
-| 01 | `01_views_and_materialization.sql` | views, updatable views, `WITH CHECK OPTION`, and the materialized-view trap |
-| 02 | `02_cross_database_and_runtime_objects.sql` | cross-database queries, DB links / FEDERATED, CTEs (`WITH`), recursive CTEs, `EXISTS` |
+| 01 | `01_views_and_materialization.ipynb` | views, updatable views, `WITH CHECK OPTION`, and the materialized-view trap |
+| 02 | `02_cross_database_and_runtime_objects.ipynb` | cross-database queries, DB links / FEDERATED, CTEs (`WITH`), recursive CTEs, `EXISTS` |
 | 03 | `03_er_modelling_challenges.ipynb` | six ER modelling problems, drawn in Mermaid |
-| 04 | `04_natural_and_primary_keys.sql` | candidate/natural/surrogate/composite keys, and how to choose a primary key |
-| 05 | `05_subquery_reports.sql` | building reports with subqueries in `SELECT`, `FROM`, `WHERE` and `HAVING` |
-| 06 | `06_window_functions.sql` | `OVER (PARTITION BY ...)`, ranking, running totals, `LAG`, frames |
-| 07 | `07_analytical_challenges.sql` | capstone — eight real business questions, combining everything |
+| 04 | `04_natural_and_primary_keys.ipynb` | candidate/natural/surrogate/composite keys, and how to choose a primary key |
+| 05 | `05_subquery_reports.ipynb` | building reports with subqueries in `SELECT`, `FROM`, `WHERE` and `HAVING` |
+| 06 | `06_window_functions.ipynb` | `OVER (PARTITION BY ...)`, ranking, running totals, `LAG`, frames |
+| 07 | `07_analytical_challenges.ipynb` | capstone — eight real business questions, combining everything |
 
 Roughly: 01–03 are about how data is **stored and modelled**, 04–06 about how
 it is **queried and reported**, and 07 puts it together.
 
-## Worksheet 03 is a notebook, not a `.sql` file
+## Every worksheet is a Jupyter notebook
 
-Its ER diagrams are written in [Mermaid](https://mermaid.js.org/), and
+Open one, run the connection cell at the top once, then work down: each
+question is a Markdown cell with an empty `%%sql` cell underneath it for your
+answer. Run a cell with `Shift+Enter` and the result appears immediately below
+it, so you can iterate on a query without leaving the page.
+
+Worksheet 03 additionally has its ER diagrams written in
+[Mermaid](https://mermaid.js.org/), and
 JupyterLab renders them as actual pictures inside the notebook. You read the
 problem, draw your answer by editing a Markdown cell, run it to see the
 diagram, and write the DDL in a `%%sql` cell directly underneath — all in one

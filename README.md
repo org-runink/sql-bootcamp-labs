@@ -494,7 +494,7 @@ either way. Suggested workflow per worksheet:
 
 Two worksheets need a word of warning, both covered in their class README:
 
-- **`afternoon-class-2408/exercises/01_build_database_and_tables.sql`** must
+- **`afternoon-class-2408/exercises/01_build_database_and_tables.ipynb`** must
   run from a mysql client on your **host** machine (Option B or C), not from
   the Jupyter console — `LOAD DATA LOCAL INFILE` reads files from the
   *client's* filesystem, and the console runs in a container that can't see
@@ -573,11 +573,11 @@ podman-compose up -d     # re-creates and re-seeds from scratch
 
 ## Regenerating the seed data
 
-`db-init/01_superstore_products.sql` through `04_superstore_returns.sql`
+`db-init/01_superstore_products.ipynb` through `04_superstore_returns.ipynb`
 are real order data (not synthetic) — see the note under
 [What's in here](#whats-in-here). To reload them from scratch, re-run the
 files in order against the running container: `podman exec -i mysql-lan
-mysql -uroot -p123456 < db-init/00_superstore_schema.sql`, then the
+mysql -uroot -p123456 < db-init/00_superstore_schema.ipynb`, then the
 `01`–`04` files the same way.
 
 `afternoon-class-2408/exercises/data/*.csv` (used only by worksheet 01,
