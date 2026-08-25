@@ -41,7 +41,9 @@ sql-bootcamp-labs/
 ├── docker-compose.yml        # recommended way to run the lab
 ├── db-init/                  # schema + seed SQL, auto-run on first container start
 ├── exercises/                # student worksheets (no answers) + sample CSVs — also mounted into jupyter-sql
+│   └── extra/                # optional extra practice, one file per lecture
 ├── solutions/                # reference solutions (not exposed in the shared Jupyter console — see note below)
+│   └── extra/                # solutions for the extra practice, with expected results
 ├── jupyter-sql/               # shared browser SQL console (JupyterLab + jupysql), pre-wired to mysql-lan
 └── scripts/generate_superstore_data.py   # regenerates the superstore seed data
 ```
@@ -351,6 +353,16 @@ files either way. Suggested workflow per file:
 2. `Part2_Exercise_Joins.sql` — `INNER`/`LEFT`/`RIGHT`/`FULL` joins on `company`.
 3. `Part3_Exercise_CaseWhen_Pivot.sql` — `CASE WHEN` and pivot tables on `superstore`.
 4. `Part3_Exercise_Subqueries.sql` — subqueries on `company` and `superstore`.
+
+### Extra practice
+
+`exercises/extra/` holds optional reinforcement exercises, one file per
+lecture (aggregates, joins & set operators, subqueries, CASE WHEN/pivots),
+all on `superstore`. Solutions are in `solutions/extra/` and quote the actual
+expected results so you can check yourself. See
+[`exercises/extra/README.md`](exercises/extra/README.md) — it also flags two
+places where the slides and MySQL disagree (`FULL OUTER JOIN` doesn't exist;
+`INTERSECT`/`EXCEPT` do work).
 
 ## Troubleshooting
 
