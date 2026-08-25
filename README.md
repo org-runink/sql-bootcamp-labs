@@ -2,15 +2,15 @@
 
 Hands-on SQL labs for the Data Engineering bootcamp: aggregate functions,
 `GROUP BY`/`HAVING`, joins & unions, `CASE WHEN` / pivot tables, and
-subqueries. Everything runs against a local MySQL instance in Docker — no
-manual database setup required.
+subqueries. Everything runs against a local MySQL instance in a container —
+no manual database setup required.
 
-**New to Docker, the terminal, or SQL entirely?** Skip straight to
+**New to containers, the terminal, or SQL entirely?** Skip straight to
 [Step-by-Step Onboarding](#step-by-step-onboarding) — it assumes nothing.
-Already comfortable with Docker? Use the [Quick Start](#quick-start) below.
+Already comfortable with containers? Use the [Quick Start](#quick-start) below.
 
 **Just want to write SQL, no installs?** Once the lab is running
-(`docker compose up -d`), open `http://<instructor-ip>:8888` in any
+(`podman-compose up -d`), open `http://<instructor-ip>:8888` in any
 browser — that's a shared JupyterLab instance with the database connection
 and the `exercises/` folder already there. See
 [Option A in Step 5](#step-5--connect-and-run-your-first-query).
@@ -20,6 +20,40 @@ org-runink platform's own sovereign coding agent (`core` CLI, see
 `~/Documents/core`) — via the `runink-core-agents` GitHub App, rather than
 by ad hoc AI-assistant edits. It always lands changes as a draft PR on a
 `core-session/*` branch for human review, never a direct push to `main`.
+
+## Why Podman and not Docker
+
+This lab runs on [Podman](https://podman.io/), not Docker. Two reasons, and
+it's worth being precise about the first one because the internet is sloppy
+about it:
+
+**1. Licensing.** Docker *Engine* — the Linux daemon and CLI — is Apache-2.0
+and free for anyone. The cost is in **Docker Desktop**, which is how you get
+Docker at all on macOS and Windows: it requires a paid per-seat subscription
+for professional use inside organisations above Docker's size threshold
+(currently >250 employees or >$10M annual revenue). Students on macOS or
+Windows therefore can't be told "just install Docker" without pointing them
+at a product many of their future employers must pay for. Podman is
+Apache-2.0 all the way through, on every OS, with no subscription tier and no
+size threshold — so the tool you learn here is the tool you can actually use
+at work.
+
+**2. Rootless by default.** Podman runs containers as your own unprivileged
+user with no background daemon. Docker's daemon runs as root, and putting
+your user in the `docker` group is effectively granting passwordless root —
+a detail worth knowing early if you're heading into data engineering.
+
+Practically, nothing you type changes much: Podman implements the same
+Compose file format and the same CLI verbs. `podman` is a drop-in for
+`docker` in almost every command in this guide, and the file is still called
+`docker-compose.yml` because that's the filename `podman-compose` looks for
+by default — the format is an open spec, the name is just history.
+
+The two places rootless genuinely differs are called out in
+`docker-compose.yml` with comments: images must be **fully qualified**
+(`docker.io/library/mysql:latest`, not `mysql:latest`), and the
+`exercises/` bind mount needs `userns_mode: keep-id` so Jupyter can save your
+work. Both are already configured for you.
 
 ## What's in here
 
@@ -38,7 +72,7 @@ products — `LineID` (`AUTO_INCREMENT`) is the actual primary key.
 ```
 sql-bootcamp-labs/
 ├── README.md
-├── docker-compose.yml        # recommended way to run the lab
+├── docker-compose.yml        # recommended way to run the lab (via podman-compose)
 ├── db-init/                  # schema + seed SQL, auto-run on first container start
 ├── exercises/                # student worksheets (no answers) + sample CSVs — also mounted into jupyter-sql
 │   └── extra/                # optional extra practice, one file per lecture
@@ -57,18 +91,18 @@ joins produce visibly different, meaningful results.
 
 ## Quick Start
 
-For students already comfortable with git/Docker:
+For students already comfortable with git and containers:
 
 ```bash
-git clone https://github.com/paesdan/sql-bootcamp-labs.git
+git clone https://github.com/org-runink/sql-bootcamp-labs.git
 cd sql-bootcamp-labs
-docker compose up -d
+podman-compose up -d
 ```
 Then either open `http://localhost:8888` in a browser for the shared
 Jupyter SQL console (no login, `exercises/` is already there — see
 [Option A](#step-5--connect-and-run-your-first-query)), or:
 ```bash
-docker exec -it mysql-lan mysql -uroot -p123456
+podman exec -it mysql-lan mysql -uroot -p123456
 ```
 Then jump to [Doing the exercises](#doing-the-exercises).
 
@@ -87,14 +121,20 @@ A quick glossary, since the rest of this guide uses these words a lot:
 - **Terminal** — a text-based window where you type commands instead of
   clicking. macOS: `Terminal.app` or `iTerm2`. Windows: `Git Bash` (installed
   with Git) or `WSL`. Linux: whatever terminal your desktop ships with.
-- **Docker** — a tool that runs pre-packaged applications ("containers")
+- **Podman** — a tool that runs pre-packaged applications ("containers")
   without you having to install and configure them yourself. We use it to
-  run MySQL so nobody has to install MySQL by hand.
+  run MySQL so nobody has to install MySQL by hand. It is the open-source,
+  daemonless equivalent of Docker — see
+  [Why Podman and not Docker](#why-podman-and-not-docker).
 - **Container** — a running instance of an application (here: our MySQL
   server), isolated from the rest of your machine.
 - **Image** — the packaged blueprint a container is started from (here:
-  `mysql:latest`, downloaded from Docker Hub the first time you run it).
-- **`docker compose`** — a tool for describing "start this container with
+  `docker.io/library/mysql:latest`, downloaded from Docker Hub the first time
+  you run it — Docker Hub is a public image registry, and Podman pulls from
+  it just fine).
+- **Rootless** — Podman runs your containers as *your* user, not as root.
+  Nothing here needs `sudo` except installing Podman itself.
+- **`podman-compose`** — a tool for describing "start these containers with
   these settings" in a file (`docker-compose.yml`) instead of one long
   command.
 - **Client** — a program you use to talk to the database and run SQL
@@ -124,7 +164,7 @@ If that prints a version number, skip to Step 2. Otherwise:
 
 "Cloning" downloads a copy of this repository to your computer.
 ```bash
-git clone https://github.com/paesdan/sql-bootcamp-labs.git
+git clone https://github.com/org-runink/sql-bootcamp-labs.git
 cd sql-bootcamp-labs
 ```
 
@@ -135,86 +175,88 @@ cd sql-bootcamp-labs
 GitHub repo page → "Download ZIP" → unzip it → open a terminal inside
 the unzipped folder. Everything below works the same either way.
 
-### Step 3 — Install Docker
+### Step 3 — Install Podman
 
-You need Docker installed and running. Pick your OS:
+You need `podman` and `podman-compose`. Pick your OS:
 
 **macOS**
 ```bash
-brew install --cask docker
-open -a Docker   # first launch finishes setup; wait for the whale icon in the menu bar
+brew install podman podman-compose
+podman machine init          # one-time: creates the small Linux VM Podman runs containers in
+podman machine start
 ```
-Or download Docker Desktop directly from
-https://www.docker.com/products/docker-desktop/ and drag it into
-Applications like any other app. Open it and wait for the whale icon in
-the menu bar to stop animating — that means it's ready.
+(Containers are a Linux technology, so macOS needs a lightweight VM. Podman
+manages it for you; you only ever run `podman machine start` again after a
+reboot.)
 
 **Windows**
-Download and install Docker Desktop from
-https://www.docker.com/products/docker-desktop/ (it will offer to set up
-WSL2 for you — accept that). Launch Docker Desktop from the Start menu
-and wait until it says "Docker Desktop is running" in the bottom left.
+Install [Podman Desktop](https://podman-desktop.io/) (free, open source, no
+subscription) — it will offer to set up WSL2 for you, which you should
+accept. Then open it and click "Initialize and start" on the Podman machine.
+`podman-compose` is bundled. Or from a terminal with `winget`:
+```powershell
+winget install RedHat.Podman-Desktop
+```
 
 **Linux (Debian/Ubuntu)**
 ```bash
-curl -fsSL https://get.docker.com | sh
-sudo usermod -aG docker $USER
+sudo apt install podman podman-compose
 ```
-Then **log all the way out and back in** (or reboot) — Linux only applies
-new group memberships to *new* login sessions, so this step is easy to
-think you've done when you haven't.
 
 **Linux (Arch/CachyOS)**
 ```bash
-sudo pacman -S docker docker-compose
-sudo systemctl enable --now docker
-sudo usermod -aG docker $USER
+sudo pacman -S podman podman-compose
 ```
-Same as above: log out and back in afterward.
+
+No group membership, no daemon to enable, no logging out and back in — that
+whole class of Docker setup problem doesn't exist here.
 
 ✅ **Checkpoint:** run both of these —
 ```bash
-docker --version
-docker run hello-world
+podman --version
+podman run --rm docker.io/library/hello-world
 ```
 The second command should print a paragraph starting with `"Hello from
-Docker!"`. If you instead see `permission denied` or `Cannot connect to
-the Docker daemon`, see [Troubleshooting](#troubleshooting).
+Docker!"` (yes, really — that's the name of the test image, and Podman runs
+it unchanged). If it fails, see [Troubleshooting](#troubleshooting).
 
 ### Step 4 — Start the lab
 
 From inside the `sql-bootcamp-labs` folder:
 ```bash
-docker compose up -d
+podman-compose up -d
 ```
 The first run downloads MySQL (a few hundred MB — can take a couple of
-minutes on a slow connection) and then automatically builds and fills in
-both databases. You'll see a wall of output; that's normal.
+minutes on a slow connection), builds the Jupyter console image, and then
+automatically creates and fills both databases. You'll see a wall of output;
+that's normal.
 
 Check that it's actually up and healthy:
 ```bash
-docker compose ps
+podman ps
 ```
 
 ✅ **Checkpoint:** the `STATUS` column says something like
-`Up X seconds (healthy)`. If it says `(health: starting)`, wait a few
-seconds and run the command again — first-time seeding of 3,000+ rows
-takes a little while.
+`Up X seconds (healthy)` for `mysql-lan`. If it says `(starting)`, wait a few
+seconds and run the command again — first-time seeding of 3,000+ rows takes
+a little while. `sql-console-lan` deliberately waits for MySQL to report
+healthy before it starts, so seeing only one container for the first ~20
+seconds is expected.
 
 Want to watch it happen instead of waiting blind?
 ```bash
-docker compose logs -f mysql
+podman logs -f mysql-lan
 ```
 (Press `Ctrl+C` to stop watching — this does not stop the container.)
 
-*Prefer not to use docker compose?* The equivalent plain `docker run`,
+*Prefer not to use compose at all?* The equivalent plain `podman run`,
 matching the style used in class:
 ```bash
-docker run --name mysql-lan \
+podman run --name mysql-lan \
   -p 0.0.0.0:3306:3306 \
   -e MYSQL_ROOT_PASSWORD=123456 \
   -v "$(pwd)/db-init:/docker-entrypoint-initdb.d" \
-  -d mysql:latest
+  -d docker.io/library/mysql:latest
 ```
 `-p 0.0.0.0:3306:3306` binds MySQL to every network interface on the
 host, not just `localhost` — that's deliberate here: it lets students on
@@ -230,7 +272,7 @@ and treat `123456` as a throwaway lab password, never a real one.
 all):** `docker-compose.yml` runs a small JupyterLab instance
 (`jupyter-sql/`) pre-wired to `mysql-lan`, so you can run queries and do
 the exercises from a browser without installing anything. It comes up
-automatically with `docker compose up -d`.
+automatically with `podman-compose up -d`.
 
 Open `http://localhost:8888` (or the instructor machine's LAN IP, port
 `8888`) — no login required. In the file browser on the left:
@@ -260,7 +302,7 @@ returns `1832`.
 
 **Option B — no extra install, using the container's own client:**
 ```bash
-docker exec -it mysql-lan mysql -uroot -p123456
+podman exec -it mysql-lan mysql -uroot -p123456
 ```
 You should land on a `mysql>` prompt. Try:
 ```sql
@@ -358,64 +400,79 @@ files either way. Suggested workflow per file:
 
 `exercises/extra/` holds optional reinforcement exercises, one file per
 lecture (aggregates, joins & set operators, subqueries, CASE WHEN/pivots),
-all on `superstore`. Solutions are in `solutions/extra/` and quote the actual
-expected results so you can check yourself. See
-[`exercises/extra/README.md`](exercises/extra/README.md) — it also flags two
+plus three that go beyond the lectures (views and what "materialized" really
+means here, cross-database queries and runtime objects, and ER modelling).
+Solutions are in `solutions/extra/` and quote the actual expected results so
+you can check yourself. See
+[`exercises/extra/README.md`](exercises/extra/README.md) — it also flags the
 places where the slides and MySQL disagree (`FULL OUTER JOIN` doesn't exist;
-`INTERSECT`/`EXCEPT` do work).
+`INTERSECT`/`EXCEPT` do work; materialized views silently aren't).
+
+**Extra 07 is a Jupyter notebook**, not a `.sql` file, because its ER
+diagrams are written in [Mermaid](https://mermaid.js.org/) and JupyterLab
+renders them as actual pictures inside the notebook. You read the problem,
+draw your answer by editing a Markdown cell, run it to see the diagram, and
+write the DDL in a `%%sql` cell directly underneath — all in one place.
+Open it from the `exercises/extra/` folder in the Jupyter console (Option A
+in Step 5).
 
 ## Troubleshooting
 
-**`permission denied while trying to connect to the Docker daemon socket`**
-Your user was added to the `docker` group, but the *current* terminal
-session predates that change — Linux only picks up new group memberships
-on new logins. Close and reopen your terminal (or fully log out and back
-in). If you're in a rush and don't want to restart your session, prefix
-commands with `sg docker -c "..."`, e.g. `sg docker -c "docker compose up -d"`.
+**`short-name "mysql:latest" did not resolve to an alias`**
+Rootless Podman ships no default registry list, so it refuses to guess which
+registry a bare image name means. Use the fully qualified name —
+`docker.io/library/mysql:latest`. The compose file in this repo already
+does; you'll only hit this if you type your own `podman run` or `podman pull`
+with a short name.
 
-**`Cannot connect to the Docker daemon. Is the docker daemon running?`**
-Docker Desktop (macOS/Windows) isn't open yet — launch it and wait for
-the whale icon to settle. On Linux, the background service isn't running:
-`sudo systemctl enable --now docker`.
+**Jupyter says `Permission denied` when saving a notebook under `exercises/`**
+Rootless Podman maps your host user to a different UID inside the container,
+so a bind-mounted folder is read-only to the container user by default. The
+`userns_mode: "keep-id:uid=1000,gid=100"` line on the `sql-console` service
+fixes this by mapping your user onto `jovyan`. If you removed that line, put
+it back and run `podman-compose up -d --force-recreate sql-console`.
+
+**`Cannot connect to Podman` / `podman machine` errors on macOS or Windows**
+The Linux VM that Podman runs containers in isn't started. Run
+`podman machine start` (macOS/CLI) or open Podman Desktop and start the
+machine there. It does not auto-start after a reboot.
 
 **Image pull fails with `network is unreachable` mentioning an IPv6 address**
-Some networks/VPNs advertise IPv6 without actually routing it. Docker
-tried IPv6 first and failed — just retry `docker compose up -d`; it falls
-back to IPv4 automatically, and layers already downloaded are cached.
+Some networks/VPNs advertise IPv6 without actually routing it. The pull tried
+IPv6 first and failed — just retry `podman-compose up -d`; it falls back to
+IPv4 automatically, and layers already downloaded are cached.
 
 **`port is already allocated` / `address already in use` for port 3306**
-Something else on your machine (a previous MySQL install, another lab
-container) is already using port 3306. Either stop that service, or
-change the host port in `docker-compose.yml` — under `ports:`, change
-`"3306:3306"` to e.g. `"3307:3306"` and connect on port 3307 instead.
+Something else on your machine (a previous MySQL install, a leftover Docker
+container from before this lab moved to Podman) is already using port 3306.
+Either stop that service, or change the host port in `docker-compose.yml` —
+under `ports:`, change `"0.0.0.0:3306:3306"` to e.g. `"0.0.0.0:3307:3306"`
+and connect on port 3307 instead.
 
-**Row counts don't match after `docker compose up -d`**
+**Ports below 1024 refuse to bind**
+Rootless containers can't bind privileged ports without extra configuration.
+Nothing in this lab needs one (3306 and 8888 are both fine) — but it's the
+one real functional difference you'll notice versus rootful Docker.
+
+**Row counts don't match after `podman-compose up -d`**
 The seed scripts only run the *first* time a container's data volume is
 created — if you previously started a container (even one that failed
 partway), the volume may already exist with partial data. Wipe it and
 start clean:
 ```bash
-docker compose down -v
-docker compose up -d
+podman-compose down -v
+podman-compose up -d
 ```
 
-**Windows: `docker-entrypoint-initdb.d` mount doesn't seem to run anything**
-Make sure Docker Desktop's WSL2 integration is enabled for the distro
-you're running commands from (Docker Desktop → Settings → Resources →
-WSL Integration), and that you're running `docker compose up -d` from
-inside that WSL distro's filesystem, not a path under `/mnt/c/...` shared
-from Windows — the latter can have file-permission quirks with bind
-mounts.
-
-**Still stuck?** Run `docker compose logs mysql` and read the last ~30
+**Still stuck?** Run `podman logs mysql-lan` and read the last ~30
 lines — MySQL prints a clear error near the bottom when something in
 `db-init/` fails to apply. Share that output with your instructor.
 
 ## Resetting the lab
 
 ```bash
-docker compose down -v   # drops the container AND its data volume
-docker compose up -d     # re-creates and re-seeds from scratch
+podman-compose down -v   # drops the containers AND their data volumes
+podman-compose up -d     # re-creates and re-seeds from scratch
 ```
 
 ## Regenerating the seed data
@@ -423,7 +480,7 @@ docker compose up -d     # re-creates and re-seeds from scratch
 `db-init/01_superstore_products.sql` through `04_superstore_returns.sql`
 are real order data (not synthetic) — see the note under
 [What's in here](#whats-in-here). To reload them from scratch, re-run the
-files in order against the running container: `docker exec -i mysql-lan
+files in order against the running container: `podman exec -i mysql-lan
 mysql -uroot -p123456 < db-init/00_superstore_schema.sql`, then the
 `01`–`04` files the same way.
 
@@ -435,4 +492,4 @@ seed, so output is reproducible). Edit constants at the top of the script
 ```bash
 python3 scripts/generate_superstore_data.py
 ```
-Then re-run `docker compose down -v && docker compose up -d` to reseed.
+Then re-run `podman-compose down -v && podman-compose up -d` to reseed.

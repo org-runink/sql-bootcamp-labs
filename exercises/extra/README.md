@@ -13,10 +13,16 @@ click, or after class to consolidate.
 | `Extra04_CaseWhen_Pivot.sql` | L09 | `CASE WHEN`, conditional aggregation, pivot tables |
 | `Extra05_Views_and_Materialization.sql` | beyond the lectures | views, updatable views, `WITH CHECK OPTION`, and what "materialized" really means here |
 | `Extra06_CrossDatabase_and_Runtime_Objects.sql` | beyond the lectures | cross-database queries, DB links / FEDERATED, CTEs (`WITH`), recursive CTEs, `EXISTS` |
-| `Extra07_ER_Modelling_Challenges.md` | beyond the lectures | six ER modelling problems, drawn in Mermaid — M:N, hierarchies, subtypes, history, and an audit of our own schema |
+| `Extra07_ER_Modelling_Challenges.ipynb` | beyond the lectures | six ER modelling problems, drawn in Mermaid — M:N, hierarchies, subtypes, history, and an audit of our own schema |
 
 Everything runs against the `superstore` database (05–06 also use `company`),
-already seeded — no setup beyond `docker compose up -d`.
+already seeded — no setup beyond `podman-compose up -d`.
+
+**Extra 07 is a notebook, not a `.sql` file.** Open it in the Jupyter console
+and run it top to bottom: the Mermaid ER diagrams render as actual pictures in
+the Markdown cells, and you draw your own answers by editing those cells — no
+external drawing tool, no leaving the notebook. Double-click any diagram to see
+the source that produced it.
 
 **Extras 05–07 CREATE things.** Everyone shares one MySQL server, so those
 files ask you to work in your own scratch database

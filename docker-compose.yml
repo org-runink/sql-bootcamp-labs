@@ -1,6 +1,18 @@
+# Runs under rootless Podman:  podman-compose up -d
+#
+# The filename stays `docker-compose.yml` because that is the name
+# podman-compose looks for by default. The Compose *file format* is an open
+# spec that Podman implements — the name is history, not a dependency.
+#
+# Two lines below are Podman-specific; see the comments on each.
+
 services:
   mysql:
-    image: mysql:latest
+    # Fully qualified on purpose. Rootless Podman ships no default registry
+    # list, so a short name like `mysql:latest` fails with
+    # "short-name did not resolve to an alias" instead of silently guessing
+    # which registry you meant.
+    image: docker.io/library/mysql:latest
     container_name: mysql-lan
     restart: unless-stopped
     environment:
@@ -21,6 +33,13 @@ services:
     container_name: sql-console-lan
     restart: unless-stopped
     command: start-notebook.py --ServerApp.token='' --ServerApp.password=''
+    # Rootless Podman maps your host user to a *different* UID inside the
+    # container, so the ./exercises bind mount below would be read-only to
+    # Jupyter and saving a notebook would fail with "Permission denied".
+    # keep-id maps your host user onto jovyan (uid 1000, gid 100 = `users`),
+    # which is who the JupyterLab image runs as, restoring write access.
+    # Running under Docker instead? Delete this one line.
+    userns_mode: "keep-id:uid=1000,gid=100"
     ports:
       - "0.0.0.0:8888:8888"
     volumes:
