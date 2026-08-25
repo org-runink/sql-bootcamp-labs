@@ -11,9 +11,17 @@ click, or after class to consolidate.
 | `Extra02_Joins_and_Unions.sql` | L07 | inner/left/right joins, anti-joins, self joins, `UNION`/`UNION ALL`, `INTERSECT`, `EXCEPT` |
 | `Extra03_Subqueries.sql` | L08 | scalar subqueries, `IN`/`NOT IN`/`EXISTS`, derived tables |
 | `Extra04_CaseWhen_Pivot.sql` | L09 | `CASE WHEN`, conditional aggregation, pivot tables |
+| `Extra05_Views_and_Materialization.sql` | beyond the lectures | views, updatable views, `WITH CHECK OPTION`, and what "materialized" really means here |
+| `Extra06_CrossDatabase_and_Runtime_Objects.sql` | beyond the lectures | cross-database queries, DB links / FEDERATED, CTEs (`WITH`), recursive CTEs, `EXISTS` |
+| `Extra07_ER_Modelling_Challenges.md` | beyond the lectures | six ER modelling problems, drawn in Mermaid — M:N, hierarchies, subtypes, history, and an audit of our own schema |
 
-Everything runs against the `superstore` database, which is already seeded —
-no setup beyond `docker compose up -d`.
+Everything runs against the `superstore` database (05–06 also use `company`),
+already seeded — no setup beyond `docker compose up -d`.
+
+**Extras 05–07 CREATE things.** Everyone shares one MySQL server, so those
+files ask you to work in your own scratch database
+(`CREATE DATABASE practice_yourname;`) and drop it when you're done. Never
+create or drop anything inside `superstore` or `company`.
 
 ## How to use them
 
@@ -47,3 +55,10 @@ Worth knowing before you hit it:
 - **`INTERSECT` and `EXCEPT` do work** on the version this lab runs. Don't
   assume from older MySQL documentation that they're unavailable — Extra 02
   Q9 and Q10 use them.
+- **There are no materialized views**, and this is the nasty one:
+  `CREATE MATERIALIZED VIEW` does **not** fail. It quietly creates an
+  ordinary view, so you get live re-execution while believing you have a
+  precomputed snapshot. Extra 05 Q4 makes you prove it.
+- **No cross-*server* links.** Querying `superstore` and `company` together
+  works because they share one server; the FEDERATED engine (MySQL's answer
+  to an Oracle DBLINK) is disabled here. Extra 06 A4 has you check.
