@@ -30,25 +30,7 @@ question is a Markdown cell with an empty `%%sql` cell underneath it for your
 answer. Run a cell with `Shift+Enter` and the result appears immediately below
 it, so you can iterate on a query without leaving the page.
 
-## Two worksheets need setup
-
-**01 is the exception to the notebook rule.** Its `LOAD DATA LOCAL INFILE`
-steps read files from the *client's* filesystem, and the Jupyter console runs
-inside a container that cannot see your disk — so those specific statements
-will fail there. Read the notebook for the exercise, but run the loading
-statements from a `mysql` client on your **host** machine, pointed at the CSVs
-in `exercises/data/`:
-
-```bash
-mysql --local-infile=1 -h 127.0.0.1 -P 3306 -u root -p
-```
-
-Everything else in that worksheet (CREATE DATABASE, CREATE TABLE, the
-verification queries) runs fine in the notebook.
-
-```bash
-mysql --local-infile=1 -h 127.0.0.1 -P 3306 -u root -p
-```
+## Worksheet 02 needs a scratch database
 
 **02** creates tables. Everyone shares one MySQL server, so it asks you to
 work in your own scratch database and drop it at the end:
@@ -60,7 +42,12 @@ USE practice_yourname;
 
 Never create or drop anything inside `superstore` or `company`.
 
-Every other worksheet is read-only and runs fine in the Jupyter console.
+**01** also creates a database (`superstore_practice`) and loads the CSVs in
+`exercises/data/` into it, then drops it at the end. It runs entirely in the
+notebook — the lab enables `LOAD DATA LOCAL INFILE` on both the server and the
+connection so you can practise the real loading workflow from the browser.
+
+Every other worksheet is read-only.
 
 ## Two things that trip people up
 

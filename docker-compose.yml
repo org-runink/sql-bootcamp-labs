@@ -22,6 +22,11 @@ services:
     image: docker.io/library/mysql:latest
     container_name: mysql-lan
     restart: unless-stopped
+    # local_infile is OFF by default in MySQL 8+. Worksheet 01 teaches
+    # LOAD DATA LOCAL INFILE, so the server has to allow it or that whole
+    # exercise is unrunnable. The client must opt in too — the notebooks
+    # connect with ?local_infile=1.
+    command: --local-infile=1
     environment:
       MYSQL_ROOT_PASSWORD: "123456"
     ports:
