@@ -44,7 +44,11 @@ services:
       - "0.0.0.0:8888:8888"
     volumes:
       - sql-console-work:/home/jovyan/work
-      - ./exercises:/home/jovyan/work/exercises
+      # Mount each class's exercises/ ONLY -- never the class folder itself.
+      # solutions/ lives beside exercises/ inside each class folder, so
+      # mounting the parent would hand students the answers in the browser.
+      - ./afternoon-class-2408/exercises:/home/jovyan/work/afternoon-class-2408
+      - ./morning-class-2508/exercises:/home/jovyan/work/morning-class-2508
     depends_on:
       mysql:
         condition: service_healthy

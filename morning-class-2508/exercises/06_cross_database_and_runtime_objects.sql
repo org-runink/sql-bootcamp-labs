@@ -10,7 +10,7 @@
 -- This lab has TWO databases on one server — `superstore` and `company` —
 -- which is exactly what Part A needs.
 --
--- SHARED SERVER: as in Extra 05, create your own scratch database for
+-- SHARED SERVER: as in worksheet 05 (views), create your own scratch database for
 -- anything you CREATE:
 --     CREATE DATABASE IF NOT EXISTS practice_yourname;
 --     USE practice_yourname;
@@ -73,7 +73,7 @@
 
 -- B3. A CTE used twice. Compute each product's total revenue once, then use
 --     it BOTH as the row source AND as the benchmark (its average), listing
---     products above average. Compare with Extra 03 Q7, where the same
+--     products above average. Compare with worksheet 02 (subqueries) Q7, where the same
 --     subquery had to be written out twice.
 
 
@@ -99,7 +99,7 @@
 
 
 -- B7. NOT EXISTS. List the customers who have never placed an order. Compare
---     your row count with the LEFT JOIN … IS NULL answer from Extra 02 Q3 —
+--     your row count with the LEFT JOIN … IS NULL answer from worksheet 04 of the afternoon class (joins & unions) Q3 —
 --     they must agree.
 
 

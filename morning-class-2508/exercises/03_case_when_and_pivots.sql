@@ -1,5 +1,5 @@
 -- ==========================================================================
--- Part 3 Exercise: CASE WHEN and Pivot Tables (superstore-data)
+-- Morning class 25/08 — Worksheet 03: CASE WHEN and Pivot Tables (superstore-data)
 -- ==========================================================================
 -- Uses the `superstore` database (customers, products, orders, returns),
 -- already seeded by db-init/.

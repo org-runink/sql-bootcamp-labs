@@ -1,5 +1,5 @@
 -- ==========================================================================
--- Part 2 Exercise: Joins (company-data)
+-- Afternoon class 24/08 — Worksheet 03: Joins (company-data)
 -- ==========================================================================
 -- Uses the `company` database (employee, hire, hobby, review), already
 -- seeded by db-init/. Expected row counts, so you can sanity-check your
