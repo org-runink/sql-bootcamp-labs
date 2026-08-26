@@ -129,9 +129,11 @@ sql-bootcamp-labs/
 │   └── solutions/            #   01–07
 ├── afternoon-class-2608/     # Python, not SQL: lists, tuples, sets, dicts, built-ins, capstone
 │   ├── README.md             #   needs no database — pure standard library
-│   ├── exercises/            #   01–13 (even numbers are extra practice)
+│   ├── exercises/            #   01–07
+│   │   ├── more-practice/    #     a second sheet per topic, same numbering
 │   │   └── wcd-originals/    #     the course's own demo + exercise notebooks, unmodified
-│   └── solutions/            #   01–13, with the actual expected output
+│   └── solutions/            #   01–07, with the actual expected output
+│       ├── more-practice/
 │       └── wcd-originals/    #     their matching answer notebooks, kept out of the console
 ├── jupyter-sql/               # shared browser SQL console (JupyterLab + jupysql), pre-wired to mysql-lan
 └── scripts/generate_superstore_data.py   # regenerates the superstore seed data
@@ -484,8 +486,8 @@ Go to your class's folder and start from its `README.md`:
   capstone (worksheets 01–07)
 - **[`afternoon-class-2608/`](afternoon-class-2608/README.md)** — **Python,
   not SQL**: lists, tuples, sets, dictionaries, the built-in functions, and a
-  combined capstone, plus strings/conditionals/loops (worksheets 01–13,
-  where each even-numbered sheet is extra practice on the one before it).
+  combined capstone, plus strings/conditionals/loops (worksheets 01–07, with
+  a second practice sheet per topic in `more-practice/`).
   Needs no database and no `%%sql` —
   pure standard library, so it runs in any Python 3 as well as in the shared
   console.
