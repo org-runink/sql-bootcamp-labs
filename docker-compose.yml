@@ -56,14 +56,19 @@ services:
       - "0.0.0.0:8888:8888"
     volumes:
       - sql-console-work:/home/jovyan/work
-      # Mount each class's exercises/ ONLY -- never the class folder itself.
-      # solutions/ lives beside exercises/ inside each class folder, so
-      # mounting the parent would hand students the answers in the browser.
+      # Mount each class's exercises/ -- never the class folder itself, which
+      # would duplicate the solutions under a second path.
       - ./afternoon-class-2408/exercises:/home/jovyan/work/afternoon-class-2408
       - ./morning-class-2508/exercises:/home/jovyan/work/morning-class-2508
       # 26/08 is Python, not SQL -- it needs no database, but it lives in the
       # same console so students open it the same way as every other sheet.
       - ./afternoon-class-2608/exercises:/home/jovyan/work/afternoon-class-2608
+      # ANSWERS ARE PUBLISHED TO EVERYONE. This console is shared across the
+      # classroom LAN, so mounting solutions/ here means every student can read
+      # every answer to every session -- including exercises they have not
+      # attempted yet. That is a deliberate choice by the instructor, not an
+      # oversight. Delete this one line to go back to answers-in-git-only.
+      - ./solutions:/home/jovyan/work/SOLUTIONS
     depends_on:
       mysql:
         condition: service_healthy
