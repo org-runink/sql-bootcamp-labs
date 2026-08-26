@@ -134,7 +134,7 @@ sql-bootcamp-labs/
 │   │   └── wcd-originals/    #     the course's own demo + exercise notebooks, unmodified
 │   └── solutions/            #   01–07, with the actual expected output
 │       ├── more-practice/
-│       └── wcd-originals/    #     their matching answer notebooks, kept out of the console
+│       └── wcd-originals/    #     their matching answer notebooks
 ├── solutions/                # ALL answers for all three sessions, in one place (generated)
 ├── jupyter-sql/               # shared browser SQL console (JupyterLab + jupysql), pre-wired to mysql-lan
 └── scripts/
@@ -148,9 +148,15 @@ one place. The class folders remain the source of truth — edit there, then
 run `python3 scripts/collect_solutions.py`. It is not mounted into the
 Jupyter console, so it does not expose answers to students.
 
-Each class folder is self-contained — start from its own `README.md`. The
-Jupyter console mounts only the `exercises/` folders, never `solutions/`, so
-answers don't appear in the shared browser console.
+Each class folder is self-contained — start from its own `README.md`.
+
+**The answers are published in the console.** The top-level `solutions/`
+folder is mounted into the shared JupyterLab as `SOLUTIONS/`, so anyone who
+opens `:8888` can read every answer to every session. That is deliberate —
+it makes teaching from one place easy — but it does mean students can look
+ahead at exercises they have not attempted. To make the console
+answers-free again, delete the `./solutions` line from `docker-compose.yml`
+and re-create the console.
 
 The `superstore` schema and its entity relationships (`customers` →
 `orders` ← `products`, `orders` → `returns`) follow the ERD from the
