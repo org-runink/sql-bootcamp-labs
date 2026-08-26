@@ -135,9 +135,18 @@ sql-bootcamp-labs/
 │   └── solutions/            #   01–07, with the actual expected output
 │       ├── more-practice/
 │       └── wcd-originals/    #     their matching answer notebooks, kept out of the console
+├── solutions/                # ALL answers for all three sessions, in one place (generated)
 ├── jupyter-sql/               # shared browser SQL console (JupyterLab + jupysql), pre-wired to mysql-lan
-└── scripts/generate_superstore_data.py   # regenerates the superstore seed data
+└── scripts/
+    ├── generate_superstore_data.py   # regenerates the superstore seed data
+    └── collect_solutions.py          # rebuilds the top-level solutions/ mirror
 ```
+
+The top-level `solutions/` is a **generated mirror** of each class folder's
+own `solutions/`, there so every answer for every session can be opened from
+one place. The class folders remain the source of truth — edit there, then
+run `python3 scripts/collect_solutions.py`. It is not mounted into the
+Jupyter console, so it does not expose answers to students.
 
 Each class folder is self-contained — start from its own `README.md`. The
 Jupyter console mounts only the `exercises/` folders, never `solutions/`, so
