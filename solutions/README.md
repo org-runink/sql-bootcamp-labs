@@ -7,9 +7,9 @@ have to hop between class folders while teaching.
 |---|---|---|
 | [`afternoon-class-2408/`](afternoon-class-2408) | 10 | SQL: DDL, aggregates, joins, subqueries, `CASE WHEN` |
 | [`morning-class-2508/`](morning-class-2508) | 7 | SQL: views, cross-database, modelling, keys, windows, capstone |
-| [`afternoon-class-2608/`](afternoon-class-2608) | 18 | Python: the four data structures, built-ins, strings/loops, capstone — plus `more-practice/` and the WeCloudData originals |
+| [`afternoon-class-2608/`](afternoon-class-2608) | 19 | Python: the four data structures, built-ins, strings/loops, capstone, data-engineering applications — plus `more-practice/` and the WeCloudData originals |
 
-35 notebooks in total.
+36 notebooks in total.
 
 ## This folder is generated — do not edit it
 

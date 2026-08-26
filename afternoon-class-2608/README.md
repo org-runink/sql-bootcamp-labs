@@ -2,10 +2,10 @@
 
 Python, not SQL. The four core data structures — lists, tuples, sets and
 dictionaries — the built-in functions that work across all of them, the
-language around them (strings, conditionals, loops), and a capstone that puts
-it all together on a realistic dataset.
+language around them (strings, conditionals, loops), a capstone, and a
+data-engineering sheet that puts the structures to work on a dirty feed.
 
-Seven worksheets, plus a second practice sheet for each of the six topics in
+Eight worksheets, plus a second practice sheet for each of the six topics in
 `more-practice/`.
 
 Work through `exercises/` in order. Answers are in `solutions/`, same
@@ -20,6 +20,7 @@ numbering.
 | 05 | `05_builtin_functions.ipynb` | `len`/`type`/`max`/`min`/`sum`, conversions, `sorted`, `range`/`zip`/`enumerate`, `map`/`filter` | Demo 5 |
 | 06 | `06_strings_conditionals_loops.ipynb` | arithmetic, `str.split`/`replace`, `if`/`elif`/`else`, `for`/`while`/`range`, Hangman | — |
 | 07 | `07_combined_challenges.ipynb` | capstone — eight business questions over one list-of-tuples dataset | all |
+| 08 | `08_data_engineering_applications.ipynb` | the structures at work: `array` vs list, dedup, schema validation, joins, anti-joins, grouping, data quality | — |
 
 ## Extra practice
 
@@ -42,8 +43,17 @@ Use them when a topic didn't land, or after class. Answers are in
 it already draws on everything.
 
 Roughly: 01–04 are the four structures one at a time, 05 is the toolkit that
-works on all of them, 06 is the language around them, and 07 puts everything
-together.
+works on all of them, 06 is the language around them, 07 puts everything
+together, and 08 asks what any of it is *for*.
+
+**Worksheet 08 is the data-engineering one.** It works on a deliberately
+dirty feed — a duplicate record, a record missing a field, a user ID absent
+from the lookup table, null amounts — and walks the pipeline: deduplicate,
+validate the schema, coerce types, join to a dimension, find the orphans,
+aggregate, then report data quality. It also introduces `array.array` as the
+typed, compact counterpart to a list, and explains where numpy and pandas
+take over in real work. Neither is installed here; nothing on this sheet
+needs them.
 
 Worksheet 06 has no slide reference because it is not from the L04 deck: it
 covers the same ground as the course's `Python Exercises 1`, described below.
@@ -109,21 +119,25 @@ and the standard library** — exactly the scope of the lecture. If the lab is
 running you can open them at `http://<instructor-ip>:8888` like any other
 worksheet, but you can equally run them in any Python 3 you already have.
 
-Nothing on this sheet imports anything. If you find yourself reaching for
-`pandas`, `collections` or `numpy`, that is a sign you have wandered past
-what this session covers — the shared console does not have them installed.
+Only one line in the whole set imports anything: worksheet 08 uses
+`from array import array`, which is standard library. If you find yourself
+reaching for `pandas`, `collections` or `numpy`, that is a sign you have
+wandered past what this session covers — and the shared console does not
+have them installed, so it will fail rather than mislead you.
 
 ## Some cells are supposed to fail
 
-Ten questions across the set end in a deliberate error, because the
+Eleven questions across the set end in a deliberate error, because the
 error *is* the lesson: assigning to a tuple, indexing a set, `remove`-ing
 something that is not there, reading a missing dictionary key, using a list
-as a key, and `int("twelve")` — several of them twice, once on each sheet of a pair.
+as a key, `int("twelve")`, and appending a string to a typed `array` —
+several of them twice, once on each sheet of a pair.
 
 They are flagged in the question text. Read the message, then carry on with
 the next cell. It also means **Restart & Run All will stop** on those seven
 worksheets — that is expected, not a broken notebook. Worksheets 01, 06 and
-07, and extra sheets 01, 05 and 06, run clean from top to bottom.
+07, and extra sheets 01, 05 and 06, run clean from top to bottom. Worksheet
+08 stops once, at Q2.
 
 ## Where the slides and Python disagree
 
@@ -157,7 +171,8 @@ Several questions end with a result that is arithmetically perfect and
 substantively wrong: the inverted dictionary in 04 Q11 that silently loses a
 pair, the `zip` in 05 Q7 that drops a data point without a word, the join in
 07 that mislays 15.8% of the revenue, the two defensible averages in 07 that
-differ by a factor of two.
+differ by a factor of two, and the **three** defensible revenue figures in
+08 that differ by 45%.
 
 That is deliberate, and it is the most useful thing in this session. None of
 those cases raises an error. Getting the code to run is the easy half;

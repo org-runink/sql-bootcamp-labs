@@ -55,8 +55,12 @@ def build(check):
     problems = []
 
     if not check:
-        if os.path.isdir(DEST):
-            shutil.rmtree(DEST)
+        # Clear only the generated per-class trees. Do NOT rmtree(DEST):
+        # solutions/README.md is hand-written and lives here too.
+        for cls in CLASSES:
+            target = os.path.join(DEST, cls)
+            if os.path.isdir(target):
+                shutil.rmtree(target)
 
     for cls, rel in pairs:
         src = os.path.join(REPO, cls, "solutions", rel)
