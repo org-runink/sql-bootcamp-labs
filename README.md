@@ -107,6 +107,10 @@ starts:
 product line item, so `OrderID` repeats when an order has multiple
 products — `LineID` (`AUTO_INCREMENT`) is the actual primary key.
 
+The 26/08 session is **Python rather than SQL** — data structures, not
+queries — so it uses neither database. It still lives here, and still opens in
+the same Jupyter console, so there is one place to find every worksheet.
+
 Worksheets are organised **by class session**, in teaching order within each:
 
 ```
@@ -123,6 +127,14 @@ sql-bootcamp-labs/
 │   ├── README.md
 │   ├── exercises/            #   01–07 (03 is a Jupyter notebook)
 │   └── solutions/            #   01–07
+├── afternoon-class-2608/     # Python, not SQL: lists, tuples, sets, dicts, built-ins, capstone
+│   ├── README.md             #   needs no database — pure standard library
+│   ├── exercises/            #   01–07
+│   │   ├── more-practice/    #     a second sheet per topic, same numbering
+│   │   └── wcd-originals/    #     the course's own demo + exercise notebooks, unmodified
+│   └── solutions/            #   01–07, with the actual expected output
+│       ├── more-practice/
+│       └── wcd-originals/    #     their matching answer notebooks, kept out of the console
 ├── jupyter-sql/               # shared browser SQL console (JupyterLab + jupysql), pre-wired to mysql-lan
 └── scripts/generate_superstore_data.py   # regenerates the superstore seed data
 ```
@@ -472,6 +484,13 @@ Go to your class's folder and start from its `README.md`:
   lectures: views and materialization, cross-database queries, ER modelling,
   key design, subquery reports, window functions, and a combined analytical
   capstone (worksheets 01–07)
+- **[`afternoon-class-2608/`](afternoon-class-2608/README.md)** — **Python,
+  not SQL**: lists, tuples, sets, dictionaries, the built-in functions, and a
+  combined capstone, plus strings/conditionals/loops (worksheets 01–07, with
+  a second practice sheet per topic in `more-practice/`).
+  Needs no database and no `%%sql` —
+  pure standard library, so it runs in any Python 3 as well as in the shared
+  console.
 
 Each folder holds `exercises/` and its matching `solutions/`, numbered in
 teaching order. In the afternoon set the even-numbered sheets from 04 on are
