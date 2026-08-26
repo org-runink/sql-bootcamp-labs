@@ -61,6 +61,9 @@ services:
       # mounting the parent would hand students the answers in the browser.
       - ./afternoon-class-2408/exercises:/home/jovyan/work/afternoon-class-2408
       - ./morning-class-2508/exercises:/home/jovyan/work/morning-class-2508
+      # 26/08 is Python, not SQL -- it needs no database, but it lives in the
+      # same console so students open it the same way as every other sheet.
+      - ./afternoon-class-2608/exercises:/home/jovyan/work/afternoon-class-2608
     depends_on:
       mysql:
         condition: service_healthy
