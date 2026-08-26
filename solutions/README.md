@@ -25,16 +25,20 @@ python3 scripts/collect_solutions.py --check   # verify it matches; exits 1 if n
 Fix an answer in `afternoon-class-2608/solutions/…`, then re-run the script.
 Running `--check` before you commit will catch a mirror that has drifted.
 
-## It is not served to students
+## It IS served to students
 
-`docker-compose.yml` mounts only each class's `exercises/` folder into the
-shared Jupyter console, never a `solutions/` folder — including this one. The
-answers are in the git repo for whoever clones it, but they do not appear in
-the browser console at `:8888`.
+This folder is mounted into the shared JupyterLab as `SOLUTIONS/`, so
+everyone on the classroom LAN who opens `:8888` can read every answer to
+every session — including exercises they have not attempted yet.
 
-That is the same reason the WeCloudData `_Solution` notebooks live under
-`afternoon-class-2608/solutions/wcd-originals/` rather than beside the
-questions they answer.
+That is a deliberate instructor choice, made so the answers are reachable
+from the same place as the worksheets. If you would rather they weren't,
+delete the `./solutions` line from `docker-compose.yml` and run
+`podman-compose up -d --force-recreate sql-console`; the answers then live in
+git only.
+
+Note the per-class `solutions/` folders are still *not* mounted individually —
+this mirror is the single published copy.
 
 ## How to use them
 

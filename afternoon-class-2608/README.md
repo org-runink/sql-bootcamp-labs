@@ -61,10 +61,11 @@ solutions/wcd-originals/     Exercise_Data_Structures_1..4_Solution
 ```
 
 They are **split across `exercises/` and `solutions/`** rather than kept in
-one folder, because only `exercises/` is mounted into the shared Jupyter
-console — putting the `_Solution` files beside the questions would hand
-everyone the answers in the browser. The files themselves are byte-for-byte
-as shipped.
+one folder, so the questions and their answers stay separable. The files
+themselves are byte-for-byte as shipped.
+
+(The answers are reachable in the console anyway, via the top-level
+`SOLUTIONS/` folder — see the root README.)
 
 How they relate to these worksheets:
 
