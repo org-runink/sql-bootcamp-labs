@@ -146,6 +146,8 @@ sql-bootcamp-labs/
 │       ├── data/             #     the same files, so the solution can be re-run in place
 │       ├── more-practice/
 │       └── wcd-originals/    #     their matching answer notebooks
+├── Control_Flow_and_Iteration_Practice/   # the WeCloudData L05 zip, unpacked as shipped
+│                             #   same files also split under morning-class-2708/wcd-originals/
 ├── solutions/                # ALL answers for all four sessions, in one place (generated)
 ├── jupyter-sql/               # shared browser SQL console (JupyterLab + jupysql), pre-wired to mysql-lan
 └── scripts/
