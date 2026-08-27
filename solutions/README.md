@@ -1,6 +1,6 @@
 # All solutions, in one place
 
-Every answer notebook from all three sessions, gathered here so you don't
+Every answer notebook from all four sessions, gathered here so you don't
 have to hop between class folders while teaching.
 
 | Session | Notebooks | Covers |
@@ -8,8 +8,9 @@ have to hop between class folders while teaching.
 | [`afternoon-class-2408/`](afternoon-class-2408) | 10 | SQL: DDL, aggregates, joins, subqueries, `CASE WHEN` |
 | [`morning-class-2508/`](morning-class-2508) | 7 | SQL: views, cross-database, modelling, keys, windows, capstone |
 | [`afternoon-class-2608/`](afternoon-class-2608) | 19 | Python: the four data structures, built-ins, strings/loops, capstone, data-engineering applications — plus `more-practice/` and the WeCloudData originals |
+| [`morning-class-2708/`](morning-class-2708) | 16 | Python: conditionals, `for`, comprehensions, `while`, `break`/`continue`/`pass`, capstone, pipeline patterns — plus `more-practice/` and the WeCloudData originals |
 
-36 notebooks in total.
+52 notebooks in total.
 
 ## This folder is generated — do not edit it
 
@@ -22,7 +23,7 @@ python3 scripts/collect_solutions.py           # rebuild
 python3 scripts/collect_solutions.py --check   # verify it matches; exits 1 if not
 ```
 
-Fix an answer in `afternoon-class-2608/solutions/…`, then re-run the script.
+Fix an answer in `morning-class-2708/solutions/…`, then re-run the script.
 Running `--check` before you commit will catch a mirror that has drifted.
 
 ## It IS served to students
