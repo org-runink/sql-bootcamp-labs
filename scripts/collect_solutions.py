@@ -12,9 +12,9 @@ answers for every session can be opened from one place.
 before committing. Never edit anything under the top-level solutions/ — it is
 overwritten wholesale on every rebuild.
 
-Safety: the top-level solutions/ is deliberately NOT mounted into the Jupyter
-console. docker-compose.yml mounts only each class's exercises/ folder, so
-adding this tree does not expose answers in the shared browser console.
+Note: the top-level solutions/ IS mounted into the Jupyter console as
+SOLUTIONS/, so everything copied here is readable by every student on the
+classroom LAN. That is a deliberate instructor choice -- see solutions/README.md.
 """
 
 import argparse
@@ -30,9 +30,15 @@ CLASSES = [
     "afternoon-class-2408",
     "morning-class-2508",
     "afternoon-class-2608",
+    "morning-class-2708",
 ]
 
 SKIP_DIRS = {".ipynb_checkpoints", "__pycache__"}
+
+# Notebooks, plus the data files a notebook needs beside it. Worksheet 08 of
+# 27/08 reads data/*.csv with a RELATIVE path, so the mirror has to carry
+# those too or the published solution cannot be re-run from the console.
+KEEP_SUFFIXES = (".ipynb", ".csv")
 
 
 def sources():
@@ -44,7 +50,7 @@ def sources():
         for dirpath, dirnames, filenames in os.walk(root):
             dirnames[:] = sorted(d for d in dirnames if d not in SKIP_DIRS)
             for name in sorted(filenames):
-                if not name.endswith(".ipynb"):
+                if not name.endswith(KEEP_SUFFIXES):
                     continue
                 full = os.path.join(dirpath, name)
                 yield cls, os.path.relpath(full, root)
@@ -80,7 +86,7 @@ def build(check):
         for dirpath, dirnames, filenames in os.walk(DEST):
             dirnames[:] = [d for d in dirnames if d not in SKIP_DIRS]
             for name in filenames:
-                if not name.endswith(".ipynb"):
+                if not name.endswith(KEEP_SUFFIXES):
                     continue
                 rel = os.path.relpath(os.path.join(dirpath, name), DEST)
                 if rel not in expected:
@@ -109,7 +115,7 @@ def main():
         sys.exit(1)
 
     verb = "in sync" if args.check else "written"
-    print("solutions/ %s — %d notebooks" % (verb, len(pairs)))
+    print("solutions/ %s — %d files" % (verb, len(pairs)))
     for cls in CLASSES:
         print("  %-22s %d" % (cls, counts.get(cls, 0)))
 
