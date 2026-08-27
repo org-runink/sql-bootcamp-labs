@@ -108,8 +108,8 @@ product line item, so `OrderID` repeats when an order has multiple
 products — `LineID` (`AUTO_INCREMENT`) is the actual primary key.
 
 The 26/08 and 27/08 sessions are **Python rather than SQL** — data structures
-on the first, control flow and iteration on the second — so they use neither
-database. They still live here, and still open in the same Jupyter console, so
+on the first, then control flow, iteration and functions on the second — so
+they use neither database. They still live here, and still open in the same Jupyter console, so
 there is one place to find every worksheet.
 
 Worksheets are organised **by class session**, in teaching order within each:
@@ -136,13 +136,13 @@ sql-bootcamp-labs/
 │   └── solutions/            #   01–08, with the actual expected output
 │       ├── more-practice/
 │       └── wcd-originals/    #     their matching answer notebooks
-├── morning-class-2708/       # Python too: conditionals, for, comprehensions, while, break/continue/pass
+├── morning-class-2708/       # Python, two lectures: control flow (01–08) then functions (09–14)
 │   ├── README.md             #   needs no database, and not one import in the whole set
-│   ├── exercises/            #   01–08
+│   ├── exercises/            #   01–14
 │   │   ├── data/             #     tab-separated superstore extract, read by worksheet 08
 │   │   ├── more-practice/    #     a second sheet per topic, same numbering
 │   │   └── wcd-originals/    #     the course's own control-flow demos + exercises, unmodified
-│   └── solutions/            #   01–08, with the actual expected output
+│   └── solutions/            #   01–14, with the actual expected output
 │       ├── data/             #     the same files, so the solution can be re-run in place
 │       ├── more-practice/
 │       └── wcd-originals/    #     their matching answer notebooks
@@ -517,13 +517,16 @@ Go to your class's folder and start from its `README.md`:
   Needs no database and no `%%sql` —
   pure standard library, so it runs in any Python 3 as well as in the shared
   console.
-- **[`morning-class-2708/`](morning-class-2708/README.md)** — **Python too**:
-  conditionals, `for` loops, comprehensions, `while` loops,
-  `break`/`continue`/`pass`, a clickstream capstone, a sheet of the
-  control-flow patterns a data pipeline is actually made of, and a final sheet
-  that reads the superstore tables straight off disk as tab-separated text
-  (worksheets 01–08). Not one `import` in the whole set — `open()` is a
-  builtin.
+- **[`morning-class-2708/`](morning-class-2708/README.md)** — **Python too**,
+  and **two lectures in one folder**. Worksheets 01–08 are control flow and
+  iteration: conditionals, `for`, comprehensions, `while`,
+  `break`/`continue`/`pass`, a clickstream capstone, the control-flow patterns
+  a data pipeline is made of, and a sheet that reads the superstore tables
+  straight off disk as tab-separated text. Worksheets 09–14 are functions and
+  code reusability: `def` and `return`, arguments and `*args`/`**kwargs`,
+  scope and side effects, `lambda`/`map`/`filter`, recursion, and a capstone
+  that rebuilds the pipeline as a reusable toolkit. Not one `import` in the
+  whole set — `open()` is a builtin.
 
 Each folder holds `exercises/` and its matching `solutions/`, numbered in
 teaching order. The two Python sessions also carry a

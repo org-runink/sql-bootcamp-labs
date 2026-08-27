@@ -8,9 +8,9 @@ have to hop between class folders while teaching.
 | [`afternoon-class-2408/`](afternoon-class-2408) | 10 | SQL: DDL, aggregates, joins, subqueries, `CASE WHEN` |
 | [`morning-class-2508/`](morning-class-2508) | 7 | SQL: views, cross-database, modelling, keys, windows, capstone |
 | [`afternoon-class-2608/`](afternoon-class-2608) | 19 | Python: the four data structures, built-ins, strings/loops, capstone, data-engineering applications — plus `more-practice/` and the WeCloudData originals |
-| [`morning-class-2708/`](morning-class-2708) | 17 | Python: conditionals, `for`, comprehensions, `while`, `break`/`continue`/`pass`, capstone, pipeline patterns, reading real files — plus `more-practice/` and the WeCloudData originals |
+| [`morning-class-2708/`](morning-class-2708) | 28 | Python, two lectures: L05 control flow and iteration (01–08), then L06 functions and code reusability (09–14) — plus `more-practice/` and the WeCloudData originals |
 
-53 notebooks in total, plus the four `.csv` files that
+64 notebooks in total, plus the four `.csv` files that
 `morning-class-2708/08_reading_real_files_solution.ipynb` reads — it uses a
 relative path, so the data has to travel with it.
 
