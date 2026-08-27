@@ -107,9 +107,10 @@ starts:
 product line item, so `OrderID` repeats when an order has multiple
 products — `LineID` (`AUTO_INCREMENT`) is the actual primary key.
 
-The 26/08 session is **Python rather than SQL** — data structures, not
-queries — so it uses neither database. It still lives here, and still opens in
-the same Jupyter console, so there is one place to find every worksheet.
+The 26/08 and 27/08 sessions are **Python rather than SQL** — data structures
+on the first, control flow and iteration on the second — so they use neither
+database. They still live here, and still open in the same Jupyter console, so
+there is one place to find every worksheet.
 
 Worksheets are organised **by class session**, in teaching order within each:
 
@@ -129,13 +130,21 @@ sql-bootcamp-labs/
 │   └── solutions/            #   01–07
 ├── afternoon-class-2608/     # Python, not SQL: lists, tuples, sets, dicts, built-ins, capstone
 │   ├── README.md             #   needs no database — pure standard library
-│   ├── exercises/            #   01–07
+│   ├── exercises/            #   01–08
 │   │   ├── more-practice/    #     a second sheet per topic, same numbering
 │   │   └── wcd-originals/    #     the course's own demo + exercise notebooks, unmodified
+│   └── solutions/            #   01–08, with the actual expected output
+│       ├── more-practice/
+│       └── wcd-originals/    #     their matching answer notebooks
+├── morning-class-2708/       # Python too: conditionals, for, comprehensions, while, break/continue/pass
+│   ├── README.md             #   needs no database, and not one import in the whole set
+│   ├── exercises/            #   01–07
+│   │   ├── more-practice/    #     a second sheet per topic, same numbering
+│   │   └── wcd-originals/    #     the course's own control-flow demos + exercises, unmodified
 │   └── solutions/            #   01–07, with the actual expected output
 │       ├── more-practice/
 │       └── wcd-originals/    #     their matching answer notebooks
-├── solutions/                # ALL answers for all three sessions, in one place (generated)
+├── solutions/                # ALL answers for all four sessions, in one place (generated)
 ├── jupyter-sql/               # shared browser SQL console (JupyterLab + jupysql), pre-wired to mysql-lan
 └── scripts/
     ├── generate_superstore_data.py   # regenerates the superstore seed data
@@ -145,8 +154,8 @@ sql-bootcamp-labs/
 The top-level `solutions/` is a **generated mirror** of each class folder's
 own `solutions/`, there so every answer for every session can be opened from
 one place. The class folders remain the source of truth — edit there, then
-run `python3 scripts/collect_solutions.py`. It is not mounted into the
-Jupyter console, so it does not expose answers to students.
+run `python3 scripts/collect_solutions.py`. Note that it **is** mounted into
+the Jupyter console — see below.
 
 Each class folder is self-contained — start from its own `README.md`.
 
@@ -500,20 +509,27 @@ Go to your class's folder and start from its `README.md`:
   key design, subquery reports, window functions, and a combined analytical
   capstone (worksheets 01–07)
 - **[`afternoon-class-2608/`](afternoon-class-2608/README.md)** — **Python,
-  not SQL**: lists, tuples, sets, dictionaries, the built-in functions, and a
-  combined capstone, plus strings/conditionals/loops (worksheets 01–07, with
-  a second practice sheet per topic in `more-practice/`).
+  not SQL**: lists, tuples, sets, dictionaries, the built-in functions,
+  strings/conditionals/loops, a combined capstone, and a data-engineering
+  sheet that puts the structures to work on a dirty feed (worksheets 01–08).
   Needs no database and no `%%sql` —
   pure standard library, so it runs in any Python 3 as well as in the shared
   console.
+- **[`morning-class-2708/`](morning-class-2708/README.md)** — **Python too**:
+  conditionals, `for` loops, comprehensions, `while` loops,
+  `break`/`continue`/`pass`, a clickstream capstone, and a sheet of the
+  control-flow patterns a data pipeline is actually made of (worksheets
+  01–07). Not one `import` in the whole set.
 
 Each folder holds `exercises/` and its matching `solutions/`, numbered in
-teaching order. In the afternoon set the even-numbered sheets from 04 on are
-extra repetitions on the topic before them — use them when something didn't
-land, or after class.
+teaching order. The two Python sessions also carry a
+`exercises/more-practice/` subfolder holding a second sheet per topic, with
+matching numbering — use those when something didn't land, or after class.
 
-Every file has the task prompts as SQL comments with blank space underneath
-for you to write your own query. Open them either from your local git clone,
+The SQL worksheets have their task prompts as SQL comments with blank space
+underneath for you to write your own query; the Python ones are notebooks with
+a `## Your Code Here` cell under each question. Open them either from your
+local git clone,
 or straight from the Jupyter SQL console (Option A in Step 5) — same files
 either way. Suggested workflow per worksheet:
 

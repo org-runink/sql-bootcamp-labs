@@ -63,6 +63,8 @@ services:
       # 26/08 is Python, not SQL -- it needs no database, but it lives in the
       # same console so students open it the same way as every other sheet.
       - ./afternoon-class-2608/exercises:/home/jovyan/work/afternoon-class-2608
+      # 27/08 is Python too -- control flow and iteration. Also no database.
+      - ./morning-class-2708/exercises:/home/jovyan/work/morning-class-2708
       # ANSWERS ARE PUBLISHED TO EVERYONE. This console is shared across the
       # classroom LAN, so mounting solutions/ here means every student can read
       # every answer to every session -- including exercises they have not
