@@ -138,10 +138,12 @@ sql-bootcamp-labs/
 │       └── wcd-originals/    #     their matching answer notebooks
 ├── morning-class-2708/       # Python too: conditionals, for, comprehensions, while, break/continue/pass
 │   ├── README.md             #   needs no database, and not one import in the whole set
-│   ├── exercises/            #   01–07
+│   ├── exercises/            #   01–08
+│   │   ├── data/             #     tab-separated superstore extract, read by worksheet 08
 │   │   ├── more-practice/    #     a second sheet per topic, same numbering
 │   │   └── wcd-originals/    #     the course's own control-flow demos + exercises, unmodified
-│   └── solutions/            #   01–07, with the actual expected output
+│   └── solutions/            #   01–08, with the actual expected output
+│       ├── data/             #     the same files, so the solution can be re-run in place
 │       ├── more-practice/
 │       └── wcd-originals/    #     their matching answer notebooks
 ├── solutions/                # ALL answers for all four sessions, in one place (generated)
@@ -517,9 +519,11 @@ Go to your class's folder and start from its `README.md`:
   console.
 - **[`morning-class-2708/`](morning-class-2708/README.md)** — **Python too**:
   conditionals, `for` loops, comprehensions, `while` loops,
-  `break`/`continue`/`pass`, a clickstream capstone, and a sheet of the
-  control-flow patterns a data pipeline is actually made of (worksheets
-  01–07). Not one `import` in the whole set.
+  `break`/`continue`/`pass`, a clickstream capstone, a sheet of the
+  control-flow patterns a data pipeline is actually made of, and a final sheet
+  that reads the superstore tables straight off disk as tab-separated text
+  (worksheets 01–08). Not one `import` in the whole set — `open()` is a
+  builtin.
 
 Each folder holds `exercises/` and its matching `solutions/`, numbered in
 teaching order. The two Python sessions also carry a

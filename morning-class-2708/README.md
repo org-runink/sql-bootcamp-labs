@@ -5,7 +5,7 @@ data structures, this one covers what makes a program *do* something with
 them: conditionals, `for` loops, comprehensions, `while` loops, and
 `break`/`continue`/`pass`.
 
-Seven worksheets, plus a second practice sheet for each of the five topics in
+Eight worksheets, plus a second practice sheet for each of the five topics in
 `more-practice/`.
 
 Work through `exercises/` in order. Answers are in `solutions/`, same
@@ -20,6 +20,7 @@ numbering.
 | 05 | `05_break_continue_pass.ipynb` | `break`, `continue`, `pass`, `for`/`while` … `else`, breaking out of nested loops | 2, 76–77 |
 | 06 | `06_combined_challenges.ipynb` | capstone — ten questions over one morning of clickstream | all |
 | 07 | `07_control_flow_in_pipelines.ipynb` | batching, retrying, validating, joining, watermarks, and the run report | — |
+| 08 | `08_reading_real_files.ipynb` | four real tab-separated files: headers, joins across files, dates without `datetime`, and four kinds of wrong number | — |
 
 ## Extra practice
 
@@ -37,12 +38,12 @@ sheet did not reach.
 | 05 | break/continue/pass | **what is the `break` of a comprehension?** (there isn't one) |
 
 Use them when a topic didn't land, or after class. Answers are in
-`solutions/more-practice/`, same numbering. The capstone and the pipeline
-sheet have no extra sheet — they already draw on everything.
+`solutions/more-practice/`, same numbering. Worksheets 06, 07 and 08 have no
+extra sheet — they already draw on everything.
 
 Roughly: 01 is the decision, 02–04 are the three ways to repeat, 05 is how to
-get out early, 06 puts everything together, and 07 asks what any of it is
-*for*.
+get out early, 06 puts everything together, 07 asks what any of it is *for*,
+and 08 does it on data that was not typed into a cell.
 
 **Worksheet 07 is the data-engineering one.** Every pattern on it is one you
 meet in the first week of a data job: batching a list into fixed-size chunks,
@@ -51,7 +52,30 @@ a dimension table, processing only what is new since the last run, and writing
 the summary at the end. It finishes with two run reports that are both true,
 one of which would let a broken pipeline pass unnoticed for months.
 
-Worksheet 07 has no slide reference because it is not from the L05 deck.
+**Worksheet 08 is the one with real files.** `exercises/data/` holds four
+tab-separated files with header rows:
+
+| File | Data rows | Columns |
+|---|---|---|
+| `orders.csv` | 1,093 | `OrderID`, `ProductID`, `CustomerID`, `OrderDate`, `OrderPriority`, `OrderQuantity`, `Sales`, `Discount`, `ShipMode`, `Profit`, `UnitPrice`, `ShippingCost` |
+| `customers.csv` | 1,832 | `CustomerID`, `CustomerName`, `Province`, `Region`, `CustomerSegment` |
+| `products.csv` | 1,237 | `ProductID`, `ProductName`, `ProductCategory`, `ProductSubCategory`, `ProductContainer`, `ProductBaseMargin` |
+| `returns.csv` | 572 | `OrderID`, `Status` |
+
+This is the **same superstore data behind the SQL sessions**, read a line at a
+time instead of queried. `orders.csv` is a sample: every line item of the
+first 600 `OrderID`s in the source file, so orders that span several rows are
+preserved — which is the point of Q4. The dimension files are complete, so
+most of their rows have no matching order, which is the point of Q3 and Q6.
+`products.csv` was transcoded from latin-1 to UTF-8; nothing else was altered.
+
+(`afternoon-class-2408/exercises/data/` holds a different, 400-row sample of
+the same tables, made for that session's `LOAD DATA LOCAL INFILE` exercise.
+The two are not interchangeable — this one deliberately keeps the repeated
+`OrderID`s that the 2408 sample does not have.)
+
+Worksheets 07 and 08 have no slide reference because they are not from the L05
+deck.
 
 ## The original WeCloudData notebooks
 
@@ -86,14 +110,16 @@ How they relate to these worksheets:
 - **`Python Exercises 2_v1.ipynb`** is the odd one out. It is a proper
   end-to-end exercise over six CSV files — counting distinct customers,
   finding the most expensive product, joining orders to customers — and it is
-  the closest thing in the course to worksheet 07.
+  the closest thing in the course to worksheets 07 and 08.
 
 Three warnings about the WeCloudData set:
 
 - **`Python Exercises 2` cannot be run as shipped.** It reads
   `data/orders.csv`, `data/customers.csv` and four more, and **the `data/`
-  folder is not in the course zip.** Read it for the technique; worksheet 07
-  is the runnable equivalent, with its data inline.
+  folder is not in the course zip.** Read it for the technique — then do
+  **worksheet 08**, which asks the same kinds of question (distinct
+  customers, orders with several line items, the most expensive product
+  without `max()`, orders by region) against files that are actually here.
 - Its solutions use `def`, `import re` and `import datetime` — all of which
   are the *next* two lectures, not this one. Nothing in these worksheets
   needs them.
@@ -120,8 +146,9 @@ No `%%sql`, no connection cell, no MySQL. These worksheets are **pure Python**
 at `http://<instructor-ip>:8888` like any other worksheet, but you can equally
 run them in any Python 3 you already have.
 
-**There is not one `import` in the whole set.** Everything on these twelve
-sheets is built into the language. If you find yourself reaching for
+**There is not one `import` in the whole set.** Everything on these thirteen
+sheets is built into the language — including worksheet 08's file reading,
+because `open()` is a builtin. If you find yourself reaching for `csv`,
 `itertools`, `collections`, `pandas` or `numpy`, that is a sign you have
 wandered past what this session covers — and the shared console does not have
 the last two installed, so it will fail rather than mislead you.
@@ -131,8 +158,8 @@ worksheet here is written to be solvable without them.
 
 ## Some cells are supposed to fail
 
-**Ten questions across the set end in a deliberate error**, because the error
-*is* the lesson:
+**Eleven questions across the set end in a deliberate error**, because the
+error *is* the lesson:
 
 | Sheet | Q | Raises |
 |---|---|---|
@@ -141,6 +168,7 @@ worksheet here is written to be solvable without them.
 | 03 comprehensions | 11 | `TypeError` — a list as a dictionary key |
 | 04 while loops | 11 | `IndexError` — `pop` from empty list |
 | 05 break/continue/pass | 11 | `NameError` — loop variable from a loop that never ran |
+| 08 reading real files | 11 | `ValueError` — forgetting to skip the header row |
 | extra 01 | 9 | `KeyError` — a key that isn't there |
 | extra 02 | 9 | `IndexError` — indexing two lists of different lengths |
 | extra 03 | 9 | `TypeError` — a set cannot hold lists either |
@@ -195,8 +223,19 @@ substantively wrong:
 - the three conversion rates in **06 Q10** — per event, per user, per session
   — where the highest is four times the lowest;
 - the join in **07 Q6** that loses 31.00 of 78.74 to a single orphaned row;
-- and **07 Q11**, where a pipeline reports `rows delivered: 4, errors: 0,
-  status: OK` while half the feed did not arrive.
+- **07 Q11**, where a pipeline reports `rows delivered: 4, errors: 0,
+  status: OK` while half the feed did not arrive;
+- **08 Q4**, where `orders.csv` has 1,093 rows and 600 orders, so the obvious
+  row count is nearly double the answer;
+- **08 Q6**, where a lookup dictionary built from 1,237 rows comes out with
+  1,234 keys because three product ids repeat — and the three lost products
+  are not duplicates, they are different products sharing an id;
+- **08 Q7**, where the per-region order counts sum to 640 against a true
+  total of 600, because 39 orders straddle two regions and distinct counts do
+  not add up across groups;
+- and **08 Q10**, where the region subtotals and the grand total differ in the
+  twelfth decimal place, so a reconciliation written as `==` fails on correct
+  data.
 
 None of those raises an error. That is deliberate, and it is the most useful
 thing in this session: getting the code to run is the easy half, and knowing
