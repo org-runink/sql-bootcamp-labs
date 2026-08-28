@@ -9,10 +9,14 @@ have to hop between class folders while teaching.
 | [`morning-class-2508/`](morning-class-2508) | 7 | SQL: views, cross-database, modelling, keys, windows, capstone |
 | [`afternoon-class-2608/`](afternoon-class-2608) | 19 | Python: the four data structures, built-ins, strings/loops, capstone, data-engineering applications — plus `more-practice/` and the WeCloudData originals |
 | [`morning-class-2708/`](morning-class-2708) | 28 | Python, two lectures: L05 control flow and iteration (01–08), then L06 functions and code reusability (09–14) — plus `more-practice/` and the WeCloudData originals |
+| [`afternoon-class-3008/`](afternoon-class-3008) | 14 | Pandas, three lectures: L01 Series/DataFrame/Index (01–04), L02 core functionality (05–10), L03 reading and writing (11–14) |
 
-64 notebooks in total, plus the four `.csv` files that
-`morning-class-2708/08_reading_real_files_solution.ipynb` reads — it uses a
-relative path, so the data has to travel with it.
+78 notebooks in total, plus 12 data files. Several solutions read `data/` by a
+**relative** path, so the data has to travel with them or the published answer
+cannot be re-run from the console:
+
+- `morning-class-2708/08_reading_real_files_solution.ipynb` — four `.csv`
+- `afternoon-class-3008/` worksheets 11–14 — `.csv`, `.tsv`, `.json`, `.xlsx`
 
 ## This folder is generated — do not edit it
 

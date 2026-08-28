@@ -1,0 +1,802 @@
+[
+  {
+    "OrderID": 8710,
+    "OrderDate": "2009-01-04",
+    "Sales": 151.35,
+    "customer": {
+      "name": "Tamara Dahlen,",
+      "region": "Ontario",
+      "segment": "Corporate"
+    }
+  },
+  {
+    "OrderID": 5251,
+    "OrderDate": "2011-04-11",
+    "Sales": 3821.039,
+    "customer": {
+      "name": "Tamara Dahlen,",
+      "region": "Ontario",
+      "segment": "Corporate"
+    }
+  },
+  {
+    "OrderID": 17024,
+    "OrderDate": "2009-10-13",
+    "Sales": 1401.75,
+    "customer": {
+      "name": "Tamara Dahlen,",
+      "region": "Ontario",
+      "segment": "Corporate"
+    }
+  },
+  {
+    "OrderID": 16326,
+    "OrderDate": "2010-05-10",
+    "Sales": 147.46,
+    "customer": {
+      "name": "Bill Donatelli",
+      "region": "Ontario",
+      "segment": "Corporate"
+    }
+  },
+  {
+    "OrderID": 15808,
+    "OrderDate": "2010-12-14",
+    "Sales": 58.14,
+    "customer": {
+      "name": "Bill Donatelli",
+      "region": "Ontario",
+      "segment": "Corporate"
+    }
+  },
+  {
+    "OrderID": 12452,
+    "OrderDate": "2010-12-07",
+    "Sales": 112.86,
+    "customer": {
+      "name": "Bill Donatelli",
+      "region": "Ontario",
+      "segment": "Corporate"
+    }
+  },
+  {
+    "OrderID": 15808,
+    "OrderDate": "2010-12-14",
+    "Sales": 126.88,
+    "customer": {
+      "name": "Bill Donatelli",
+      "region": "Ontario",
+      "segment": "Corporate"
+    }
+  },
+  {
+    "OrderID": 16326,
+    "OrderDate": "2010-05-10",
+    "Sales": 1538.33,
+    "customer": {
+      "name": "Bill Donatelli",
+      "region": "Ontario",
+      "segment": "Corporate"
+    }
+  },
+  {
+    "OrderID": 40961,
+    "OrderDate": "2011-03-30",
+    "Sales": 23.84,
+    "customer": {
+      "name": "Bill Donatelli",
+      "region": "Ontario",
+      "segment": "Corporate"
+    }
+  },
+  {
+    "OrderID": 15808,
+    "OrderDate": "2010-12-14",
+    "Sales": 906.64,
+    "customer": {
+      "name": "Bill Donatelli",
+      "region": "Ontario",
+      "segment": "Corporate"
+    }
+  },
+  {
+    "OrderID": 15808,
+    "OrderDate": "2010-12-14",
+    "Sales": 882.96,
+    "customer": {
+      "name": "Bill Donatelli",
+      "region": "Ontario",
+      "segment": "Corporate"
+    }
+  },
+  {
+    "OrderID": 59815,
+    "OrderDate": "2010-12-15",
+    "Sales": 51.56,
+    "customer": {
+      "name": "Christy Brittain",
+      "region": "West",
+      "segment": "Consumer"
+    }
+  },
+  {
+    "OrderID": 36647,
+    "OrderDate": "2009-06-30",
+    "Sales": 55.44,
+    "customer": {
+      "name": "Christy Brittain",
+      "region": "West",
+      "segment": "Consumer"
+    }
+  },
+  {
+    "OrderID": 36356,
+    "OrderDate": "2011-12-25",
+    "Sales": 117.77,
+    "customer": {
+      "name": "Christy Brittain",
+      "region": "West",
+      "segment": "Consumer"
+    }
+  },
+  {
+    "OrderID": 58470,
+    "OrderDate": "2011-06-08",
+    "Sales": 49.08,
+    "customer": {
+      "name": "Barry Blumstein",
+      "region": "West",
+      "segment": "Small Business"
+    }
+  },
+  {
+    "OrderID": 34083,
+    "OrderDate": "2012-02-05",
+    "Sales": 1415.148,
+    "customer": {
+      "name": "Barry Blumstein",
+      "region": "West",
+      "segment": "Small Business"
+    }
+  },
+  {
+    "OrderID": 35239,
+    "OrderDate": "2011-11-12",
+    "Sales": 2257.88,
+    "customer": {
+      "name": "Barry Blumstein",
+      "region": "West",
+      "segment": "Small Business"
+    }
+  },
+  {
+    "OrderID": 50657,
+    "OrderDate": "2011-12-18",
+    "Sales": 60.02,
+    "customer": {
+      "name": "Aleksandra Gannaway",
+      "region": "Atlantic",
+      "segment": "Corporate"
+    }
+  },
+  {
+    "OrderID": 47173,
+    "OrderDate": "2009-09-01",
+    "Sales": 277.0745,
+    "customer": {
+      "name": "Aleksandra Gannaway",
+      "region": "Atlantic",
+      "segment": "Corporate"
+    }
+  },
+  {
+    "OrderID": 34017,
+    "OrderDate": "2009-03-23",
+    "Sales": 103.39,
+    "customer": {
+      "name": "Paul Prost",
+      "region": "Ontario",
+      "segment": "Corporate"
+    }
+  },
+  {
+    "OrderID": 26918,
+    "OrderDate": "2009-04-06",
+    "Sales": 77.96,
+    "customer": {
+      "name": "Russell Applegate",
+      "region": "Ontario",
+      "segment": "Home Office"
+    }
+  },
+  {
+    "OrderID": 54342,
+    "OrderDate": "2009-06-08",
+    "Sales": 10.48,
+    "customer": {
+      "name": "Pauline Webber",
+      "region": "West",
+      "segment": "Consumer"
+    }
+  },
+  {
+    "OrderID": 21831,
+    "OrderDate": "2009-09-19",
+    "Sales": 28.39,
+    "customer": {
+      "name": "Pauline Webber",
+      "region": "West",
+      "segment": "Consumer"
+    }
+  },
+  {
+    "OrderID": 34275,
+    "OrderDate": "2009-07-01",
+    "Sales": 123.46,
+    "customer": {
+      "name": "Greg Guthrie",
+      "region": "Atlantic",
+      "segment": "Small Business"
+    }
+  },
+  {
+    "OrderID": 29382,
+    "OrderDate": "2010-11-17",
+    "Sales": 684.66,
+    "customer": {
+      "name": "Greg Guthrie",
+      "region": "Atlantic",
+      "segment": "Small Business"
+    }
+  },
+  {
+    "OrderID": 44576,
+    "OrderDate": "2009-12-25",
+    "Sales": 5016.25,
+    "customer": {
+      "name": "Greg Guthrie",
+      "region": "Atlantic",
+      "segment": "Small Business"
+    }
+  },
+  {
+    "OrderID": 47876,
+    "OrderDate": "2009-12-25",
+    "Sales": 365.22,
+    "customer": {
+      "name": "Greg Guthrie",
+      "region": "Atlantic",
+      "segment": "Small Business"
+    }
+  },
+  {
+    "OrderID": 4004,
+    "OrderDate": "2010-05-06",
+    "Sales": 63.52,
+    "customer": {
+      "name": "Sheri Gordon",
+      "region": "Quebec",
+      "segment": "Corporate"
+    }
+  },
+  {
+    "OrderID": 39972,
+    "OrderDate": "2012-09-25",
+    "Sales": 224.58,
+    "customer": {
+      "name": "Sheri Gordon",
+      "region": "Quebec",
+      "segment": "Corporate"
+    }
+  },
+  {
+    "OrderID": 39972,
+    "OrderDate": "2012-09-25",
+    "Sales": 138.59,
+    "customer": {
+      "name": "Sheri Gordon",
+      "region": "Quebec",
+      "segment": "Corporate"
+    }
+  },
+  {
+    "OrderID": 44229,
+    "OrderDate": "2010-05-14",
+    "Sales": 185.69,
+    "customer": {
+      "name": "Erin Smith",
+      "region": "Ontario",
+      "segment": "Home Office"
+    }
+  },
+  {
+    "OrderID": 45125,
+    "OrderDate": "2012-05-28",
+    "Sales": 4834.8,
+    "customer": {
+      "name": "Erin Smith",
+      "region": "Ontario",
+      "segment": "Home Office"
+    }
+  },
+  {
+    "OrderID": 13861,
+    "OrderDate": "2010-08-11",
+    "Sales": 37.3,
+    "customer": {
+      "name": "Andy,Yotov",
+      "region": "Ontario",
+      "segment": "Corporate"
+    }
+  },
+  {
+    "OrderID": 39330,
+    "OrderDate": "2010-07-17",
+    "Sales": 184.77,
+    "customer": {
+      "name": "Andy,Yotov",
+      "region": "Ontario",
+      "segment": "Corporate"
+    }
+  },
+  {
+    "OrderID": 46336,
+    "OrderDate": "2011-07-29",
+    "Sales": 143.85,
+    "customer": {
+      "name": "Carl Weiss",
+      "region": "West",
+      "segment": "Consumer"
+    }
+  },
+  {
+    "OrderID": 56420,
+    "OrderDate": "2011-07-24",
+    "Sales": 2403.137,
+    "customer": {
+      "name": "Carl Weiss",
+      "region": "West",
+      "segment": "Consumer"
+    }
+  },
+  {
+    "OrderID": 57412,
+    "OrderDate": "2009-07-13",
+    "Sales": 223.499,
+    "customer": {
+      "name": "Carl Weiss",
+      "region": "West",
+      "segment": "Consumer"
+    }
+  },
+  {
+    "OrderID": 39169,
+    "OrderDate": "2011-08-26",
+    "Sales": 24.91,
+    "customer": {
+      "name": "Noel Staavos",
+      "region": "Quebec",
+      "segment": "Home Office"
+    }
+  },
+  {
+    "OrderID": 13476,
+    "OrderDate": "2010-10-16",
+    "Sales": 231.29,
+    "customer": {
+      "name": "Noel Staavos",
+      "region": "Quebec",
+      "segment": "Home Office"
+    }
+  },
+  {
+    "OrderID": 1444,
+    "OrderDate": "2009-12-05",
+    "Sales": 416.4,
+    "customer": {
+      "name": "Noel Staavos",
+      "region": "Quebec",
+      "segment": "Home Office"
+    }
+  },
+  {
+    "OrderID": 46662,
+    "OrderDate": "2011-12-29",
+    "Sales": 162.0,
+    "customer": {
+      "name": "Aaron Hawkins",
+      "region": "West",
+      "segment": "Home Office"
+    }
+  },
+  {
+    "OrderID": 46662,
+    "OrderDate": "2011-12-29",
+    "Sales": 3410.1575,
+    "customer": {
+      "name": "Aaron Hawkins",
+      "region": "West",
+      "segment": "Home Office"
+    }
+  },
+  {
+    "OrderID": 5860,
+    "OrderDate": "2012-02-19",
+    "Sales": 56.73,
+    "customer": {
+      "name": "Annie Thurman",
+      "region": "West",
+      "segment": "Consumer"
+    }
+  },
+  {
+    "OrderID": 3172,
+    "OrderDate": "2012-06-02",
+    "Sales": 584.511,
+    "customer": {
+      "name": "Annie Thurman",
+      "region": "West",
+      "segment": "Consumer"
+    }
+  },
+  {
+    "OrderID": 24705,
+    "OrderDate": "2011-09-15",
+    "Sales": 260.51,
+    "customer": {
+      "name": "Annie Thurman",
+      "region": "West",
+      "segment": "Consumer"
+    }
+  },
+  {
+    "OrderID": 14018,
+    "OrderDate": "2010-06-06",
+    "Sales": 160.68,
+    "customer": {
+      "name": "Annie Thurman",
+      "region": "West",
+      "segment": "Consumer"
+    }
+  },
+  {
+    "OrderID": 42246,
+    "OrderDate": "2012-04-26",
+    "Sales": 25.31,
+    "customer": {
+      "name": "Ted Trevino",
+      "region": "Ontario",
+      "segment": "Corporate"
+    }
+  },
+  {
+    "OrderID": 2691,
+    "OrderDate": "2012-04-29",
+    "Sales": 3363.14,
+    "customer": {
+      "name": "Ted Trevino",
+      "region": "Ontario",
+      "segment": "Corporate"
+    }
+  },
+  {
+    "OrderID": 53698,
+    "OrderDate": "2012-06-16",
+    "Sales": 55.33,
+    "customer": {
+      "name": "Tamara Chand",
+      "region": "Ontario",
+      "segment": "Consumer"
+    }
+  },
+  {
+    "OrderID": 6592,
+    "OrderDate": "2009-12-01",
+    "Sales": 194.29,
+    "customer": {
+      "name": "Tamara Chand",
+      "region": "Ontario",
+      "segment": "Consumer"
+    }
+  },
+  {
+    "OrderID": 44960,
+    "OrderDate": "2011-05-03",
+    "Sales": 180.92,
+    "customer": {
+      "name": "Tamara Chand",
+      "region": "Ontario",
+      "segment": "Consumer"
+    }
+  },
+  {
+    "OrderID": 44960,
+    "OrderDate": "2011-05-03",
+    "Sales": 31.68,
+    "customer": {
+      "name": "Tamara Chand",
+      "region": "Ontario",
+      "segment": "Consumer"
+    }
+  },
+  {
+    "OrderID": 37473,
+    "OrderDate": "2009-10-01",
+    "Sales": 88.23,
+    "customer": {
+      "name": "Tom Prescott",
+      "region": "West",
+      "segment": "Small Business"
+    }
+  },
+  {
+    "OrderID": 5543,
+    "OrderDate": "2010-09-24",
+    "Sales": 67.3,
+    "customer": {
+      "name": "Fred Chung",
+      "region": "Quebec",
+      "segment": "Corporate"
+    }
+  },
+  {
+    "OrderID": 5543,
+    "OrderDate": "2010-09-24",
+    "Sales": 703.54,
+    "customer": {
+      "name": "Fred Chung",
+      "region": "Quebec",
+      "segment": "Corporate"
+    }
+  },
+  {
+    "OrderID": 2628,
+    "OrderDate": "2010-10-21",
+    "Sales": 34.59,
+    "customer": {
+      "name": "Eileen Kiefer",
+      "region": "Ontario",
+      "segment": "Consumer"
+    }
+  },
+  {
+    "OrderID": 11362,
+    "OrderDate": "2012-09-10",
+    "Sales": 63.02,
+    "customer": {
+      "name": "Hilary Holden",
+      "region": "Atlantic",
+      "segment": "Corporate"
+    }
+  },
+  {
+    "OrderID": 37888,
+    "OrderDate": "2009-12-22",
+    "Sales": 639.19,
+    "customer": {
+      "name": "Hilary Holden",
+      "region": "Atlantic",
+      "segment": "Corporate"
+    }
+  },
+  {
+    "OrderID": 3808,
+    "OrderDate": "2009-04-23",
+    "Sales": 6.13,
+    "customer": {
+      "name": "Lynn Smith",
+      "region": "Atlantic",
+      "segment": "Corporate"
+    }
+  },
+  {
+    "OrderID": 21799,
+    "OrderDate": "2011-04-19",
+    "Sales": 115.99,
+    "customer": {
+      "name": "Lynn Smith",
+      "region": "Atlantic",
+      "segment": "Corporate"
+    }
+  },
+  {
+    "OrderID": 22628,
+    "OrderDate": "2009-10-29",
+    "Sales": 2951.7,
+    "customer": {
+      "name": "Lynn Smith",
+      "region": "Atlantic",
+      "segment": "Corporate"
+    }
+  },
+  {
+    "OrderID": 35300,
+    "OrderDate": "2010-03-02",
+    "Sales": 28.81,
+    "customer": {
+      "name": "Dan Reichenbach",
+      "region": "Atlantic",
+      "segment": "Corporate"
+    }
+  },
+  {
+    "OrderID": 10048,
+    "OrderDate": "2009-05-15",
+    "Sales": 78.57,
+    "customer": {
+      "name": "Sonia Sunley",
+      "region": "West",
+      "segment": "Corporate"
+    }
+  },
+  {
+    "OrderID": 19074,
+    "OrderDate": "2012-06-25",
+    "Sales": 3816.59,
+    "customer": {
+      "name": "Sonia Sunley",
+      "region": "West",
+      "segment": "Corporate"
+    }
+  },
+  {
+    "OrderID": 21856,
+    "OrderDate": "2012-04-05",
+    "Sales": 168.55,
+    "customer": {
+      "name": "Sonia Sunley",
+      "region": "West",
+      "segment": "Corporate"
+    }
+  },
+  {
+    "OrderID": 35461,
+    "OrderDate": "2009-06-01",
+    "Sales": 112.6,
+    "customer": {
+      "name": "Julie Kriz",
+      "region": "Prarie",
+      "segment": "Corporate"
+    }
+  },
+  {
+    "OrderID": 35461,
+    "OrderDate": "2009-06-01",
+    "Sales": 48.75,
+    "customer": {
+      "name": "Julie Kriz",
+      "region": "Prarie",
+      "segment": "Corporate"
+    }
+  },
+  {
+    "OrderID": 35782,
+    "OrderDate": "2011-08-05",
+    "Sales": 1330.73,
+    "customer": {
+      "name": "Julie Kriz",
+      "region": "Prarie",
+      "segment": "Corporate"
+    }
+  },
+  {
+    "OrderID": 16545,
+    "OrderDate": "2010-05-09",
+    "Sales": 4.99,
+    "customer": {
+      "name": "Carlos Soltero",
+      "region": "Northwest Territories",
+      "segment": "Small Business"
+    }
+  },
+  {
+    "OrderID": 12771,
+    "OrderDate": "2009-01-17",
+    "Sales": 1143.49,
+    "customer": {
+      "name": "Carlos Soltero",
+      "region": "Northwest Territories",
+      "segment": "Small Business"
+    }
+  },
+  {
+    "OrderID": 4935,
+    "OrderDate": "2010-05-24",
+    "Sales": 106.64,
+    "customer": {
+      "name": "Xylona Price",
+      "region": "Ontario",
+      "segment": "Corporate"
+    }
+  },
+  {
+    "OrderID": 47303,
+    "OrderDate": "2011-12-05",
+    "Sales": 56.9,
+    "customer": {
+      "name": "Xylona Price",
+      "region": "Ontario",
+      "segment": "Corporate"
+    }
+  },
+  {
+    "OrderID": 21729,
+    "OrderDate": "2012-12-06",
+    "Sales": 120.98,
+    "customer": {
+      "name": "Xylona Price",
+      "region": "Ontario",
+      "segment": "Corporate"
+    }
+  },
+  {
+    "OrderID": 36896,
+    "OrderDate": "2009-11-03",
+    "Sales": 34.01,
+    "customer": {
+      "name": "Xylona Price",
+      "region": "Ontario",
+      "segment": "Corporate"
+    }
+  },
+  {
+    "OrderID": 31393,
+    "OrderDate": "2012-05-11",
+    "Sales": 110.32,
+    "customer": {
+      "name": "Cindy Schnelling",
+      "region": "Northwest Territories",
+      "segment": "Corporate"
+    }
+  },
+  {
+    "OrderID": 28870,
+    "OrderDate": "2011-11-10",
+    "Sales": 3310.9455,
+    "customer": {
+      "name": "Cindy Schnelling",
+      "region": "Northwest Territories",
+      "segment": "Corporate"
+    }
+  },
+  {
+    "OrderID": 33159,
+    "OrderDate": "2012-04-27",
+    "Sales": 56.695,
+    "customer": {
+      "name": "Cindy Schnelling",
+      "region": "Northwest Territories",
+      "segment": "Corporate"
+    }
+  },
+  {
+    "OrderID": 27780,
+    "OrderDate": "2012-10-20",
+    "Sales": 147.71,
+    "customer": {
+      "name": "Matthew Grinstein",
+      "region": "West",
+      "segment": "Small Business"
+    }
+  },
+  {
+    "OrderID": 13607,
+    "OrderDate": "2010-11-18",
+    "Sales": 440.6,
+    "customer": {
+      "name": "Matthew Grinstein",
+      "region": "West",
+      "segment": "Small Business"
+    }
+  },
+  {
+    "OrderID": 19559,
+    "OrderDate": "2010-04-15",
+    "Sales": 1032.0275,
+    "customer": {
+      "name": "Matthew Grinstein",
+      "region": "West",
+      "segment": "Small Business"
+    }
+  }
+]

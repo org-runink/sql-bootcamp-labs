@@ -146,10 +146,17 @@ sql-bootcamp-labs/
 │       ├── data/             #     the same files, so the solution can be re-run in place
 │       ├── more-practice/
 │       └── wcd-originals/    #     their matching answer notebooks
+├── afternoon-class-3008/     # Pandas, three lectures: L01 basics, L02 core ops, L03 reading/writing
+│   ├── README.md             #   NEEDS pandas in the image -- base-notebook does not ship it
+│   ├── exercises/            #   01–14
+│   │   └── data/             #     csv / tsv / json / xlsx built from the same superstore extract
+│   └── solutions/            #   01–14, with the actual expected output
+│       └── data/             #     the same files, so the solution can be re-run in place
 ├── Control_Flow_and_Iteration_Practice/   # the WeCloudData L05 zip, unpacked as shipped
 │                             #   same files also split under morning-class-2708/wcd-originals/
-├── solutions/                # ALL answers for all four sessions, in one place (generated)
+├── solutions/                # ALL answers for all five sessions, in one place (generated)
 ├── jupyter-sql/               # shared browser SQL console (JupyterLab + jupysql), pre-wired to mysql-lan
+│                             #   also carries pandas + openpyxl/pyarrow/lxml for the 30/08 class
 └── scripts/
     ├── generate_superstore_data.py   # regenerates the superstore seed data
     └── collect_solutions.py          # rebuilds the top-level solutions/ mirror
@@ -529,9 +536,18 @@ Go to your class's folder and start from its `README.md`:
   scope and side effects, `lambda`/`map`/`filter`, recursion, and a capstone
   that rebuilds the pipeline as a reusable toolkit. Not one `import` in the
   whole set — `open()` is a builtin.
+- **[`afternoon-class-3008/`](afternoon-class-3008/README.md)** — **Pandas**,
+  and **three lectures in one folder**. Worksheets 01–04 are the introduction:
+  Series, DataFrames, the `Index` object, and `loc` vs `iloc`. Worksheets 05–10
+  are the core operations: reindexing, dropping, filtering, label alignment,
+  `apply`/`map`, and sorting and ranking. Worksheets 11–14 are reading and
+  writing: CSV and TSV parameters, chunked reads, JSON including nested
+  objects, and Excel workbooks with a full load-check-process-save capstone.
+  Needs no database, but it **does** need pandas — the base image ships
+  without it, so rebuild the console image if imports fail.
 
 Each folder holds `exercises/` and its matching `solutions/`, numbered in
-teaching order. The two Python sessions also carry a
+teaching order. The 26/08 and 27/08 sessions also carry a
 `exercises/more-practice/` subfolder holding a second sheet per topic, with
 matching numbering — use those when something didn't land, or after class.
 

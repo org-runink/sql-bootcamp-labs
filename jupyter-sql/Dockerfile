@@ -1,6 +1,18 @@
 FROM quay.io/jupyter/base-notebook:latest
 
-RUN pip install --no-cache-dir jupysql pymysql sqlalchemy
+# jupysql/pymysql/sqlalchemy drive the SQL worksheets (24/08, 25/08).
+#
+# The rest is for the Pandas block (30/08). base-notebook deliberately ships
+# without pandas -- that is the scipy-notebook image -- so every one of these
+# has to be named explicitly or the worksheets are unrunnable:
+#   openpyxl  .xlsx read AND write        xlrd     legacy .xls read
+#   pyarrow   .parquet                    lxml     read_html / read_xml
+#   html5lib + beautifulsoup4             read_html's fallback parser
+#   tabulate  DataFrame.to_markdown()
+RUN pip install --no-cache-dir \
+      jupysql pymysql sqlalchemy \
+      pandas numpy \
+      openpyxl xlrd pyarrow lxml html5lib beautifulsoup4 tabulate matplotlib
 
 COPY --chown=${NB_UID}:${NB_GID} SQL_Console.ipynb /home/jovyan/work/SQL_Console.ipynb
 
