@@ -3,14 +3,17 @@
 Pandas, across three lectures: what a Series and a DataFrame actually are, the
 core operations you use on every dataset, and how data gets in and out.
 
-Fourteen worksheets, 140 questions. Every one was executed in the lab image
-before it was written down, and every number quoted in the solutions is output
-that was actually observed — not predicted, not rounded for tidiness.
+Fifteen worksheets and five extra-practice sheets — 200 questions. Every one was
+executed in the lab image before it was written down, and every number quoted in
+the solutions is output that was actually observed — not predicted, not rounded
+for tidiness.
 
 ```
-exercises/          the worksheets
-solutions/          the answers, with the real output quoted
-exercises/data/     the files the worksheets read
+exercises/                 worksheets 01–15
+exercises/more-practice/   a second sheet for five of the topics
+exercises/wcd-originals/   the course's own notebooks, byte-identical
+exercises/data/            the files the worksheets read
+solutions/                 the answers, with the real output quoted
 ```
 
 ## Part 1 — Introduction to Pandas (L01), worksheets 01–04
@@ -41,6 +44,45 @@ exercises/data/     the files the worksheets read
 | 12 | [`12_chunked_reading.ipynb`](exercises/12_chunked_reading.ipynb) | `chunksize`, accumulating across chunks, `pd.concat`, float sums |
 | 13 | [`13_json_data.ipynb`](exercises/13_json_data.ipynb) | flat vs nested JSON, `json_normalize`, `orient` |
 | 14 | [`14_excel_and_capstone.ipynb`](exercises/14_excel_and_capstone.ipynb) | sheets, `ExcelWriter`, `index=False`, and the full pipeline |
+
+## Synthesis — worksheet 15
+
+| # | Sheet | Covers |
+|---|---|---|
+| 15 | [`15_pipelines_and_roles.ipynb`](exercises/15_pipelines_and_roles.ipynb) | a SQL and Python refresher, then batch and streaming pipelines seen from four job roles |
+
+Twenty questions, and the only sheet that talks to the **real MySQL** from the
+SQL sessions as well as to a REST endpoint. It refreshes both languages and then
+builds the same flow four times, once per role:
+
+| Role | Owns | The question they are paid to answer |
+|---|---|---|
+| **ETL/ELT engineer** | getting data out and in, repeatably | "did every row arrive, exactly once?" |
+| **Analytics engineer** | what the numbers *mean* | "what is one row of this table?" |
+| **Streaming/Platform engineer** | the pipe, while it is running | "what happens when it breaks halfway?" |
+| **ML/AI engineer** | features and what the model saw | "would this column have existed at prediction time?" |
+
+It needs the database container running (`mysql-lan`) but **no internet** — the
+REST endpoint is served from inside the notebook, on `127.0.0.1:8931`, so the
+streaming section works on a classroom network that blocks everything. The
+setup cell is deliberately safe to re-run, which is the same idempotency
+property its own Q8 asks of an extract job.
+
+## Extra practice
+
+A second sheet for the five topics that most need repetition. Same numbering as
+the main worksheets, eight questions each, all on the real sales file.
+
+| # | Sheet | Second pass at |
+|---|---|---|
+| 01 | [`more-practice/01_series_more.ipynb`](exercises/more-practice/01_series_more.ipynb) | Series, `value_counts`, grouped Series |
+| 04 | [`more-practice/04_loc_and_iloc_more.ipynb`](exercises/more-practice/04_loc_and_iloc_more.ipynb) | labels vs positions on a sorted frame |
+| 07 | [`more-practice/07_filtering_more.ipynb`](exercises/more-practice/07_filtering_more.ipynb) | compound conditions, dates, writing into a filtered frame |
+| 09 | [`more-practice/09_apply_and_map_more.ipynb`](exercises/more-practice/09_apply_and_map_more.ipynb) | partial lookups, `axis=1`, vectorising instead |
+| 11 | [`more-practice/11_reading_csv_more.ipynb`](exercises/more-practice/11_reading_csv_more.ipynb) | turning load checks into tests |
+
+These live one directory down, so they read the data as **`../data/sales.csv`**.
+That is the only difference from the main sheets.
 
 ## The data
 
@@ -128,6 +170,12 @@ so Restart & Run All reaches the bottom of the notebook before anything raises.
 | 12 | `StopIteration` | a chunk reader is a one-pass iterator |
 | 13 | `ValueError: Expected object or value` | a CSV handed to `read_json` |
 | 14 | `ValueError: Worksheet named 'Q5' not found` | name your sheets, do not number them |
+| 15 | `AttributeError: Can only use .dt accessor...` | the ETL engineer's untyped column, surfacing in the ML engineer's notebook |
+| mp 01 | `KeyError: 'Prairie'` | the correctly-spelled word is the one that fails |
+| mp 04 | `KeyError: 500` | a label beyond the end of the file |
+| mp 07 | `ValueError: The truth value of a Series is ambiguous` | `or` instead of `\|` |
+| mp 09 | `ZeroDivisionError` | 30 orders have a `Discount` of exactly 0; none have a `Profit` of 0 |
+| mp 11 | `ValueError: Usecols do not match columns` | `usecols` validates against the header |
 
 ## Where the slides and Python disagree
 
