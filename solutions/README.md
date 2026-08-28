@@ -11,12 +11,15 @@ have to hop between class folders while teaching.
 | [`morning-class-2708/`](morning-class-2708) | 28 | Python, two lectures: L05 control flow and iteration (01–08), then L06 functions and code reusability (09–14) — plus `more-practice/` and the WeCloudData originals |
 | [`afternoon-class-3008/`](afternoon-class-3008) | 22 | Pandas, three lectures: L01 Series/DataFrame/Index (01–04), L02 core functionality (05–10), L03 reading and writing (11–14), plus a pipelines-and-roles synthesis sheet (15) — and `more-practice/` and the WeCloudData originals |
 
-86 notebooks in total, plus 12 data files. Several solutions read `data/` by a
+| [`week3_day2/`](week3_day2) | 15 | Pandas continued: L04 reshaping and pivoting (01–05), L05 data transformation (06–10) — plus `more-practice/` and the WeCloudData Advanced lab |
+
+101 notebooks in total, plus 15 data files. Several solutions read `data/` by a
 **relative** path, so the data has to travel with them or the published answer
 cannot be re-run from the console:
 
 - `morning-class-2708/08_reading_real_files_solution.ipynb` — four `.csv`
 - `afternoon-class-3008/` worksheets 11–14 — `.csv`, `.tsv`, `.json`, `.xlsx`
+- `week3_day2/` — all sheets read `data/`, and `more-practice/` reads `../data/`
 
 ## This folder is generated — do not edit it
 

@@ -3,12 +3,13 @@
 Pandas continued, across two lectures: getting data into the shape you need
 (L04), and cleaning the values once it is there (L05).
 
-Ten worksheets, 100 questions. Every one was executed in the lab image before
-it was written down, and every number quoted in the solutions is output that was
+Ten worksheets plus four extra-practice sheets — 132 questions. Every one was
+executed in the lab image before it was written down, and every number quoted in the solutions is output that was
 actually observed — not predicted, not rounded for tidiness.
 
 ```
-exercises/                 the worksheets
+exercises/                 worksheets 01–10
+exercises/more-practice/   a second sheet for four of the topics
 exercises/data/            the files they read
 exercises/wcd-originals/   the course's own lab, byte-identical
 slides/                    the two lecture decks
@@ -34,6 +35,21 @@ solutions/                 the answers, with the real output quoted
 | 08 | [`08_binning.ipynb`](exercises/08_binning.ipynb) | `cut` and `qcut`, boundaries, and values that fall outside |
 | 09 | [`09_outliers.ipynb`](exercises/09_outliers.ipynb) | the IQR fence, the z-score, and what removing them costs |
 | 10 | [`10_encoding_and_capstone.ipynb`](exercises/10_encoding_and_capstone.ipynb) | `get_dummies`, `sample`, and the whole day end to end |
+
+## Extra practice
+
+A second sheet for four of the topics — eight questions each, same numbering as
+the main worksheets, all on the same real files.
+
+| # | Sheet | Second pass at |
+|---|---|---|
+| 03 | [`more-practice/03_unstack_more.ipynb`](exercises/more-practice/03_unstack_more.ipynb) | `unstack` on counts and means, and when `fill_value=0` is a lie |
+| 05 | [`more-practice/05_pivot_table_more.ipynb`](exercises/more-practice/05_pivot_table_more.ipynb) | `aggfunc`, per-column aggregates, ratio-of-sums vs mean-of-ratios |
+| 07 | [`more-practice/07_transform_more.ipynb`](exercises/more-practice/07_transform_more.ipynb) | standardising a join key, and rule order with overlapping conditions |
+| 09 | [`more-practice/09_outliers_more.ipynb`](exercises/more-practice/09_outliers_more.ipynb) | fences within group, and three rules compared side by side |
+
+These live one directory down, so they read the data as **`../data/`**. That is
+the only difference from the main sheets.
 
 ## The data
 
@@ -122,6 +138,10 @@ Restart & Run All reaches the bottom before anything raises.
 | 08 | `ValueError: Bin edges must be unique` | too few distinct values to quarter |
 | 09 | `TypeError: Cannot perform reduction 'mean' with string dtype` | neither outlier rule checks that its input is numeric |
 | 10 | `KeyError: "None of [Index(['Segment'])] are in the [columns]"` | the column exists — in the *other* file |
+| mp 03 | `ValueError: index must be a MultiIndex to unstack` | nothing to move |
+| mp 05 | `AttributeError: 'total' is not a valid function` | the name is `sum` |
+| mp 07 | `AttributeError: Can only use .str accessor with string values` | `.str` on a float column |
+| mp 09 | `ArrowNotImplementedError: Function 'quantile' has no kernel...` | pandas 3 backs strings with Arrow, so the error names a layer you did not know you were using |
 
 ## Where the slides and Python disagree
 

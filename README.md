@@ -152,9 +152,15 @@ sql-bootcamp-labs/
 │   │   └── data/             #     csv / tsv / json / xlsx built from the same superstore extract
 │   └── solutions/            #   01–14, with the actual expected output
 │       └── data/             #     the same files, so the solution can be re-run in place
+├── week3_day2/               # Pandas continued: reshaping (L04) and transformation (L05)
+│   ├── README.md             #   also needs pandas in the image
+│   ├── slides/               #   the two lecture decks
+│   ├── exercises/            #   01–10 plus more-practice/
+│   │   └── data/             #     long, wide and deliberately messy CSVs
+│   └── solutions/            #   01–10, with the actual expected output
 ├── Control_Flow_and_Iteration_Practice/   # the WeCloudData L05 zip, unpacked as shipped
 │                             #   same files also split under morning-class-2708/wcd-originals/
-├── solutions/                # ALL answers for all five sessions, in one place (generated)
+├── solutions/                # ALL answers for all six sessions, in one place (generated)
 ├── jupyter-sql/               # shared browser SQL console (JupyterLab + jupysql), pre-wired to mysql-lan
 │                             #   also carries pandas + openpyxl/pyarrow/lxml for the 30/08 class
 └── scripts/
@@ -545,6 +551,12 @@ Go to your class's folder and start from its `README.md`:
   objects, and Excel workbooks with a full load-check-process-save capstone.
   Needs no database, but it **does** need pandas — the base image ships
   without it, so rebuild the console image if imports fail.
+- **[`week3_day2/`](week3_day2/README.md)** — **Pandas continued**, two more
+  lectures. Worksheets 01–05 are reshaping and pivoting: long vs wide,
+  MultiIndex, `unstack`, `stack`, and `pivot` versus `pivot_table`. Worksheets
+  06–10 are data transformation: duplicates, `replace`/`map`/`.loc`, binning,
+  outliers, and one-hot encoding with a capstone that runs the whole day end to
+  end. Four extra-practice sheets alongside. Same pandas requirement as 30/08.
 
 Each folder holds `exercises/` and its matching `solutions/`, numbered in
 teaching order. The 26/08 and 27/08 sessions also carry a
