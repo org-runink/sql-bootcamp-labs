@@ -165,7 +165,8 @@ sql-bootcamp-labs/
 │                             #   also carries pandas + openpyxl/pyarrow/lxml for the 30/08 class
 └── scripts/
     ├── generate_superstore_data.py   # regenerates the superstore seed data
-    └── collect_solutions.py          # rebuilds the top-level solutions/ mirror
+    ├── collect_solutions.py          # rebuilds the top-level solutions/ mirror
+    └── check_console.py              # verifies the console is serving what is on disk
 ```
 
 The top-level `solutions/` is a **generated mirror** of each class folder's
@@ -589,6 +590,28 @@ Two worksheets need a word of warning, both covered in their class README:
   underneath — all in one place.
 
 ## Troubleshooting
+
+**A class folder is EMPTY in the browser, but the files are there in git**
+The bind mount is pointing at a directory that no longer exists. A bind mount
+resolves to an **inode** when the container starts, not to a path, so anything
+that deletes and recreates a mounted directory orphans it — and git does this
+routinely:
+
+```bash
+git checkout some-branch-without-that-folder   # git removes the directory
+git checkout master                            # git recreates it, new inode
+```
+
+The container keeps pointing at the old inode and serves an empty folder, with
+no error anywhere. Restarting does **not** reliably fix it; recreate:
+
+```bash
+python3 scripts/check_console.py               # tells you which mounts are stale
+podman-compose up -d --force-recreate sql-console
+```
+
+Run the check before class. It compares host and container inodes for every
+mount and exits non-zero if any is orphaned.
 
 **`short-name "mysql:latest" did not resolve to an alias`**
 Rootless Podman ships no default registry list, so it refuses to guess which
