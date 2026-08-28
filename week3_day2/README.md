@@ -3,9 +3,9 @@
 Pandas continued, across two lectures: getting data into the shape you need
 (L04), and cleaning the values once it is there (L05).
 
-Every worksheet was executed in the lab image before it was written down, and
-every number quoted in the solutions is output that was actually observed — not
-predicted, not rounded for tidiness.
+Ten worksheets, 100 questions. Every one was executed in the lab image before
+it was written down, and every number quoted in the solutions is output that was
+actually observed — not predicted, not rounded for tidiness.
 
 ```
 exercises/                 the worksheets
@@ -27,9 +27,13 @@ solutions/                 the answers, with the real output quoted
 
 ## Part 2 — Data transformation (L05), worksheets 06–10
 
-**Not yet built.** The L05 deck is in `slides/`; the worksheets covering
-duplicates, `map`/`apply`/`replace`, renaming, binning, outliers, sampling and
-one-hot encoding are the next block.
+| # | Sheet | Covers |
+|---|---|---|
+| 06 | [`06_duplicates.ipynb`](exercises/06_duplicates.ipynb) | `duplicated`, `drop_duplicates`, `subset`/`keep`, and near-duplicates |
+| 07 | [`07_transform_values.ipynb`](exercises/07_transform_values.ipynb) | `replace` vs `map`, and `.loc[mask]` for conditions |
+| 08 | [`08_binning.ipynb`](exercises/08_binning.ipynb) | `cut` and `qcut`, boundaries, and values that fall outside |
+| 09 | [`09_outliers.ipynb`](exercises/09_outliers.ipynb) | the IQR fence, the z-score, and what removing them costs |
+| 10 | [`10_encoding_and_capstone.ipynb`](exercises/10_encoding_and_capstone.ipynb) | `get_dummies`, `sample`, and the whole day end to end |
 
 ## The data
 
@@ -49,9 +53,21 @@ Technology alone genuinely has **no Nunavut orders in 2009 or 2012**, so the
 exported grid has two real blank cells. Nothing was injected to create them.
 
 **The one invented thing** is the mess in `customers_messy.csv`, added
-deterministically for the L05 block: the first 40 rows are appended again
-verbatim, every 9th `Province` becomes `N/A`/`-`/`?`, and every 15th
-`CustomerName` gains a trailing space.
+deterministically for the L05 block:
+
+- the first 40 rows are appended again — **28 as exact copies, 12 with a
+  trailing space on the name**, so some are duplicates and some only look like
+  it. `drop_duplicates()` removes 29 and leaves 11 pairs that differ by one
+  invisible character;
+- every 9th `Province` becomes `N/A`, `-` or `?` in rotation;
+- every 15th `CustomerName` gains a trailing space.
+
+Two things about that file were **not** planted and are worth knowing. The
+source spells it **`Saskachewan`**, missing a `t` — the same kind of error as
+`Prarie` in the region column. And `read_csv` silently converts the `N/A`
+markers to `NaN` while leaving `-` and `?` as text, so the file arrives with two
+different encodings of "missing" and only one of them is visible to
+`isna()`.
 
 ## This class needs pandas
 
@@ -101,6 +117,11 @@ Restart & Run All reaches the bottom before anything raises.
 | 03 | `KeyError: 'Level Category not found'` | you can only unstack a level you grouped by |
 | 04 | `ValueError: dropna must be unspecified...` | an argument that worked for years, removed in pandas 3 |
 | 05 | `KeyError: 'Quarter'` | the file has `Year` and `Month`; a quarter has to be derived |
+| 06 | `KeyError: Index(['Customer_ID'])` | one underscore |
+| 07 | `AttributeError: 'float' object has no attribute 'split'` | `map` with a *function* meets the `NaN`s; with a *dict* it stayed silent |
+| 08 | `ValueError: Bin edges must be unique` | too few distinct values to quarter |
+| 09 | `TypeError: Cannot perform reduction 'mean' with string dtype` | neither outlier rule checks that its input is numeric |
+| 10 | `KeyError: "None of [Index(['Segment'])] are in the [columns]"` | the column exists — in the *other* file |
 
 ## Where the slides and Python disagree
 
@@ -122,7 +143,18 @@ because the rewritten `stack()` no longer drops NA rows at all. The behaviour
 change is **silent** for anyone who did not pass the argument: round trips now
 return more rows than they used to, with no warning. *(Worksheet 04 Q6, Q10.)*
 
-And three things the deck never mentions:
+**4. `get_dummies` returns booleans, not `0`/`1`.** The L05 slide shows the
+encoded cells as `0` and `1`, and that was right until pandas 2.0 changed the
+default to `bool`. The values are equivalent; the dtype is not, and it matters
+when the result is concatenated with numeric data or written to CSV. Pass
+`dtype=int` for the deck's version. *(Worksheet 10 Q2.)*
+
+**5. `unique()` returns neither a NumPy array nor `dtype=object`.** The L05
+slide asserts both. In this Pandas a text column gives an **`ArrowStringArray`**
+with `dtype: str`. Code that checked `isinstance(x, np.ndarray)` or
+`dtype == object` now takes the wrong branch silently. *(Worksheet 06 Q7.)*
+
+And these the decks never mention:
 
 - **`unstack()` promotes integer columns to float** the moment one combination
   is missing, because `NaN` is a float. *(Worksheet 03 Q5.)*
@@ -132,6 +164,15 @@ And three things the deck never mentions:
 - **`margins=True` on a mean is not the mean of the column.** The margin is
   computed from the underlying rows, so it weights every record once instead of
   every group once. *(Worksheet 05 Q8.)*
+- **`cut` discards anything outside its outermost edges**, silently — including
+  values sitting exactly on the lowest edge, because intervals are right-closed.
+  *(Worksheet 08 Q3, Q4.)*
+- **`read_csv` already treats `N/A` as missing** but not `-` or `?`, so a file
+  using all three arrives with two different encodings of the same idea.
+  *(Worksheet 07 Q2.)*
+- **`replace` keeps the values you did not list; `map` discards them.** Same
+  dictionary, same column, and `map` turned 62% of it into `NaN`.
+  *(Worksheet 07 Q6.)*
 
 ## A theme worth naming
 
@@ -153,6 +194,18 @@ other six regions reconcile exactly. Round for presentation, never for storage.
 And worksheet 04 Q6 is the reshaping version: `unstack().stack()` on data with
 gaps returns **32 rows where 30 went in**. The two extra rows are combinations
 that never happened, now present in your data as records with missing values.
+
+The transformation half has its own version, and it is the sharpest number in
+the folder. Worksheet 09 flags outliers with the standard 1.5xIQR fence and
+removes them — **11.3% of the rows, carrying 56.8% of the revenue.** Mean order
+value drops from `1468.96` to `715.08`. Every one of those 123 orders is real;
+they are the large customers. The z-score rule on the same column flags 27 rows
+rather than 123, a factor of 4.6, and neither answer is wrong. 'Remove the
+outliers' names no method, and the two obvious methods disagree by five times.
+
+Worksheet 08 Q4 is the quiet one: binning `Sales` with a top edge of 10,000
+leaves 19 orders unbinned and **274,216 of revenue — 17% — outside every band**,
+while `value_counts()` prints four tidy bands that look complete.
 
 ## How to use the solutions
 
