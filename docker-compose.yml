@@ -69,6 +69,9 @@ services:
       # pyarrow in the image -- see jupyter-sql/Dockerfile. base-notebook ships
       # none of them, so rebuild the image if these worksheets fail to import.
       - ./afternoon-class-3008/exercises:/home/jovyan/work/afternoon-class-3008
+      # week 3 day 2 continues Pandas: reshaping (L04) and transformation (L05).
+      # Same image requirements as 30/08 -- pandas and friends must be present.
+      - ./week3_day2/exercises:/home/jovyan/work/week3_day2
       # ANSWERS ARE PUBLISHED TO EVERYONE. This console is shared across the
       # classroom LAN, so mounting solutions/ here means every student can read
       # every answer to every session -- including exercises they have not
