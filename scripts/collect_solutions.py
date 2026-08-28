@@ -32,6 +32,7 @@ CLASSES = [
     "afternoon-class-2608",
     "morning-class-2708",
     "afternoon-class-3008",
+    "week3_day2",
 ]
 
 SKIP_DIRS = {".ipynb_checkpoints", "__pycache__"}
