@@ -31,14 +31,17 @@ CLASSES = [
     "morning-class-2508",
     "afternoon-class-2608",
     "morning-class-2708",
+    "afternoon-class-3008",
 ]
 
 SKIP_DIRS = {".ipynb_checkpoints", "__pycache__"}
 
-# Notebooks, plus the data files a notebook needs beside it. Worksheet 08 of
-# 27/08 reads data/*.csv with a RELATIVE path, so the mirror has to carry
-# those too or the published solution cannot be re-run from the console.
-KEEP_SUFFIXES = (".ipynb", ".csv")
+# Notebooks, plus the data files a notebook needs beside it. Several solutions
+# read data/ with a RELATIVE path, so the mirror has to carry those too or the
+# published answer cannot be re-run from the console:
+#   27/08 worksheet 08          .csv
+#   30/08 worksheets 11-14      .csv .tsv .json .xlsx
+KEEP_SUFFIXES = (".ipynb", ".csv", ".tsv", ".json", ".xlsx")
 
 
 def sources():

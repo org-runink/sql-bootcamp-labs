@@ -1,0 +1,301 @@
+OrderID,OrderDate,Region,Category,Product,ShipMode,Quantity,Sales,Discount,Profit
+8710,2009-01-04,Ontario,Office Supplies,"""While you Were Out"" Message Book, One Form per Page",Express Air,42,151.35000,0.07,8.33
+5251,2011-04-11,Ontario,Technology,2160,Express Air,38,3821.03900,0.05,1057.89
+17024,2009-10-13,Ontario,Office Supplies,Belkin F9M820V08 8 Outlet Surge,Regular Air,31,1401.75000,0.02,426.44
+16326,2010-05-10,Ontario,Office Supplies,"""While you Were Out"" Message Book, One Form per Page",Regular Air,39,147.46000,0.06,14.13
+15808,2010-12-14,Ontario,Technology,1726 Digital Answering Machine,Regular Air,3,58.14000,0.01,-96.25
+12452,2010-12-07,Ontario,Technology,"3.5"" IBM Formatted Diskettes, DS/HD",Regular Air,17,112.86000,0.04,-56.78
+15808,2010-12-14,Ontario,Furniture,3M Hangers With Command Adhesive,Regular Air,33,126.88000,0.05,12.63
+16326,2010-05-10,Ontario,Technology,"80 Minute CD-R Spindle, 100/Pack - Staples",Regular Air,39,1538.33000,0.03,471.35
+40961,2011-03-30,Ontario,Office Supplies,Avery 520,Regular Air,7,23.84000,0.02,5.88
+15808,2010-12-14,Ontario,Office Supplies,"Avery Flip-Chart Easel Binder, Black",Express Air,42,906.64000,0.07,-148.93
+15808,2010-12-14,Ontario,Technology,Belkin 105-Key Black Keyboard,Regular Air,45,882.96000,0.06,11.65
+59815,2010-12-15,West,Office Supplies,"""While you Were Out"" Message Book, One Form per Page",Regular Air,14,51.56000,0.09,-1.06
+36647,2009-06-30,West,Office Supplies,"*Staples* vLetter Openers, 2/Pack",Regular Air,16,55.44000,0.09,-21.91
+36356,2011-12-25,West,Office Supplies,Avery 510,Regular Air,33,117.77000,0.08,47.98
+58470,2011-06-08,West,Office Supplies,"""While you Were Out"" Message Book, One Form per Page",Regular Air,13,49.08000,0.06,-0.31
+34083,2012-02-05,West,Technology,Accessory6,Express Air,29,1415.14800,0.02,-64.94
+35239,2011-11-12,West,Office Supplies,"Advantus 10-Drawer Portable Organizer, Chrome Metal Frame, Smoke Drawers",Regular Air,38,2257.88000,0.01,474.98
+50657,2011-12-18,Atlantic,Office Supplies,"""While you Were Out"" Message Book, One Form per Page",Express Air,16,60.02000,0.10,0.94
+47173,2009-09-01,Atlantic,Technology,Bell Sonecor JB700 Caller ID,Regular Air,41,277.07450,0.03,-128.44
+34017,2009-03-23,Ontario,Office Supplies,*Staples* Highlighting Markers,Express Air,20,103.39000,0.05,29.17
+26918,2009-04-06,Ontario,Office Supplies,*Staples* Highlighting Markers,Regular Air,16,77.96000,0.05,16.65
+54342,2009-06-08,West,Office Supplies,*Staples* Highlighting Markers,Regular Air,2,10.48000,0.02,-5.65
+21831,2009-09-19,West,Office Supplies,Avery White Multi-Purpose Labels,Regular Air,6,28.39000,0.05,3.84
+34275,2009-07-01,Atlantic,Office Supplies,*Staples* Highlighting Markers,Regular Air,27,123.46000,0.07,26.66
+29382,2010-11-17,Atlantic,Furniture,12-1/2 Diameter Round Wall Clock,Express Air,34,684.66000,0.07,35.09
+44576,2009-12-25,Atlantic,Furniture,Bevis 36 x 72 Conference Tables,Delivery Truck,38,5016.25000,0.01,-189.35
+47876,2009-12-25,Atlantic,Office Supplies,Bionaire Personal Warm Mist Humidifier/Vaporizer,Regular Air,8,365.22000,0.04,58.08
+4004,2010-05-06,Quebec,Office Supplies,*Staples* Highlighting Markers,Regular Air,14,63.52000,0.10,8.66
+39972,2012-09-25,Quebec,Office Supplies,Avery 48,Regular Air,35,224.58000,0.03,108.49
+39972,2012-09-25,Quebec,Office Supplies,Boston 1799 Powerhouseª Electric Pencil Sharpener,Regular Air,36,138.59000,0.01,62.73
+44229,2010-05-14,Ontario,Office Supplies,*Staples* Highlighting Markers,Regular Air,39,185.69000,0.02,50.16
+45125,2012-05-28,Ontario,Technology,5165,Regular Air,32,4834.80000,0.00,1193.11
+13861,2010-08-11,Ontario,Office Supplies,*Staples* Highlighting Markers,Regular Air,7,37.30000,0.00,5.03
+39330,2010-07-17,Ontario,Office Supplies,Acme Kleencut¨ Forged Steel Scissors,Express Air,29,184.77000,0.00,-71.96
+46336,2011-07-29,West,Office Supplies,*Staples* Highlighting Markers,Regular Air,31,143.85000,0.10,34.14
+56420,2011-07-24,West,Technology,5170i,Regular Air,22,2403.13700,0.00,377.62
+57412,2009-07-13,West,Technology,Bell Sonecor JB700 Caller ID,Regular Air,34,223.49900,0.06,-122.13
+39169,2011-08-26,Quebec,Office Supplies,*Staples* Highlighting Markers,Regular Air,5,24.91000,0.00,-0.90
+13476,2010-10-16,Quebec,Office Supplies,"Acco Pressboard Covers with Storage Hooks, 14 7/8"" x 11"", Light Blue",Express Air,47,231.29000,0.09,-147.86
+1444,2009-12-05,Quebec,Office Supplies,Advantus Rolling Storage Box,Regular Air,24,416.40000,0.02,24.33
+46662,2011-12-29,West,Office Supplies,*Staples* Highlighting Markers,Regular Air,33,162.00000,0.01,45.84
+46662,2011-12-29,West,Office Supplies,Laser & Ink Jet Business Envelopes,Regular Air,48,3410.15750,0.10,1137.91
+5860,2012-02-19,West,Office Supplies,*Staples* Highlighting Markers,Regular Air,12,56.73000,0.09,8.33
+3172,2012-06-02,West,Technology,Accessory39,Regular Air,33,584.51100,0.05,-95.98
+24705,2011-09-15,West,Office Supplies,"Angle-D Binders with Locking Rings, Label Holders",Regular Air,34,260.51000,0.03,-127.52
+14018,2010-06-06,West,Office Supplies,Avery White Multi-Purpose Labels,Express Air,30,160.68000,0.08,77.75
+42246,2012-04-26,Ontario,Office Supplies,*Staples* Highlighting Markers,Regular Air,5,25.31000,0.05,-0.50
+2691,2012-04-29,Ontario,Furniture,"Atlantic Metals Mobile 3-Shelf Bookcases, Custom Colors",Delivery Truck,14,3363.14000,0.10,98.75
+53698,2012-06-16,Ontario,Office Supplies,*Staples* Highlighting Markers,Express Air,10,55.33000,0.00,13.38
+6592,2009-12-01,Ontario,Office Supplies,"Acme Design Line 8"" Stainless Steel Bent Scissors w/Champagne Handles, 3-1/8"" Cut",Regular Air,29,194.29000,0.09,-177.17
+44960,2011-05-03,Ontario,Office Supplies,Acme¨ Office Executive Series Stainless Steel Trimmers,Regular Air,22,180.92000,0.10,-82.54
+44960,2011-05-03,Ontario,Technology,BASF Silver 74 Minute CD-R,Regular Air,17,31.68000,0.04,-23.69
+37473,2009-10-01,West,Office Supplies,*Staples* Letter Opener,Regular Air,42,88.23000,0.10,-195.93
+5543,2010-09-24,Quebec,Office Supplies,*Staples* Letter Opener,Regular Air,27,67.30000,0.02,-115.38
+5543,2010-09-24,Quebec,Office Supplies,Belkin Premiere Surge Master II 8-outlet surge protector,Regular Air,15,703.54000,0.04,138.46
+2628,2010-10-21,Ontario,Office Supplies,*Staples* Letter Opener,Regular Air,14,34.59000,0.04,-60.13
+11362,2012-09-10,Atlantic,Office Supplies,*Staples* Letter Opener,Regular Air,27,63.02000,0.07,-119.66
+37888,2009-12-22,Atlantic,Office Supplies,Avery Legal 4-Ring Binder,Regular Air,31,639.19000,0.09,274.90
+3808,2009-04-23,Atlantic,Office Supplies,*Staples* Packaging Labels,Regular Air,2,6.13000,0.08,-2.83
+21799,2011-04-19,Atlantic,Office Supplies,12 Colored Short Pencils,Express Air,42,115.99000,0.05,-53.35
+22628,2009-10-29,Atlantic,Furniture,Bevis Steel Folding Chairs,Delivery Truck,30,2951.70000,0.02,-1111.45
+35300,2010-03-02,Atlantic,Office Supplies,*Staples* Packaging Labels,Regular Air,10,28.81000,0.02,7.15
+10048,2009-05-15,West,Office Supplies,"*Staples* vLetter Openers, 2/Pack",Regular Air,21,78.57000,0.02,-20.65
+19074,2012-06-25,West,Office Supplies,"1.7 Cubic Foot Compact ""Cube"" Office Refrigerators",Delivery Truck,17,3816.59000,0.01,191.47
+21856,2012-04-05,West,Office Supplies,Avery 487,Regular Air,47,168.55000,0.05,71.77
+35461,2009-06-01,Prarie,Office Supplies,"*Staples* vLetter Openers, 2/Pack",Regular Air,30,112.60000,0.04,-25.99
+35461,2009-06-01,Prarie,Office Supplies,Avery Non-Stick Binders,Regular Air,11,48.75000,0.08,3.50
+35782,2011-08-05,Prarie,Furniture,Balt Solid Wood Rectangular Table,Delivery Truck,13,1330.73000,0.06,-450.10
+16545,2010-05-09,Northwest Territories,Office Supplies,"*Staples* vLetter Openers, 2/Pack",Regular Air,1,4.99000,0.04,-3.06
+12771,2009-01-17,Northwest Territories,Office Supplies,"Avery 4027 File Folder Labels for Dot Matrix Printers, 5000 Labels per Box, White",Regular Air,40,1143.49000,0.08,-193.44
+4935,2010-05-24,Ontario,Office Supplies,"*Staples* vLetter Openers, 2/Pack",Regular Air,30,106.64000,0.10,-31.95
+47303,2011-12-05,Ontario,Office Supplies,"#10- 4 1/8"" x 9 1/2"" Security-Tint Envelopes",Regular Air,7,56.90000,0.03,12.64
+21729,2012-12-06,Ontario,Office Supplies,ACCOHIDE¨ Binder by Acco,Regular Air,28,120.98000,0.00,-92.85
+36896,2009-11-03,Ontario,Office Supplies,Avery 494,Regular Air,12,34.01000,0.00,10.58
+31393,2012-05-11,Northwest Territories,Office Supplies,"*Staples* vLetter Openers, 2/Pack",Regular Air,31,110.32000,0.09,-32.65
+28870,2011-11-10,Northwest Territories,Technology,6160,Regular Air,35,3310.94550,0.05,822.40
+33159,2012-04-27,Northwest Territories,Technology,Accessory21,Regular Air,3,56.69500,0.01,-70.97
+27780,2012-10-20,West,Office Supplies,"*Staples* vLetter Openers, 2/Pack",Regular Air,39,147.71000,0.00,-30.25
+13607,2010-11-18,West,Technology,"80 Minute CD-R Spindle, 100/Pack - Staples",Regular Air,12,440.60000,0.07,2.97
+19559,2010-04-15,West,Office Supplies,Laser & Ink Jet Business Envelopes,Express Air,14,1032.02750,0.07,97.40
+13607,2010-11-18,West,Office Supplies,Avery 479,Express Air,37,109.90000,0.09,48.52
+27780,2012-10-20,West,Office Supplies,Avery 481,Regular Air,18,56.41000,0.02,11.92
+53572,2010-05-07,West,Office Supplies,#10 Self-Seal White Envelopes,Regular Air,17,184.09000,0.07,4.79
+48388,2009-08-09,West,Office Supplies,Binder Posts,Regular Air,3,21.64000,0.08,-13.33
+1699,2010-12-29,Atlantic,Office Supplies,#10 Self-Seal White Envelopes,Regular Air,40,430.88000,0.05,39.00
+26304,2011-03-19,Atlantic,Technology,3285,Regular Air,43,7452.13700,0.02,2028.36
+18432,2011-03-12,Atlantic,Office Supplies,Avery Hi-Liter¨ Smear-Safe Highlighters,Express Air,12,76.42000,0.02,20.44
+30532,2011-11-26,Ontario,Office Supplies,#10 Self-Seal White Envelopes,Express Air,23,262.31000,0.04,27.55
+32000,2012-09-13,Ontario,Office Supplies,Acco¨ Hot Clipsª Clips to Go,Regular Air,49,162.16000,0.05,24.95
+38084,2009-03-20,Ontario,Office Supplies,"Black Print Carbonless Snap-Off¨ Rapid Letter, 8 1/2"" x 7""",Regular Air,11,100.36000,0.02,18.41
+18466,2012-05-21,Yukon,Office Supplies,#10 Self-Seal White Envelopes,Regular Air,25,270.16000,0.09,16.92
+18849,2012-08-05,Yukon,Office Supplies,#10 Self-Seal White Envelopes,Regular Air,43,471.87000,0.05,52.27
+13157,2012-02-11,Yukon,Technology,1726 Digital Answering Machine,Regular Air,2,38.93000,0.07,-102.43
+18849,2012-08-05,Yukon,Furniture,9-3/4 Diameter Round Wall Clock,Regular Air,39,539.60000,0.06,-6.50
+23360,2009-05-11,Atlantic,Office Supplies,"#10 White Business Envelopes,4 1/8 x 9 1/2",Express Air,30,512.97000,0.01,261.29
+5698,2009-05-20,West,Office Supplies,"#10 White Business Envelopes,4 1/8 x 9 1/2",Regular Air,7,108.26000,0.06,25.51
+16161,2012-07-28,West,Technology,6162i,Regular Air,49,2692.68950,0.03,768.32
+13986,2011-10-11,West,Technology,"80 Minute CD-R Spindle, 100/Pack - Staples",Regular Air,46,1905.79000,0.01,675.65
+57153,2009-05-26,Ontario,Office Supplies,"#10 White Business Envelopes,4 1/8 x 9 1/2",Regular Air,45,698.10000,0.01,336.25
+7430,2010-06-08,Nunavut,Office Supplies,"#10 White Business Envelopes,4 1/8 x 9 1/2",Regular Air,50,751.77000,0.05,353.20
+57568,2010-06-17,Atlantic,Office Supplies,"#10 White Business Envelopes,4 1/8 x 9 1/2",Regular Air,38,592.54000,0.07,282.11
+56960,2009-08-06,Atlantic,Technology,5170,Express Air,48,2784.82950,0.01,788.29
+39521,2009-08-09,Atlantic,Office Supplies,Avery 491,Regular Air,28,112.35000,0.10,31.27
+4610,2010-06-17,Ontario,Office Supplies,"#10 White Business Envelopes,4 1/8 x 9 1/2",Regular Air,29,447.34000,0.08,203.01
+43713,2012-09-07,Ontario,Office Supplies,12 Colored Short Pencils,Regular Air,12,34.41000,0.05,-17.69
+4610,2010-06-17,Ontario,Technology,"80 Minute Slim Jewel Case CD-R , 10/Pack - Staples",Regular Air,8,66.88000,0.09,-17.01
+46436,2009-04-04,Ontario,Technology,Accessory31,Regular Air,46,1477.57200,0.00,840.05
+53445,2012-10-24,Ontario,Office Supplies,Acco¨ Hot Clipsª Clips to Go,Regular Air,21,73.80000,0.02,11.23
+19205,2010-07-26,Ontario,Office Supplies,"Avery Hi-Liter GlideStik Fluorescent Highlighter, Yellow Ink",Regular Air,31,107.97000,0.00,2.36
+27811,2011-03-04,Ontario,Office Supplies,Avery Self-Adhesive Photo Pockets for Polaroid Photos,Regular Air,31,197.59000,0.09,-73.62
+24646,2011-04-15,Prarie,Office Supplies,"#10 White Business Envelopes,4 1/8 x 9 1/2",Regular Air,46,662.51000,0.09,293.32
+23104,2011-04-09,Prarie,Office Supplies,"Advantus Push Pins, Aluminum Head",Regular Air,24,142.80000,0.01,-25.00
+10309,2009-11-21,Prarie,Office Supplies,Avery Legal 4-Ring Binder,Regular Air,23,496.15000,0.03,213.38
+51974,2011-01-26,Prarie,Office Supplies,Avery Printable Repositionable Plastic Tabs,Regular Air,2,23.18000,0.05,-14.88
+9921,2011-05-14,Prarie,Office Supplies,"#10 White Business Envelopes,4 1/8 x 9 1/2",Regular Air,23,356.09000,0.05,155.82
+26976,2011-05-20,Yukon,Office Supplies,"#10 White Business Envelopes,4 1/8 x 9 1/2",Regular Air,44,729.75000,0.02,375.25
+26976,2011-05-20,Yukon,Technology,5170i,Express Air,11,1154.93750,0.04,-176.06
+29411,2012-04-06,Ontario,Office Supplies,"#10 White Business Envelopes,4 1/8 x 9 1/2",Regular Air,33,542.24000,0.02,268.53
+21796,2012-05-06,Ontario,Office Supplies,"#10 White Business Envelopes,4 1/8 x 9 1/2",Regular Air,41,607.13000,0.10,274.66
+21796,2012-05-06,Ontario,Technology,1726 Digital Answering Machine,Regular Air,2,40.82550,0.01,-99.98
+46468,2011-01-11,Ontario,Technology,"80 Minute CD-R Spindle, 100/Pack - Staples",Express Air,41,1618.31000,0.08,504.71
+57091,2011-10-31,Ontario,Office Supplies,Alliance Rubber Bands,Express Air,6,14.85000,0.05,-2.79
+38564,2009-11-02,Ontario,Office Supplies,Avery 506,Express Air,21,98.51000,0.10,45.93
+26310,2012-07-29,Prarie,Office Supplies,"#10 White Business Envelopes,4 1/8 x 9 1/2",Regular Air,5,77.41000,0.05,9.35
+47522,2012-10-23,West,Office Supplies,"#10 White Business Envelopes,4 1/8 x 9 1/2",Regular Air,5,80.56000,0.03,12.50
+44261,2012-03-23,West,Technology,Accessory41,Regular Air,10,306.66300,0.07,-17.41
+7461,2009-01-12,West,Office Supplies,"#10- 4 1/8"" x 9 1/2"" Recycled Envelopes",Regular Air,28,260.79000,0.00,111.40
+44198,2011-01-04,West,Technology,Accessory39,Express Air,35,625.94850,0.04,-87.02
+39270,2011-02-06,West,Office Supplies,"Advantus Push Pins, Aluminum Head",Regular Air,11,65.78000,0.07,-17.42
+34498,2009-02-15,Prarie,Office Supplies,"#10- 4 1/8"" x 9 1/2"" Recycled Envelopes",Express Air,4,47.12000,0.09,10.80
+42243,2012-03-11,Prarie,Office Supplies,"1/4 Fold Party Design Invitations & White Envelopes, 24 8-1/2"" X 11"" Cards, 25 Env./Pack",Regular Air,19,145.26000,0.05,-35.75
+54819,2009-10-10,Prarie,Technology,6120,Regular Air,46,2710.50550,0.03,624.12
+59044,2011-07-20,Prarie,Office Supplies,Avery 481,Regular Air,6,20.19000,0.02,1.25
+13542,2009-03-08,Prarie,Office Supplies,"#10- 4 1/8"" x 9 1/2"" Recycled Envelopes",Regular Air,33,310.44000,0.03,-90.21
+15524,2012-05-11,Prarie,Office Supplies,Acme¨ Preferred Stainless Steel Scissors,Regular Air,27,156.82000,0.03,-37.62
+18119,2009-06-24,West,Office Supplies,"#10- 4 1/8"" x 9 1/2"" Recycled Envelopes",Regular Air,37,347.84000,0.00,-99.25
+28519,2010-06-22,West,Office Supplies,Laser & Ink Jet Business Envelopes,Regular Air,4,268.71050,0.09,-337.66
+38887,2009-10-24,West,Office Supplies,"Acco Recycled 2"" Capacity Laser Printer Hanging Data Binders",Regular Air,25,378.90000,0.02,28.46
+50882,2010-08-31,West,Office Supplies,Acme¨ Box Cutter Scissors,Regular Air,37,366.84000,0.08,-50.10
+58725,2010-05-20,Prarie,Office Supplies,"#10- 4 1/8"" x 9 1/2"" Recycled Envelopes",Regular Air,39,335.35000,0.05,-134.97
+2055,2010-09-03,Yukon,Office Supplies,"#10- 4 1/8"" x 9 1/2"" Recycled Envelopes",Regular Air,7,66.41000,0.05,-32.35
+14048,2010-05-17,Yukon,Technology,Accessory32,Regular Air,40,2035.39300,0.01,1152.69
+37829,2010-09-29,Atlantic,Office Supplies,"#10- 4 1/8"" x 9 1/2"" Recycled Envelopes",Regular Air,28,257.90000,0.00,-84.69
+37792,2011-12-29,Atlantic,Office Supplies,Boston 1799 Powerhouseª Electric Pencil Sharpener,Regular Air,49,183.08000,0.01,82.49
+12261,2010-10-23,Ontario,Office Supplies,"#10- 4 1/8"" x 9 1/2"" Recycled Envelopes",Regular Air,23,217.35000,0.00,-67.19
+53024,2012-05-12,Ontario,Technology,Accessory6,Regular Air,46,2255.19450,0.03,74.51
+12261,2010-10-23,Ontario,Office Supplies,Acco 6 Outlet Guardian Premium Surge Suppressor,Regular Air,19,281.74000,0.06,25.67
+44706,2010-03-30,Ontario,Office Supplies,Binder Clips by OIC,Regular Air,33,47.48000,0.07,3.35
+26050,2011-06-16,Ontario,Office Supplies,"#10- 4 1/8"" x 9 1/2"" Recycled Envelopes",Regular Air,44,365.24000,0.09,-163.13
+26279,2009-07-30,Ontario,Technology,Accessory23,Regular Air,7,211.74350,0.04,-33.31
+58598,2011-08-22,Ontario,Office Supplies,Advantus SlideClipª Paper Clips,Regular Air,25,89.32000,0.01,33.46
+5381,2010-01-28,Ontario,Office Supplies,"Ampad¨ Evidence¨ Wirebond Steno Books, 6"" x 9""",Regular Air,27,63.87000,0.09,-149.93
+19653,2012-09-11,Ontario,Office Supplies,Avery Poly Binder Pockets,Regular Air,34,125.46000,0.07,-129.63
+55270,2010-01-22,Ontario,Office Supplies,Binding Machine Supplies,Regular Air,1,35.14000,0.02,-12.75
+12293,2011-06-18,Atlantic,Office Supplies,"#10- 4 1/8"" x 9 1/2"" Recycled Envelopes",Regular Air,31,283.17000,0.00,119.64
+10852,2010-10-26,Atlantic,Furniture,"Atlantic Metals Mobile 5-Shelf Bookcases, Custom Colors",Delivery Truck,40,12450.48000,0.01,3030.16
+11269,2012-05-26,Atlantic,Office Supplies,Avery 493,Regular Air,49,233.28000,0.04,112.35
+52930,2011-11-08,Ontario,Office Supplies,"#10- 4 1/8"" x 9 1/2"" Recycled Envelopes",Regular Air,16,136.98000,0.04,44.12
+52930,2011-11-08,Ontario,Technology,Accessory24,Regular Air,24,1112.15700,0.09,140.81
+52930,2011-11-08,Ontario,Technology,Accessory32,Regular Air,40,1865.58850,0.02,972.90
+56995,2009-10-15,Ontario,Office Supplies,Binder Posts,Express Air,27,157.57000,0.08,-57.06
+31523,2012-03-08,Ontario,Office Supplies,"#10- 4 1/8"" x 9 1/2"" Recycled Envelopes",Regular Air,19,179.33000,0.00,-58.76
+29537,2012-09-19,Ontario,Office Supplies,Belkin 6 Outlet Metallic Surge Strip,Express Air,30,318.56000,0.08,-30.97
+5473,2012-03-24,West,Office Supplies,"#10- 4 1/8"" x 9 1/2"" Recycled Envelopes",Regular Air,42,355.69000,0.09,-149.46
+40134,2011-10-09,West,Office Supplies,Belkin 6 Outlet Metallic Surge Strip,Regular Air,10,109.37000,0.10,-21.66
+22373,2012-03-28,Ontario,Office Supplies,"#10- 4 1/8"" x 9 1/2"" Recycled Envelopes",Express Air,26,233.03000,0.05,-86.34
+27461,2010-02-26,Ontario,Office Supplies,Avery 507,Express Air,40,121.92000,0.09,51.23
+55749,2012-05-03,Prarie,Office Supplies,"#10- 4 1/8"" x 9 1/2"" Recycled Envelopes",Regular Air,42,364.80000,0.01,149.45
+11011,2012-05-13,Atlantic,Office Supplies,"#10- 4 1/8"" x 9 1/2"" Recycled Envelopes",Regular Air,36,305.62000,0.10,-129.86
+41383,2010-05-12,Atlantic,Office Supplies,"Avery Trapezoid Extra Heavy Duty 4"" Binders",Regular Air,36,1449.45000,0.04,620.07
+48423,2012-10-31,Prarie,Office Supplies,"#10- 4 1/8"" x 9 1/2"" Recycled Envelopes",Regular Air,49,414.11000,0.08,-172.32
+59776,2009-03-09,Prarie,Office Supplies,"#10- 4 1/8"" x 9 1/2"" Security-Tint Envelopes",Express Air,35,285.01000,0.01,124.82
+28867,2011-07-22,Prarie,Technology,600 Series Flip,Regular Air,26,2169.75250,0.02,374.75
+52197,2012-08-04,Prarie,Office Supplies,Advantus Map Pennant Flags and Round Head Tacks,Regular Air,23,91.94000,0.01,-10.11
+13735,2009-05-21,Ontario,Office Supplies,"#10- 4 1/8"" x 9 1/2"" Security-Tint Envelopes",Regular Air,36,281.71000,0.02,117.38
+32037,2009-02-16,Ontario,Office Supplies,Avery Printable Repositionable Plastic Tabs,Regular Air,37,311.66000,0.04,-63.81
+43974,2009-09-16,West,Office Supplies,"#10- 4 1/8"" x 9 1/2"" Security-Tint Envelopes",Regular Air,8,64.23000,0.03,15.83
+47683,2010-09-01,West,Office Supplies,Avery Reinforcements for Hole-Punch Pages,Regular Air,38,81.97000,0.05,-148.80
+7744,2009-11-17,Ontario,Office Supplies,"#10- 4 1/8"" x 9 1/2"" Security-Tint Envelopes",Regular Air,1,8.34000,0.09,-3.44
+802,2011-01-04,Ontario,Technology,"AT&T Black Trimline Phone, Model 210",Regular Air,2,38.50000,0.09,-52.14
+22501,2010-05-18,Northwest Territories,Office Supplies,"#10- 4 1/8"" x 9 1/2"" Security-Tint Envelopes",Express Air,2,30.83000,0.04,7.27
+33444,2012-10-06,Northwest Territories,Office Supplies,12 Colored Short Pencils,Regular Air,11,30.51000,0.09,-17.68
+40067,2012-02-17,Northwest Territories,Technology,3390,Regular Air,38,2157.30850,0.00,519.25
+9763,2011-08-13,Northwest Territories,Office Supplies,Avery 506,Regular Air,44,176.26000,0.07,75.13
+11014,2010-09-07,West,Office Supplies,"#10- 4 1/8"" x 9 1/2"" Security-Tint Envelopes",Regular Air,39,286.81000,0.07,110.05
+4389,2009-05-04,West,Technology,2190,Express Air,42,2455.27600,0.04,693.06
+48293,2012-04-09,West,Office Supplies,"#10- 4 1/8"" x 9 1/2"" Security-Tint Envelopes",Regular Air,47,370.60000,0.03,160.72
+34980,2010-08-02,West,Furniture,3M Polarizing Light Filter Sleeves,Regular Air,7,140.77000,0.01,100.77
+34980,2010-08-02,West,Office Supplies,Bionaire Personal Warm Mist Humidifier/Vaporizer,Regular Air,12,562.15000,0.01,148.34
+48199,2009-01-18,Atlantic,Office Supplies,"#10-4 1/8"" x 9 1/2"" Premium Diagonal Seam Envelopes",Regular Air,47,672.46000,0.10,279.74
+28836,2010-10-24,Atlantic,Technology,688,Regular Air,50,8221.29350,0.06,2342.21
+4454,2009-02-01,Atlantic,Office Supplies,Avery 497,Regular Air,17,55.45000,0.01,21.42
+998,2009-11-25,Nunavut,Office Supplies,"#10-4 1/8"" x 9 1/2"" Premium Diagonal Seam Envelopes",Regular Air,16,248.26000,0.07,93.80
+8292,2010-02-01,Quebec,Office Supplies,"#10-4 1/8"" x 9 1/2"" Premium Diagonal Seam Envelopes",Regular Air,18,299.87000,0.02,130.04
+20900,2010-11-24,Quebec,Technology,600 Series Non-Flip,Regular Air,50,1978.36650,0.00,483.60
+19558,2011-02-25,Quebec,Office Supplies,Acco¨ Hot Clipsª Clips to Go,Regular Air,2,7.98000,0.04,-3.93
+27879,2010-02-26,Atlantic,Office Supplies,"#10-4 1/8"" x 9 1/2"" Premium Diagonal Seam Envelopes",Regular Air,44,669.01000,0.08,299.35
+15651,2012-10-04,Atlantic,Furniture,Bevis Round Conference Room Tables and Bases,Delivery Truck,8,1496.83000,0.07,-329.72
+49767,2010-11-08,West,Office Supplies,"#10-4 1/8"" x 9 1/2"" Premium Diagonal Seam Envelopes",Regular Air,43,634.38000,0.09,272.40
+32165,2012-10-14,West,Technology,Accessory4,Regular Air,38,2939.68250,0.02,192.06
+36773,2010-09-23,West,Office Supplies,Ames Color-File¨ Green Diamond Border X-ray Mailers,Regular Air,24,2048.78000,0.05,994.68
+26214,2011-11-20,Prarie,Office Supplies,"#10-4 1/8"" x 9 1/2"" Premium Diagonal Seam Envelopes",Express Air,19,305.68000,0.10,128.17
+24993,2010-03-11,Prarie,Technology,Accessory28,Regular Air,36,1561.22050,0.09,-226.82
+24193,2009-03-14,Prarie,Technology,Accessory4,Regular Air,19,1426.51250,0.04,-175.18
+16422,2011-10-09,Prarie,Office Supplies,Acme¨ Box Cutter Scissors,Regular Air,16,171.50000,0.02,-20.41
+772,2010-04-16,Quebec,Office Supplies,#6 3/4 Gummed Flap White Envelopes,Regular Air,25,233.05000,0.10,86.93
+36739,2009-10-08,Quebec,Furniture,Aluminum Document Frame,Regular Air,27,331.17000,0.07,97.19
+772,2010-04-16,Quebec,Office Supplies,Bionaire 99.97% HEPA Air Cleaner,Regular Air,35,589.24000,0.08,-38.35
+40512,2010-09-17,Prarie,Office Supplies,#6 3/4 Gummed Flap White Envelopes,Regular Air,41,405.83000,0.06,178.86
+59491,2012-03-24,Prarie,Furniture,Aluminum Document Frame,Regular Air,46,562.95000,0.06,147.12
+59491,2012-03-24,Prarie,Office Supplies,Avery Poly Binder Pockets,Regular Air,8,32.31000,0.09,-33.59
+35841,2011-05-08,Quebec,Office Supplies,#6 3/4 Gummed Flap White Envelopes,Regular Air,23,230.41000,0.06,94.39
+8162,2009-10-07,Quebec,Technology,Belkin MediaBoard 104- Keyboard,Regular Air,25,670.39000,0.03,-82.26
+59969,2012-01-11,Prarie,Office Supplies,#6 3/4 Gummed Flap White Envelopes,Regular Air,42,437.73000,0.01,205.70
+55808,2011-02-14,Prarie,Technology,1726 Digital Answering Machine,Regular Air,45,837.38600,0.03,104.33
+57477,2010-09-26,Prarie,Technology,Accessory12,Regular Air,45,3086.51150,0.08,1560.96
+57477,2010-09-26,Prarie,Office Supplies,Acco 6 Outlet Guardian Premium Surge Suppressor,Regular Air,50,745.48000,0.02,119.12
+292,2012-01-12,Prarie,Office Supplies,#6 3/4 Gummed Flap White Envelopes,Regular Air,43,412.62000,0.08,175.54
+9829,2011-12-08,Prarie,Office Supplies,Avery 508,Regular Air,4,18.46000,0.06,-0.43
+51044,2012-01-18,Prarie,Office Supplies,#6 3/4 Gummed Flap White Envelopes,Regular Air,17,155.89000,0.10,50.19
+36003,2010-10-31,Prarie,Office Supplies,"Acco Pressboard Covers with Storage Hooks, 14 7/8"" x 11"", Light Blue",Regular Air,40,207.42000,0.04,-115.35
+16262,2011-01-01,Prarie,Office Supplies,Array¨ Memo Cubes,Express Air,11,62.84000,0.06,9.53
+24384,2011-03-26,Prarie,Office Supplies,Avery 508,Regular Air,44,205.11000,0.06,95.52
+51044,2012-01-18,Prarie,Office Supplies,Avery Hi-Liter¨ Smear-Safe Highlighters,Regular Air,19,117.27000,0.01,35.45
+1542,2010-09-14,Prarie,Office Supplies,Belkin Premiere Surge Master II 8-outlet surge protector,Regular Air,47,2150.25000,0.06,586.93
+30567,2009-01-14,Prarie,Office Supplies,"1.7 Cubic Foot Compact ""Cube"" Office Refrigerators",Delivery Truck,14,2690.84000,0.10,-368.02
+24352,2010-05-10,Prarie,Office Supplies,"Adams ""While You Were Out"" Message Pads",Regular Air,32,103.48000,0.03,20.53
+12067,2010-02-04,Prarie,Office Supplies,Binder Posts,Regular Air,45,271.06000,0.00,-76.60
+37440,2010-06-23,West,Office Supplies,"1.7 Cubic Foot Compact ""Cube"" Office Refrigerators",Delivery Truck,39,8407.08000,0.04,629.40
+293,2012-10-01,Nunavut,Office Supplies,"1.7 Cubic Foot Compact ""Cube"" Office Refrigerators",Delivery Truck,49,10123.02000,0.07,457.81
+21634,2012-10-28,Ontario,Office Supplies,"1.7 Cubic Foot Compact ""Cube"" Office Refrigerators",Delivery Truck,8,1611.73000,0.10,-314.61
+30208,2012-07-16,Ontario,Technology,600 Series Non-Flip,Regular Air,46,1752.09650,0.10,356.35
+36130,2012-09-13,Ontario,Technology,"Belkin 107-key enhanced keyboard, USB/PS/2 interface",Regular Air,23,394.80000,0.10,-113.80
+59906,2010-05-20,Ontario,Office Supplies,"Black Print Carbonless Snap-Off¨ Rapid Letter, 8 1/2"" x 7""",Regular Air,32,284.92000,0.03,81.29
+3395,2009-10-29,West,Office Supplies,"1/4 Fold Party Design Invitations & White Envelopes, 24 8-1/2"" X 11"" Cards, 25 Env./Pack",Regular Air,1,13.16000,0.03,-10.29
+30147,2012-06-17,West,Furniture,12-1/2 Diameter Round Wall Clock,Regular Air,37,740.14000,0.06,29.73
+3395,2009-10-29,West,Office Supplies,"Acco PRESSTEX¨ Data Binder with Storage Hooks, Dark Blue, 14 7/8"" X 11""",Express Air,31,181.17000,0.06,-59.88
+15622,2011-08-25,West,Technology,Timeport L7089,Delivery Truck,34,8581.25000,0.00,1464.23
+29826,2009-09-24,West,Technology,"Belkin 107-key enhanced keyboard, USB/PS/2 interface",Regular Air,9,157.63000,0.06,-78.13
+54534,2012-03-19,West,Office Supplies,"1/4 Fold Party Design Invitations & White Envelopes, 24 8-1/2"" X 11"" Cards, 25 Env./Pack",Regular Air,16,124.71000,0.01,-30.04
+15872,2012-10-30,Prarie,Office Supplies,"1/4 Fold Party Design Invitations & White Envelopes, 24 8-1/2"" X 11"" Cards, 25 Env./Pack",Regular Air,23,188.53000,0.00,-27.49
+15872,2012-10-30,Prarie,Office Supplies,Avanti 1.7 Cu. Ft. Refrigerator,Delivery Truck,48,5198.12000,0.01,1481.67
+40097,2009-01-09,Ontario,Office Supplies,12 Colored Short Pencils,Regular Air,47,117.88000,0.10,-71.00
+8388,2012-02-23,Ontario,Office Supplies,"Adams Phone Message Book, Professional, 400 Message Capacity, 5 3/6Ó x 11Ó",Regular Air,42,288.90000,0.02,96.34
+11652,2011-11-10,Ontario,Office Supplies,Array¨ Memo Cubes,Regular Air,25,122.09000,0.10,14.11
+39589,2009-08-02,Ontario,Office Supplies,Avery 508,Regular Air,20,95.08000,0.06,39.91
+56901,2009-09-11,Atlantic,Office Supplies,12 Colored Short Pencils,Regular Air,36,100.68000,0.00,-45.21
+23936,2009-12-17,Prarie,Office Supplies,12 Colored Short Pencils,Regular Air,27,71.39000,0.09,-39.33
+40901,2012-07-29,Prarie,Technology,"3.5"" IBM Formatted Diskettes, DS/HD",Regular Air,40,273.14000,0.02,-96.90
+40901,2012-07-29,Prarie,Technology,300 Series Non-Flip,Express Air,22,3100.11150,0.02,567.37
+41634,2012-12-08,Prarie,Technology,"80 Minute Slim Jewel Case CD-R , 10/Pack - Staples",Regular Air,7,57.35000,0.06,-28.55
+30564,2009-02-26,Prarie,Technology,Accessory41,Regular Air,20,606.39850,0.09,126.13
+40611,2012-03-28,Prarie,Technology,Accessory9,Regular Air,43,1407.51500,0.00,657.45
+15397,2010-02-06,Ontario,Office Supplies,12 Colored Short Pencils,Regular Air,43,121.94000,0.01,-51.30
+14119,2010-05-31,Ontario,Technology,Accessory24,Regular Air,35,1599.07100,0.04,296.66
+14119,2010-05-31,Ontario,Technology,Accessory27,Regular Air,31,968.23500,0.05,-158.61
+43271,2010-03-03,Quebec,Office Supplies,12 Colored Short Pencils,Regular Air,2,7.75000,0.03,-5.27
+53411,2011-11-29,Quebec,Technology,Belkin MediaBoard 104- Keyboard,Regular Air,25,667.64000,0.08,-57.53
+39749,2010-06-27,Ontario,Office Supplies,12 Colored Short Pencils,Regular Air,43,110.64000,0.06,-62.60
+17735,2012-07-12,Ontario,Office Supplies,Avery Self-Adhesive Photo Pockets for Polaroid Photos,Regular Air,45,311.65000,0.03,-71.25
+29639,2011-04-17,Prarie,Office Supplies,12 Colored Short Pencils,Regular Air,8,22.37000,0.04,-14.09
+40928,2009-09-12,Prarie,Technology,Accessory4,Regular Air,4,292.34050,0.01,-420.59
+50087,2010-05-15,Prarie,Office Supplies,Acco¨ Hot Clipsª Clips to Go,Regular Air,17,58.86000,0.03,6.96
+27141,2010-02-04,Prarie,Office Supplies,"Advantus 10-Drawer Portable Organizer, Chrome Metal Frame, Smoke Drawers",Regular Air,28,1645.51000,0.06,300.34
+8642,2010-01-16,Prarie,Office Supplies,Avery 503,Regular Air,13,133.04000,0.04,49.69
+45893,2011-05-26,Prarie,Office Supplies,Avery Non-Stick Binders,Regular Air,15,68.03000,0.05,8.87
+14951,2011-05-17,Prarie,Office Supplies,12 Colored Short Pencils,Regular Air,26,65.21000,0.08,-41.60
+47270,2010-08-02,Prarie,Technology,6185,Regular Air,19,3559.61300,0.00,747.74
+49760,2011-10-01,Prarie,Technology,8890,Regular Air,13,1281.17950,0.02,-26.62
+58755,2011-12-03,Prarie,Office Supplies,"Ampad¨ Evidence¨ Wirebond Steno Books, 6"" x 9""",Regular Air,18,47.11000,0.00,-95.42
+3650,2012-05-27,Prarie,Office Supplies,Avery Poly Binder Pockets,Express Air,36,139.95000,0.04,-128.59
+59809,2011-03-08,Prarie,Technology,Belkin ErgoBoardª Keyboard,Regular Air,16,506.84000,0.02,-38.32
+17282,2009-11-18,Prarie,Office Supplies,Binding Machine Supplies,Regular Air,37,988.42000,0.09,253.94
+18371,2009-09-18,Prarie,Office Supplies,Boston 1645 Deluxe Heavier-Duty Electric Pencil Sharpener,Regular Air,30,1394.36000,0.00,271.45
+51557,2011-10-31,West,Office Supplies,12 Colored Short Pencils,Regular Air,14,37.90000,0.08,-22.01
+37185,2012-10-31,Atlantic,Office Supplies,12 Colored Short Pencils,Regular Air,8,23.19000,0.02,-13.27
+33220,2009-04-15,Prarie,Furniture,12-1/2 Diameter Round Wall Clock,Regular Air,40,736.96000,0.10,-34.29
+15040,2009-12-04,Prarie,Office Supplies,"Black Print Carbonless Snap-Off¨ Rapid Letter, 8 1/2"" x 7""",Express Air,48,410.35000,0.10,114.02
+43936,2010-03-13,Prarie,Office Supplies,Boston 16701 Slimline Battery Pencil Sharpener,Regular Air,42,670.65000,0.08,41.66
+54464,2009-09-01,Prarie,Furniture,12-1/2 Diameter Round Wall Clock,Regular Air,11,227.41000,0.06,44.29
+56612,2009-07-22,Prarie,Technology,8890,Regular Air,38,4008.72750,0.00,1219.34
+23362,2010-08-27,Prarie,Furniture,12-1/2 Diameter Round Wall Clock,Regular Air,45,852.05000,0.10,-20.60
+26503,2011-04-21,Prarie,Furniture,12-1/2 Diameter Round Wall Clock,Regular Air,12,262.09000,0.01,58.69
+2688,2012-01-23,Prarie,Technology,Accessory8,Regular Air,31,2080.03500,0.10,844.90
+52258,2009-02-10,Prarie,Furniture,Aluminum Document Frame,Regular Air,5,63.85000,0.04,40.44
+55046,2009-04-13,Prarie,Office Supplies,"Array¨ Parchment Paper, Assorted Colors",Express Air,2,29.32000,0.08,-12.93
+6982,2011-11-16,Nunavut,Furniture,12-1/2 Diameter Round Wall Clock,Regular Air,41,844.09000,0.04,52.56
+3908,2010-03-08,Nunavut,Technology,6160,Regular Air,8,820.28400,0.00,-180.20
+6982,2011-11-16,Nunavut,Technology,"80 Minute CD-R Spindle, 100/Pack - Staples",Express Air,32,1311.25000,0.00,407.44
+25318,2011-11-19,Northwest Territories,Furniture,12-1/2 Diameter Round Wall Clock,Express Air,22,440.92000,0.05,-65.18
+3845,2012-04-25,West,Furniture,12-1/2 Diameter Round Wall Clock,Regular Air,22,475.72000,0.02,-10.40
+18279,2009-02-26,West,Technology,"80 Minute Slim Jewel Case CD-R , 10/Pack - Staples",Regular Air,22,184.35000,0.07,11.95
+11909,2009-11-24,West,Technology,Accessory25,Regular Air,11,194.17400,0.03,-20.91
+11943,2010-04-07,West,Office Supplies,"Acco Recycled 2"" Capacity Laser Printer Hanging Data Binders",Regular Air,49,657.94000,0.09,7.35
+45664,2012-06-09,West,Furniture,12-1/2 Diameter Round Wall Clock,Regular Air,24,473.03000,0.09,26.27
+30913,2012-09-22,West,Furniture,12-1/2 Diameter Round Wall Clock,Express Air,24,496.62000,0.07,49.86
+8609,2012-04-14,West,Technology,Accessory37,Regular Air,4,72.00350,0.04,-108.08
+30913,2012-09-22,West,Office Supplies,Avery 498,Regular Air,44,126.36000,0.02,50.26
+13282,2012-05-09,West,Office Supplies,Avery 51,Regular Air,2,12.59000,0.02,-5.92
+30913,2012-09-22,West,Office Supplies,Avery Hanging File Binders,Regular Air,23,143.10000,0.01,36.75

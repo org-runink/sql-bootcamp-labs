@@ -1,0 +1,842 @@
+[
+  {
+    "CustomerID": 40732966,
+    "CustomerName": "Tamara Dahlen,",
+    "Province": "Ontario",
+    "Region": "Ontario",
+    "Segment": "Corporate"
+  },
+  {
+    "CustomerID": 68464052,
+    "CustomerName": "Bill Donatelli",
+    "Province": "Ontario",
+    "Region": "Ontario",
+    "Segment": "Corporate"
+  },
+  {
+    "CustomerID": 63834266,
+    "CustomerName": "Christy Brittain",
+    "Province": "British Columbia",
+    "Region": "West",
+    "Segment": "Consumer"
+  },
+  {
+    "CustomerID": 38512011,
+    "CustomerName": "Barry Blumstein",
+    "Province": "British Columbia",
+    "Region": "West",
+    "Segment": "Small Business"
+  },
+  {
+    "CustomerID": 82335880,
+    "CustomerName": "Aleksandra Gannaway",
+    "Province": "New Brunswick",
+    "Region": "Atlantic",
+    "Segment": "Corporate"
+  },
+  {
+    "CustomerID": 58046234,
+    "CustomerName": "Paul Prost",
+    "Province": "Ontario",
+    "Region": "Ontario",
+    "Segment": "Corporate"
+  },
+  {
+    "CustomerID": 9130094,
+    "CustomerName": "Russell Applegate",
+    "Province": "Ontario",
+    "Region": "Ontario",
+    "Segment": "Home Office"
+  },
+  {
+    "CustomerID": 60559394,
+    "CustomerName": "Pauline Webber",
+    "Province": "Alberta",
+    "Region": "West",
+    "Segment": "Consumer"
+  },
+  {
+    "CustomerID": 21939120,
+    "CustomerName": "Greg Guthrie",
+    "Province": "Prince Edward Island",
+    "Region": "Atlantic",
+    "Segment": "Small Business"
+  },
+  {
+    "CustomerID": 75726086,
+    "CustomerName": "Sheri Gordon",
+    "Province": "Quebec",
+    "Region": "Quebec",
+    "Segment": "Corporate"
+  },
+  {
+    "CustomerID": 94530777,
+    "CustomerName": "Erin Smith",
+    "Province": "Ontario",
+    "Region": "Ontario",
+    "Segment": "Home Office"
+  },
+  {
+    "CustomerID": 21258025,
+    "CustomerName": "Andy,Yotov",
+    "Province": "Ontario",
+    "Region": "Ontario",
+    "Segment": "Corporate"
+  },
+  {
+    "CustomerID": 45311141,
+    "CustomerName": "Carl Weiss",
+    "Province": "Alberta",
+    "Region": "West",
+    "Segment": "Consumer"
+  },
+  {
+    "CustomerID": 78224739,
+    "CustomerName": "Noel Staavos",
+    "Province": "Quebec",
+    "Region": "Quebec",
+    "Segment": "Home Office"
+  },
+  {
+    "CustomerID": 30578487,
+    "CustomerName": "Aaron Hawkins",
+    "Province": "British Columbia",
+    "Region": "West",
+    "Segment": "Home Office"
+  },
+  {
+    "CustomerID": 85111166,
+    "CustomerName": "Annie Thurman",
+    "Province": "Alberta",
+    "Region": "West",
+    "Segment": "Consumer"
+  },
+  {
+    "CustomerID": 79674261,
+    "CustomerName": "Ted Trevino",
+    "Province": "Ontario",
+    "Region": "Ontario",
+    "Segment": "Corporate"
+  },
+  {
+    "CustomerID": 74639533,
+    "CustomerName": "Tamara Chand",
+    "Province": "Ontario",
+    "Region": "Ontario",
+    "Segment": "Consumer"
+  },
+  {
+    "CustomerID": 28257713,
+    "CustomerName": "Tom Prescott",
+    "Province": "British Columbia",
+    "Region": "West",
+    "Segment": "Small Business"
+  },
+  {
+    "CustomerID": 14649835,
+    "CustomerName": "Fred Chung",
+    "Province": "Quebec",
+    "Region": "Quebec",
+    "Segment": "Corporate"
+  },
+  {
+    "CustomerID": 99328710,
+    "CustomerName": "Eileen Kiefer",
+    "Province": "Ontario",
+    "Region": "Ontario",
+    "Segment": "Consumer"
+  },
+  {
+    "CustomerID": 23051437,
+    "CustomerName": "Hilary Holden",
+    "Province": "Prince Edward Island",
+    "Region": "Atlantic",
+    "Segment": "Corporate"
+  },
+  {
+    "CustomerID": 104239922,
+    "CustomerName": "Lynn Smith",
+    "Province": "New Brunswick",
+    "Region": "Atlantic",
+    "Segment": "Corporate"
+  },
+  {
+    "CustomerID": 44905147,
+    "CustomerName": "Dan Reichenbach",
+    "Province": "Prince Edward Island",
+    "Region": "Atlantic",
+    "Segment": "Corporate"
+  },
+  {
+    "CustomerID": 17033987,
+    "CustomerName": "Sonia Sunley",
+    "Province": "British Columbia",
+    "Region": "West",
+    "Segment": "Corporate"
+  },
+  {
+    "CustomerID": 8480164,
+    "CustomerName": "Julie Kriz",
+    "Province": "Manitoba",
+    "Region": "Prarie",
+    "Segment": "Corporate"
+  },
+  {
+    "CustomerID": 84795584,
+    "CustomerName": "Carlos Soltero",
+    "Province": "Northwest Territories",
+    "Region": "Northwest Territories",
+    "Segment": "Small Business"
+  },
+  {
+    "CustomerID": 63582475,
+    "CustomerName": "Xylona Price",
+    "Province": "Ontario",
+    "Region": "Ontario",
+    "Segment": "Corporate"
+  },
+  {
+    "CustomerID": 2717381,
+    "CustomerName": "Cindy Schnelling",
+    "Province": "Northwest Territories",
+    "Region": "Northwest Territories",
+    "Segment": "Corporate"
+  },
+  {
+    "CustomerID": 69563791,
+    "CustomerName": "Matthew Grinstein",
+    "Province": "Alberta",
+    "Region": "West",
+    "Segment": "Small Business"
+  },
+  {
+    "CustomerID": 87034117,
+    "CustomerName": "Marina Lichtenstein",
+    "Province": "British Columbia",
+    "Region": "West",
+    "Segment": "Corporate"
+  },
+  {
+    "CustomerID": 25507147,
+    "CustomerName": "Art Ferguson",
+    "Province": "Nova Scotia",
+    "Region": "Atlantic",
+    "Segment": "Corporate"
+  },
+  {
+    "CustomerID": 47450738,
+    "CustomerName": "Victoria Wilson",
+    "Province": "Ontario",
+    "Region": "Ontario",
+    "Segment": "Home Office"
+  },
+  {
+    "CustomerID": 16666221,
+    "CustomerName": "Deanra Eno",
+    "Province": "Yukon",
+    "Region": "Yukon",
+    "Segment": "Corporate"
+  },
+  {
+    "CustomerID": 96327900,
+    "CustomerName": "Jocasta Rupert",
+    "Province": "New Brunswick",
+    "Region": "Atlantic",
+    "Segment": "Consumer"
+  },
+  {
+    "CustomerID": 38344188,
+    "CustomerName": "Kristina Nunn",
+    "Province": "British Columbia",
+    "Region": "West",
+    "Segment": "Consumer"
+  },
+  {
+    "CustomerID": 59981908,
+    "CustomerName": "Meg O'Connel",
+    "Province": "Ontario",
+    "Region": "Ontario",
+    "Segment": "Corporate"
+  },
+  {
+    "CustomerID": 89759693,
+    "CustomerName": "Barry Weirich",
+    "Province": "Nunavut",
+    "Region": "Nunavut",
+    "Segment": "Corporate"
+  },
+  {
+    "CustomerID": 56764115,
+    "CustomerName": "Jim Epp",
+    "Province": "New Brunswick",
+    "Region": "Atlantic",
+    "Segment": "Small Business"
+  },
+  {
+    "CustomerID": 44817590,
+    "CustomerName": "Odella Nelson",
+    "Province": "Ontario",
+    "Region": "Ontario",
+    "Segment": "Small Business"
+  },
+  {
+    "CustomerID": 48076280,
+    "CustomerName": "Trudy Brown",
+    "Province": "Saskachewan",
+    "Region": "Prarie",
+    "Segment": "Small Business"
+  },
+  {
+    "CustomerID": 80727603,
+    "CustomerName": "Amy Hunt",
+    "Province": "Saskachewan",
+    "Region": "Prarie",
+    "Segment": "Home Office"
+  },
+  {
+    "CustomerID": 20148851,
+    "CustomerName": "Thea Hendricks",
+    "Province": "Yukon",
+    "Region": "Yukon",
+    "Segment": "Home Office"
+  },
+  {
+    "CustomerID": 59062935,
+    "CustomerName": "Naresj Patel",
+    "Province": "Ontario",
+    "Region": "Ontario",
+    "Segment": "Corporate"
+  },
+  {
+    "CustomerID": 40615970,
+    "CustomerName": "Vivek Grady",
+    "Province": "Ontario",
+    "Region": "Ontario",
+    "Segment": "Home Office"
+  },
+  {
+    "CustomerID": 101078507,
+    "CustomerName": "Neil French",
+    "Province": "Saskachewan",
+    "Region": "Prarie",
+    "Segment": "Corporate"
+  },
+  {
+    "CustomerID": 39049481,
+    "CustomerName": "Juliana Krohn",
+    "Province": "British Columbia",
+    "Region": "West",
+    "Segment": "Corporate"
+  },
+  {
+    "CustomerID": 38038963,
+    "CustomerName": "Greg Matthias",
+    "Province": "British Columbia",
+    "Region": "West",
+    "Segment": "Home Office"
+  },
+  {
+    "CustomerID": 60181220,
+    "CustomerName": "Phillip Flathmann",
+    "Province": "Manitoba",
+    "Region": "Prarie",
+    "Segment": "Small Business"
+  },
+  {
+    "CustomerID": 96145776,
+    "CustomerName": "John Huston",
+    "Province": "Saskachewan",
+    "Region": "Prarie",
+    "Segment": "Consumer"
+  },
+  {
+    "CustomerID": 92369283,
+    "CustomerName": "Trudy Bell",
+    "Province": "Alberta",
+    "Region": "West",
+    "Segment": "Consumer"
+  },
+  {
+    "CustomerID": 39306812,
+    "CustomerName": "Joel Jenkins",
+    "Province": "Manitoba",
+    "Region": "Prarie",
+    "Segment": "Corporate"
+  },
+  {
+    "CustomerID": 10374472,
+    "CustomerName": "Nora Paige",
+    "Province": "Yukon",
+    "Region": "Yukon",
+    "Segment": "Small Business"
+  },
+  {
+    "CustomerID": 51874025,
+    "CustomerName": "Eleni McCrary",
+    "Province": "Nova Scotia",
+    "Region": "Atlantic",
+    "Segment": "Corporate"
+  },
+  {
+    "CustomerID": 91811409,
+    "CustomerName": "Ritsa Hightower",
+    "Province": "Ontario",
+    "Region": "Ontario",
+    "Segment": "Corporate"
+  },
+  {
+    "CustomerID": 90514203,
+    "CustomerName": "Edward Nazzal",
+    "Province": "Ontario",
+    "Region": "Ontario",
+    "Segment": "Home Office"
+  },
+  {
+    "CustomerID": 97428330,
+    "CustomerName": "Harold Engle",
+    "Province": "Prince Edward Island",
+    "Region": "Atlantic",
+    "Segment": "Home Office"
+  },
+  {
+    "CustomerID": 55283064,
+    "CustomerName": "Sarah Foster",
+    "Province": "Ontario",
+    "Region": "Ontario",
+    "Segment": "Corporate"
+  },
+  {
+    "CustomerID": 33980383,
+    "CustomerName": "Joni Sundaresam",
+    "Province": "Ontario",
+    "Region": "Ontario",
+    "Segment": "Home Office"
+  },
+  {
+    "CustomerID": 24088027,
+    "CustomerName": "Shahid Hopkins",
+    "Province": "British Columbia",
+    "Region": "West",
+    "Segment": "Small Business"
+  },
+  {
+    "CustomerID": 20071951,
+    "CustomerName": "Candace McMahon",
+    "Province": "Ontario",
+    "Region": "Ontario",
+    "Segment": "Corporate"
+  },
+  {
+    "CustomerID": 50179492,
+    "CustomerName": "Brad Norvell",
+    "Province": "Manitoba",
+    "Region": "Prarie",
+    "Segment": "Corporate"
+  },
+  {
+    "CustomerID": 61616872,
+    "CustomerName": "Fred McMath",
+    "Province": "Nova Scotia",
+    "Region": "Atlantic",
+    "Segment": "Small Business"
+  },
+  {
+    "CustomerID": 21703579,
+    "CustomerName": "Henia Zydlo",
+    "Province": "Manitoba",
+    "Region": "Prarie",
+    "Segment": "Home Office"
+  },
+  {
+    "CustomerID": 28130934,
+    "CustomerName": "Maxwell Schwartz",
+    "Province": "Saskachewan",
+    "Region": "Prarie",
+    "Segment": "Corporate"
+  },
+  {
+    "CustomerID": 66378277,
+    "CustomerName": "Edward Becker",
+    "Province": "Ontario",
+    "Region": "Ontario",
+    "Segment": "Home Office"
+  },
+  {
+    "CustomerID": 16627071,
+    "CustomerName": "Harold Dahlen",
+    "Province": "British Columbia",
+    "Region": "West",
+    "Segment": "Corporate"
+  },
+  {
+    "CustomerID": 102252318,
+    "CustomerName": "Kean Nguyen",
+    "Province": "Ontario",
+    "Region": "Ontario",
+    "Segment": "Corporate"
+  },
+  {
+    "CustomerID": 30354681,
+    "CustomerName": "Alan Barnes",
+    "Province": "Northwest Territories",
+    "Region": "Northwest Territories",
+    "Segment": "Corporate"
+  },
+  {
+    "CustomerID": 21462074,
+    "CustomerName": "Victoria Pisteka",
+    "Province": "Alberta",
+    "Region": "West",
+    "Segment": "Corporate"
+  },
+  {
+    "CustomerID": 41989638,
+    "CustomerName": "Victoria Pisteka",
+    "Province": "British Columbia",
+    "Region": "West",
+    "Segment": "Corporate"
+  },
+  {
+    "CustomerID": 26995184,
+    "CustomerName": "Erica Bern",
+    "Province": "Prince Edward Island",
+    "Region": "Atlantic",
+    "Segment": "Corporate"
+  },
+  {
+    "CustomerID": 31594679,
+    "CustomerName": "Allen Rosenblatt",
+    "Province": "Nunavut",
+    "Region": "Nunavut",
+    "Segment": "Small Business"
+  },
+  {
+    "CustomerID": 3704525,
+    "CustomerName": "Ellis Ballard",
+    "Province": "Quebec",
+    "Region": "Quebec",
+    "Segment": "Corporate"
+  },
+  {
+    "CustomerID": 20705818,
+    "CustomerName": "Anemone Ratner",
+    "Province": "New Brunswick",
+    "Region": "Atlantic",
+    "Segment": "Small Business"
+  },
+  {
+    "CustomerID": 81843446,
+    "CustomerName": "John Murray",
+    "Province": "Alberta",
+    "Region": "West",
+    "Segment": "Small Business"
+  },
+  {
+    "CustomerID": 43018738,
+    "CustomerName": "Beth Fritzler",
+    "Province": "Saskachewan",
+    "Region": "Prarie",
+    "Segment": "Small Business"
+  },
+  {
+    "CustomerID": 108626146,
+    "CustomerName": "Pamela Stobb",
+    "Province": "Quebec",
+    "Region": "Quebec",
+    "Segment": "Consumer"
+  },
+  {
+    "CustomerID": 98185921,
+    "CustomerName": "Greg Hansen",
+    "Province": "Saskachewan",
+    "Region": "Prarie",
+    "Segment": "Home Office"
+  },
+  {
+    "CustomerID": 17767864,
+    "CustomerName": "Mathew Reese",
+    "Province": "Quebec",
+    "Region": "Quebec",
+    "Segment": "Small Business"
+  },
+  {
+    "CustomerID": 21909421,
+    "CustomerName": "Ed Braxton",
+    "Province": "Manitoba",
+    "Region": "Prarie",
+    "Segment": "Home Office"
+  },
+  {
+    "CustomerID": 26421512,
+    "CustomerName": "Valerie Takahito",
+    "Province": "Saskachewan",
+    "Region": "Prarie",
+    "Segment": "Consumer"
+  },
+  {
+    "CustomerID": 73966703,
+    "CustomerName": "Linda Southworth",
+    "Province": "Manitoba",
+    "Region": "Prarie",
+    "Segment": "Consumer"
+  },
+  {
+    "CustomerID": 79755549,
+    "CustomerName": "Toby Swindell",
+    "Province": "Saskachewan",
+    "Region": "Prarie",
+    "Segment": "Small Business"
+  },
+  {
+    "CustomerID": 9043071,
+    "CustomerName": "Rick Wilson",
+    "Province": "Alberta",
+    "Region": "West",
+    "Segment": "Corporate"
+  },
+  {
+    "CustomerID": 60345992,
+    "CustomerName": "Barry French",
+    "Province": "Nunavut",
+    "Region": "Nunavut",
+    "Segment": "Consumer"
+  },
+  {
+    "CustomerID": 73316576,
+    "CustomerName": "Lindsay Shagiari",
+    "Province": "Ontario",
+    "Region": "Ontario",
+    "Segment": "Home Office"
+  },
+  {
+    "CustomerID": 95284420,
+    "CustomerName": "Cathy Armstrong",
+    "Province": "British Columbia",
+    "Region": "West",
+    "Segment": "Consumer"
+  },
+  {
+    "CustomerID": 72906222,
+    "CustomerName": "Tracy Hopkins",
+    "Province": "British Columbia",
+    "Region": "West",
+    "Segment": "Small Business"
+  },
+  {
+    "CustomerID": 74518551,
+    "CustomerName": "Helen Andreada",
+    "Province": "Manitoba",
+    "Region": "Prarie",
+    "Segment": "Corporate"
+  },
+  {
+    "CustomerID": 104516246,
+    "CustomerName": "Olvera Toch",
+    "Province": "Ontario",
+    "Region": "Ontario",
+    "Segment": "Home Office"
+  },
+  {
+    "CustomerID": 104598944,
+    "CustomerName": "Paul MacIntyre",
+    "Province": "Nova Scotia",
+    "Region": "Atlantic",
+    "Segment": "Corporate"
+  },
+  {
+    "CustomerID": 101777049,
+    "CustomerName": "Darrin Van Huff",
+    "Province": "Saskachewan",
+    "Region": "Prarie",
+    "Segment": "Home Office"
+  },
+  {
+    "CustomerID": 12392564,
+    "CustomerName": "Troy Blackwell",
+    "Province": "Ontario",
+    "Region": "Ontario",
+    "Segment": "Home Office"
+  },
+  {
+    "CustomerID": 103724988,
+    "CustomerName": "Brenda Bowman",
+    "Province": "Quebec",
+    "Region": "Quebec",
+    "Segment": "Small Business"
+  },
+  {
+    "CustomerID": 100099945,
+    "CustomerName": "Ed Ludwig",
+    "Province": "Ontario",
+    "Region": "Ontario",
+    "Segment": "Consumer"
+  },
+  {
+    "CustomerID": 4221093,
+    "CustomerName": "Patrick Ryan",
+    "Province": "Saskachewan",
+    "Region": "Prarie",
+    "Segment": "Corporate"
+  },
+  {
+    "CustomerID": 72489079,
+    "CustomerName": "Denise Monton",
+    "Province": "Saskachewan",
+    "Region": "Prarie",
+    "Segment": "Home Office"
+  },
+  {
+    "CustomerID": 101656918,
+    "CustomerName": "Craig Carroll",
+    "Province": "Alberta",
+    "Region": "West",
+    "Segment": "Corporate"
+  },
+  {
+    "CustomerID": 14548487,
+    "CustomerName": "Guy Armstrong",
+    "Province": "Prince Edward Island",
+    "Region": "Atlantic",
+    "Segment": "Corporate"
+  },
+  {
+    "CustomerID": 27242353,
+    "CustomerName": "Carl Weiss",
+    "Province": "Saskachewan",
+    "Region": "Prarie",
+    "Segment": "Consumer"
+  },
+  {
+    "CustomerID": 31379257,
+    "CustomerName": "Joseph Airdo",
+    "Province": "Manitoba",
+    "Region": "Prarie",
+    "Segment": "Consumer"
+  },
+  {
+    "CustomerID": 90097133,
+    "CustomerName": "Randy Bradley",
+    "Province": "Saskachewan",
+    "Region": "Prarie",
+    "Segment": "Small Business"
+  },
+  {
+    "CustomerID": 8230900,
+    "CustomerName": "Thais Sissman",
+    "Province": "Manitoba",
+    "Region": "Prarie",
+    "Segment": "Small Business"
+  },
+  {
+    "CustomerID": 36349541,
+    "CustomerName": "Dorothy Wardle",
+    "Province": "Nunavut",
+    "Region": "Nunavut",
+    "Segment": "Corporate"
+  },
+  {
+    "CustomerID": 93429106,
+    "CustomerName": "Julia West",
+    "Province": "Northwest Territories",
+    "Region": "Northwest Territories",
+    "Segment": "Small Business"
+  },
+  {
+    "CustomerID": 19890992,
+    "CustomerName": "Stephanie Phelps",
+    "Province": "Alberta",
+    "Region": "West",
+    "Segment": "Consumer"
+  },
+  {
+    "CustomerID": 18293658,
+    "CustomerName": "Karen Carlisle",
+    "Province": "British Columbia",
+    "Region": "West",
+    "Segment": "Home Office"
+  },
+  {
+    "CustomerID": 60636010,
+    "CustomerName": "Roy Phan",
+    "Province": "Alberta",
+    "Region": "West",
+    "Segment": "Corporate"
+  },
+  {
+    "CustomerID": 56352213,
+    "CustomerName": "Pauline Chand",
+    "Province": "Ontario",
+    "Region": "Ontario",
+    "Segment": "Corporate"
+  },
+  {
+    "CustomerID": 71604925,
+    "CustomerName": "Brad Eason",
+    "Province": "Ontario",
+    "Region": "Ontario",
+    "Segment": "Small Business"
+  },
+  {
+    "CustomerID": 13884388,
+    "CustomerName": "Thomas Boland",
+    "Province": "Ontario",
+    "Region": "Ontario",
+    "Segment": "Corporate"
+  },
+  {
+    "CustomerID": 85518221,
+    "CustomerName": "Liz Pelletier",
+    "Province": "Saskachewan",
+    "Region": "Prarie",
+    "Segment": "Home Office"
+  },
+  {
+    "CustomerID": 77579377,
+    "CustomerName": "Berenike Kampe",
+    "Province": "Nova Scotia",
+    "Region": "Atlantic",
+    "Segment": "Corporate"
+  },
+  {
+    "CustomerID": 72058336,
+    "CustomerName": "Roy Skaria",
+    "Province": "British Columbia",
+    "Region": "West",
+    "Segment": "Corporate"
+  },
+  {
+    "CustomerID": 15023876,
+    "CustomerName": "Dennis Pardue",
+    "Province": "Saskachewan",
+    "Region": "Prarie",
+    "Segment": "Small Business"
+  },
+  {
+    "CustomerID": 67135124,
+    "CustomerName": "Pamela Coakley",
+    "Province": "Ontario",
+    "Region": "Ontario",
+    "Segment": "Corporate"
+  },
+  {
+    "CustomerID": 90365410,
+    "CustomerName": "Arthur Gainer",
+    "Province": "Quebec",
+    "Region": "Quebec",
+    "Segment": "Corporate"
+  },
+  {
+    "CustomerID": 100684577,
+    "CustomerName": "Maria Zettner",
+    "Province": "Alberta",
+    "Region": "West",
+    "Segment": "Corporate"
+  },
+  {
+    "CustomerID": 20700273,
+    "CustomerName": "Ionia McGrath",
+    "Province": "New Brunswick",
+    "Region": "Atlantic",
+    "Segment": "Small Business"
+  }
+]
