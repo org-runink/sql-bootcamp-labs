@@ -33,6 +33,7 @@ CLASSES = [
     "week2_day5_morning",
     "week3_day1_afternoon",
     "week3_day2_afternoon",
+    "week3_day3_afternoon",
 ]
 
 SKIP_DIRS = {".ipynb_checkpoints", "__pycache__"}
@@ -42,7 +43,12 @@ SKIP_DIRS = {".ipynb_checkpoints", "__pycache__"}
 # published answer cannot be re-run from the console:
 #   27/08 worksheet 08          .csv
 #   30/08 worksheets 11-14      .csv .tsv .json .xlsx
-KEEP_SUFFIXES = (".ipynb", ".csv", ".tsv", ".json", ".xlsx")
+#
+# week3_day3_afternoon adds .sql and .html: worksheet 05 question 10 greps
+# snowflake-scripts/*.sql and labs/*.html by relative path, and its answer
+# quotes the file list it finds. Without them the published solution reports
+# a different number of files than its own text says.
+KEEP_SUFFIXES = (".ipynb", ".csv", ".tsv", ".json", ".xlsx", ".sql", ".html")
 
 
 def sources():

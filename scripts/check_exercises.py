@@ -47,12 +47,19 @@ CLASSES = {
     "week2_day5_morning": "python",
     "week3_day1_afternoon": "python",
     "week3_day2_afternoon": "python",
+    "week3_day3_afternoon": "python",
 }
 
 MD_KEYS = ["cell_type", "id", "metadata", "source"]
 CODE_KEYS = ["cell_type", "execution_count", "id", "metadata", "outputs", "source"]
 STUB_MARKER = "Your Code Here"
 SKIP = ("wcd-originals", ".ipynb_checkpoints")
+
+# week3_day3_afternoon worksheets 01 and 02 run in the student's own Snowflake
+# account, so they have NO code cells -- an empty Python cell in a notebook that
+# cannot reach Snowflake is a trap. Their answer space is a markdown block
+# instead, and a notebook with no code cells is recognised as this convention.
+MD_STUB_MARKER = "Your query, and the result"
 
 failures = []
 
@@ -101,6 +108,19 @@ def check_class(cls):
             continue
 
         enb, snb = json.load(open(e)), json.load(open(want))
+        if not any(c["cell_type"] == "code" for c in enb["cells"]):
+            # Markdown-only worksheet: the answer space is a markdown block, and
+            # the solution must have one commentary cell per question on top of
+            # the shared title, question and banner cells.
+            questions = sum(1 for c in enb["cells"]
+                            if c["cell_type"] == "markdown"
+                            and MD_STUB_MARKER in "".join(c["source"]))
+            if questions == 0:
+                fail("%s has no code cells and no markdown answer blocks" % rel)
+            elif any(c["cell_type"] == "code" for c in snb["cells"]):
+                fail("%s: exercise has no code cells but its solution does" % rel)
+            continue
+
         questions = sum(1 for c in enb["cells"]
                         if c["cell_type"] == "code" and is_stub(c, convention))
         sol_cells = sum(1 for c in snb["cells"] if c["cell_type"] == "code")
