@@ -138,20 +138,32 @@ Kept **byte-identical**, split so the answers do not sit beside the exercise:
 | [`exercises/wcd-originals/`](exercises/wcd-originals) | `Lab - Pandas Advanced.ipynb` |
 | [`solutions/wcd-originals/`](solutions/wcd-originals) | `Lab - Pandas Advanced Solution.ipynb` |
 
-**It downloads its own data, and needs internet to do it.** The notebook
-fetches all seven CSVs with `!curl -sS -o ...` from
-`https://s3.amazonaws.com/weclouddata/datasets/genai/ml_fundamentals/` before
-reading them — `telecom.csv` in its first cell, and the six `employee_*.csv`
-files partway through. They are the MySQL `employees` sample schema, and all
-seven were reachable when this was written.
+**It runs offline, after a one-time fetch.** The notebook downloads seven
+CSVs with `!curl -sS -o ...` from
+`https://s3.amazonaws.com/weclouddata/datasets/genai/ml_fundamentals/` — the
+telecom dataset, and six tables of the MySQL `employees` sample schema. Needing
+the network mid-class is no good, so fetch them once:
 
-Two practical notes. **`curl` is not in `base-notebook`** — the image installs
-it (see `jupyter-sql/Dockerfile`) precisely so this vendor notebook runs as
-written, rather than editing a file we keep byte-identical. And the download is
-**about 142 MB**, most of it `employee_salaries.csv` at 98.8 MB for 2.8 million
-rows, so on a slow classroom network that cell is not instant. Nothing is
-committed to this repo; the files land in the notebook's working directory at
-runtime.
+```bash
+python3 scripts/fetch_lab_data.py            # ~136 MB, run once per machine
+python3 scripts/fetch_lab_data.py --verify   # check they are in place
+```
+
+After that the lab works with the network **down**. The `curl` cells fail
+visibly and harmlessly — curl gives up at DNS resolution, *before* it opens the
+output file, so the pre-placed CSV is untouched — and the `read_csv` cells that
+follow find the data already there. Verified: with the host unreachable, both
+files came through byte-identical and `read_csv` returned `(7043, 21)` and
+`(9, 2)`.
+
+The data is **not committed**. `employee_salaries.csv` alone is 94 MB — past
+GitHub's warning threshold and near its hard limit — so all seven are in
+`.gitignore`. The copy under `solutions/` is hardlinked to the one under
+`exercises/`, so 136 MB is used once rather than twice, and
+`collect_solutions.py` re-links them after it rebuilds the mirror.
+
+`curl` itself is not in `base-notebook`; `jupyter-sql/Dockerfile` installs it,
+so the vendor notebook runs exactly as shipped rather than being edited.
 
 The ten worksheets in this folder deliberately depend on none of that: every
 file they read is in `data/`, on disk, and they work with the network down.

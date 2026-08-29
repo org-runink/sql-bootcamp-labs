@@ -2,3 +2,11 @@ __pycache__/
 *.pyc
 .DS_Store
 .ipynb_checkpoints/
+
+# WeCloudData Advanced-lab datasets, fetched once by
+# scripts/fetch_lab_data.py so the lab runs offline. About 136 MB, most of it
+# employee_salaries.csv at 94 MB -- past GitHub's warning threshold and near
+# its hard limit, so these are deliberately not committed.
+week3_day2/exercises/wcd-originals/*.csv
+week3_day2/solutions/wcd-originals/*.csv
+solutions/week3_day2/wcd-originals/*.csv

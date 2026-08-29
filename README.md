@@ -169,6 +169,7 @@ sql-bootcamp-labs/
     ├── collect_solutions.py          # rebuilds the top-level solutions/ mirror
     ├── check_console.py              # verifies the console is serving what is on disk
     ├── check_exercises.py            # every exercise has a solution, none leak answers
+    ├── fetch_lab_data.py             # one-time ~136MB fetch so the WCD Advanced lab runs offline
     └── normalise_notebooks.py        # fixes notebook JSON churn after a JupyterLab save
 ```
 
@@ -598,6 +599,7 @@ Two worksheets need a word of warning, both covered in their class README:
 python3 scripts/check_console.py     # is the console serving what is on disk?
 python3 scripts/check_exercises.py   # does every exercise have a solution?
 python3 scripts/collect_solutions.py --check   # is the published mirror in sync?
+python3 scripts/fetch_lab_data.py --verify     # is the offline lab data in place?
 ```
 
 All three exit non-zero on failure, so they work in a pre-commit hook or a
