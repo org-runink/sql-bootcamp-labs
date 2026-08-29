@@ -19,7 +19,7 @@ from pathlib import Path
 random.seed(42)
 
 OUT_DIR = Path(__file__).resolve().parent.parent / "db-init"
-CSV_DIR = Path(__file__).resolve().parent.parent / "afternoon-class-2408" / "exercises" / "data"
+CSV_DIR = Path(__file__).resolve().parent.parent / "week2_day2_afternoon" / "exercises" / "data"
 
 N_CUSTOMERS = 250
 N_PRODUCTS = 60

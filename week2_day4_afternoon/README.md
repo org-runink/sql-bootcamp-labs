@@ -1,4 +1,8 @@
-# Afternoon class — 26/08
+# Week 2, day 4 (afternoon) — 26/08
+
+> Folders are named by position in the course; the worksheets inside still
+> carry the calendar date they were taught on. Both refer to the same
+> session.
 
 Python, not SQL. The four core data structures — lists, tuples, sets and
 dictionaries — the built-in functions that work across all of them, the

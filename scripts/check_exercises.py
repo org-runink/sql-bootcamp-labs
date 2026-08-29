@@ -13,7 +13,7 @@ and verifies the things that are easy to get wrong and invisible once wrong:
      and identical under solutions/, so the published copy still runs
 
     python3 scripts/check_exercises.py            # all classes
-    python3 scripts/check_exercises.py week3_day2 # one class
+    python3 scripts/check_exercises.py week3_day2_afternoon # one class
 
 Exits non-zero if anything fails, so it can go in a pre-commit hook.
 
@@ -41,12 +41,12 @@ REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # `## Your Code Here` stub. Both are "an empty cell for the student"; they
 # just look different, so the check has to know which to expect.
 CLASSES = {
-    "afternoon-class-2408": "sql",
-    "morning-class-2508": "sql",
-    "afternoon-class-2608": "python",
-    "morning-class-2708": "python",
-    "afternoon-class-3008": "python",
-    "week3_day2": "python",
+    "week2_day2_afternoon": "sql",
+    "week2_day3_morning": "sql",
+    "week2_day4_afternoon": "python",
+    "week2_day5_morning": "python",
+    "week3_day1_afternoon": "python",
+    "week3_day2_afternoon": "python",
 }
 
 MD_KEYS = ["cell_type", "id", "metadata", "source"]

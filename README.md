@@ -119,16 +119,16 @@ sql-bootcamp-labs/
 ├── README.md
 ├── docker-compose.yml        # recommended way to run the lab (via podman-compose)
 ├── db-init/                  # schema + seed SQL, auto-run on first container start
-├── afternoon-class-2408/     # the taught syllabus: DDL, aggregates, joins, subqueries, CASE WHEN
+├── week2_day2_afternoon/     # the taught syllabus: DDL, aggregates, joins, subqueries, CASE WHEN
 │   ├── README.md             #   what this session covers, and its gotchas
 │   ├── exercises/            #   01–10, no answers — mounted into the Jupyter console
 │   │   └── data/             #   CSVs for worksheet 01
 │   └── solutions/            #   01–10, with the actual expected results
-├── morning-class-2508/       # beyond the lectures: views, cross-database, modelling, keys, reports, windows
+├── week2_day3_morning/       # beyond the lectures: views, cross-database, modelling, keys, reports, windows
 │   ├── README.md
 │   ├── exercises/            #   01–07 (03 is a Jupyter notebook)
 │   └── solutions/            #   01–07
-├── afternoon-class-2608/     # Python, not SQL: lists, tuples, sets, dicts, built-ins, capstone
+├── week2_day4_afternoon/     # Python, not SQL: lists, tuples, sets, dicts, built-ins, capstone
 │   ├── README.md             #   needs no database — pure standard library
 │   ├── exercises/            #   01–08
 │   │   ├── more-practice/    #     a second sheet per topic, same numbering
@@ -136,7 +136,7 @@ sql-bootcamp-labs/
 │   └── solutions/            #   01–08, with the actual expected output
 │       ├── more-practice/
 │       └── wcd-originals/    #     their matching answer notebooks
-├── morning-class-2708/       # Python, two lectures: control flow (01–08) then functions (09–14)
+├── week2_day5_morning/       # Python, two lectures: control flow (01–08) then functions (09–14)
 │   ├── README.md             #   needs no database, and not one import in the whole set
 │   ├── exercises/            #   01–14
 │   │   ├── data/             #     tab-separated superstore extract, read by worksheet 08
@@ -146,28 +146,30 @@ sql-bootcamp-labs/
 │       ├── data/             #     the same files, so the solution can be re-run in place
 │       ├── more-practice/
 │       └── wcd-originals/    #     their matching answer notebooks
-├── afternoon-class-3008/     # Pandas, three lectures: L01 basics, L02 core ops, L03 reading/writing
+├── week3_day1_afternoon/     # Pandas, three lectures: L01 basics, L02 core ops, L03 reading/writing
 │   ├── README.md             #   NEEDS pandas in the image -- base-notebook does not ship it
 │   ├── exercises/            #   01–14
 │   │   └── data/             #     csv / tsv / json / xlsx built from the same superstore extract
 │   └── solutions/            #   01–14, with the actual expected output
 │       └── data/             #     the same files, so the solution can be re-run in place
-├── week3_day2/               # Pandas continued: reshaping (L04) and transformation (L05)
+├── week3_day2_afternoon/               # Pandas continued: reshaping (L04) and transformation (L05)
 │   ├── README.md             #   also needs pandas in the image
 │   ├── slides/               #   the two lecture decks
 │   ├── exercises/            #   01–10 plus more-practice/
 │   │   └── data/             #     long, wide and deliberately messy CSVs
 │   └── solutions/            #   01–10, with the actual expected output
 ├── Control_Flow_and_Iteration_Practice/   # the WeCloudData L05 zip, unpacked as shipped
-│                             #   same files also split under morning-class-2708/wcd-originals/
+│                             #   same files also split under week2_day5_morning/wcd-originals/
 ├── solutions/                # ALL answers for all six sessions, in one place (generated)
 ├── jupyter-sql/               # shared browser SQL console (JupyterLab + jupysql), pre-wired to mysql-lan
 │                             #   also carries pandas + openpyxl/pyarrow/lxml for the 30/08 class
+│                             #   and curl, which the WeCloudData Advanced lab shells out to
 └── scripts/
     ├── generate_superstore_data.py   # regenerates the superstore seed data
     ├── collect_solutions.py          # rebuilds the top-level solutions/ mirror
     ├── check_console.py              # verifies the console is serving what is on disk
     ├── check_exercises.py            # every exercise has a solution, none leak answers
+    ├── fetch_lab_data.py             # one-time ~136MB fetch so the WCD Advanced lab runs offline
     └── normalise_notebooks.py        # fixes notebook JSON churn after a JupyterLab save
 ```
 
@@ -274,8 +276,8 @@ cd sql-bootcamp-labs
 ```
 
 ✅ **Checkpoint:** `ls` (or `dir` on Windows) shows `README.md`,
-`docker-compose.yml`, `db-init/`, `afternoon-class-2408/`,
-`morning-class-2508/`.
+`docker-compose.yml`, `db-init/`, `week2_day2_afternoon/`,
+`week2_day3_morning/`.
 
 *Don't want to use git at all?* Click the green "Code" button on the
 GitHub repo page → "Download ZIP" → unzip it → open a terminal inside
@@ -432,7 +434,7 @@ Open `http://localhost:8888` (or the instructor machine's LAN IP, port
   %%sql
   SELECT * FROM superstore.products LIMIT 5;
   ```
-- `afternoon-class-2408/` and `morning-class-2508/` — the worksheets for
+- `week2_day2_afternoon/` and `week2_day3_morning/` — the worksheets for
   each session, described in [Doing the exercises](#doing-the-exercises).
   Open one, read a task comment, then run your answer as a `%%sql` cell in
   `SQL_Console.ipynb` (or paste it into a new cell right in the worksheet's
@@ -521,21 +523,21 @@ You're fully set up — move on to the exercises below.
 
 Go to your class's folder and start from its `README.md`:
 
-- **[`afternoon-class-2408/`](afternoon-class-2408/README.md)** — the full
+- **[`week2_day2_afternoon/`](week2_day2_afternoon/README.md)** — the full
   taught syllabus: building tables and constraints, aggregate functions,
   joins, subqueries, `CASE WHEN`/pivots (worksheets 01–10)
-- **[`morning-class-2508/`](morning-class-2508/README.md)** — past the
+- **[`week2_day3_morning/`](week2_day3_morning/README.md)** — past the
   lectures: views and materialization, cross-database queries, ER modelling,
   key design, subquery reports, window functions, and a combined analytical
   capstone (worksheets 01–07)
-- **[`afternoon-class-2608/`](afternoon-class-2608/README.md)** — **Python,
+- **[`week2_day4_afternoon/`](week2_day4_afternoon/README.md)** — **Python,
   not SQL**: lists, tuples, sets, dictionaries, the built-in functions,
   strings/conditionals/loops, a combined capstone, and a data-engineering
   sheet that puts the structures to work on a dirty feed (worksheets 01–08).
   Needs no database and no `%%sql` —
   pure standard library, so it runs in any Python 3 as well as in the shared
   console.
-- **[`morning-class-2708/`](morning-class-2708/README.md)** — **Python too**,
+- **[`week2_day5_morning/`](week2_day5_morning/README.md)** — **Python too**,
   and **two lectures in one folder**. Worksheets 01–08 are control flow and
   iteration: conditionals, `for`, comprehensions, `while`,
   `break`/`continue`/`pass`, a clickstream capstone, the control-flow patterns
@@ -545,7 +547,7 @@ Go to your class's folder and start from its `README.md`:
   scope and side effects, `lambda`/`map`/`filter`, recursion, and a capstone
   that rebuilds the pipeline as a reusable toolkit. Not one `import` in the
   whole set — `open()` is a builtin.
-- **[`afternoon-class-3008/`](afternoon-class-3008/README.md)** — **Pandas**,
+- **[`week3_day1_afternoon/`](week3_day1_afternoon/README.md)** — **Pandas**,
   and **three lectures in one folder**. Worksheets 01–04 are the introduction:
   Series, DataFrames, the `Index` object, and `loc` vs `iloc`. Worksheets 05–10
   are the core operations: reindexing, dropping, filtering, label alignment,
@@ -554,7 +556,7 @@ Go to your class's folder and start from its `README.md`:
   objects, and Excel workbooks with a full load-check-process-save capstone.
   Needs no database, but it **does** need pandas — the base image ships
   without it, so rebuild the console image if imports fail.
-- **[`week3_day2/`](week3_day2/README.md)** — **Pandas continued**, two more
+- **[`week3_day2_afternoon/`](week3_day2_afternoon/README.md)** — **Pandas continued**, two more
   lectures. Worksheets 01–05 are reshaping and pivoting: long vs wide,
   MultiIndex, `unstack`, `stack`, and `pivot` versus `pivot_table`. Worksheets
   06–10 are data transformation: duplicates, `replace`/`map`/`.loc`, binning,
@@ -584,7 +586,7 @@ either way. Suggested workflow per worksheet:
 
 Two worksheets need a word of warning, both covered in their class README:
 
-- **`morning-class-2508/exercises/03_er_modelling_challenges.ipynb`** is a
+- **`week2_day3_morning/exercises/03_er_modelling_challenges.ipynb`** is a
   Jupyter notebook, not a `.sql` file, because its ER diagrams are written in
   [Mermaid](https://mermaid.js.org/) and JupyterLab renders them as actual
   pictures. You read the problem, draw your answer by editing a Markdown
@@ -597,6 +599,7 @@ Two worksheets need a word of warning, both covered in their class README:
 python3 scripts/check_console.py     # is the console serving what is on disk?
 python3 scripts/check_exercises.py   # does every exercise have a solution?
 python3 scripts/collect_solutions.py --check   # is the published mirror in sync?
+python3 scripts/fetch_lab_data.py --verify     # is the offline lab data in place?
 ```
 
 All three exit non-zero on failure, so they work in a pre-commit hook or a
@@ -710,7 +713,7 @@ files in order against the running container: `podman exec -i mysql-lan
 mysql -uroot -p123456 < db-init/00_superstore_schema.ipynb`, then the
 `01`–`04` files the same way.
 
-`afternoon-class-2408/exercises/data/*.csv` (used only by worksheet 01,
+`week2_day2_afternoon/exercises/data/*.csv` (used only by worksheet 01,
 against a separate `superstore_practice` database) is synthetic, generated by
 `scripts/generate_superstore_data.py` (fixed random seed, so output is
 reproducible). That script writes **only those four CSVs** — it deliberately

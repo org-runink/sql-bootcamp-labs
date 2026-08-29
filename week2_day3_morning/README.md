@@ -1,4 +1,8 @@
-# Morning class — 25/08
+# Week 2, day 3 (morning) — 25/08
+
+> Folders are named by position in the course; the worksheets inside still
+> carry the calendar date they were taught on. Both refer to the same
+> session.
 
 Past the lectures: views, cross-database queries, data modelling, key design,
 report building, window functions, and a set of combined analytical
