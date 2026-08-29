@@ -1,0 +1,9 @@
+program_id,program_name,program_desc,pm_id,start_date,active_flg,category_id
+101,Applied Data Engineering,Applied Data Engineering program,911,2022-06-01,1,1
+102,Analytics Engineering,Analytics Engineering program,912,2022-01-01,1,1
+103,Machine Learning Foundations,Machine Learning Foundations program,913,2022-02-01,1,2
+104,Applied Data Science,Applied Data Science program,901,2022-03-01,1,2
+105,Cloud Platform Engineering,Cloud Platform Engineering program,902,2022-04-01,1,3
+106,Site Reliability Engineering,Site Reliability Engineering program,903,2022-05-01,0,3
+107,Security Operations,Security Operations program,904,2022-06-01,1,4
+108,Foundations Bootcamp,Foundations Bootcamp program,905,2022-01-01,1,5

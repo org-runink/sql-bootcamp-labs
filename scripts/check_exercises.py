@@ -48,6 +48,7 @@ CLASSES = {
     "week3_day1_afternoon": "python",
     "week3_day2_afternoon": "python",
     "week3_day3_afternoon": "python",
+    "week3_day4_morning": "python",
 }
 
 MD_KEYS = ["cell_type", "id", "metadata", "source"]
@@ -55,11 +56,12 @@ CODE_KEYS = ["cell_type", "execution_count", "id", "metadata", "outputs", "sourc
 STUB_MARKER = "Your Code Here"
 SKIP = ("wcd-originals", ".ipynb_checkpoints")
 
-# week3_day3_afternoon worksheets 01 and 02 run in the student's own Snowflake
-# account, so they have NO code cells -- an empty Python cell in a notebook that
-# cannot reach Snowflake is a trap. Their answer space is a markdown block
-# instead, and a notebook with no code cells is recognised as this convention.
-MD_STUB_MARKER = "Your query, and the result"
+# Some worksheets have NO code cells, because there is nothing here that could
+# run them: week3_day3_afternoon 01-02 need the student's own Snowflake account,
+# and week3_day4_morning 11 is a pen-and-paper group design activity. An empty
+# Python cell in either would be a trap. Their answer space is a markdown block,
+# and a notebook with no code cells is recognised as this convention.
+MD_STUB_MARKERS = ("Your query, and the result", "Your group's answer")
 
 failures = []
 
@@ -114,7 +116,8 @@ def check_class(cls):
             # the shared title, question and banner cells.
             questions = sum(1 for c in enb["cells"]
                             if c["cell_type"] == "markdown"
-                            and MD_STUB_MARKER in "".join(c["source"]))
+                            and any(m in "".join(c["source"])
+                                    for m in MD_STUB_MARKERS))
             if questions == 0:
                 fail("%s has no code cells and no markdown answer blocks" % rel)
             elif any(c["cell_type"] == "code" for c in snb["cells"]):

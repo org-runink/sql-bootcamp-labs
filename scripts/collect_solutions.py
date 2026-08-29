@@ -34,6 +34,7 @@ CLASSES = [
     "week3_day1_afternoon",
     "week3_day2_afternoon",
     "week3_day3_afternoon",
+    "week3_day4_morning",
 ]
 
 SKIP_DIRS = {".ipynb_checkpoints", "__pycache__"}

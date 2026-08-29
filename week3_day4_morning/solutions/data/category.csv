@@ -1,0 +1,6 @@
+category_id,category_name,category_desc,director_id,start_date,active_flg
+1,Data Engineering,"Pipelines, warehousing and platform work",901,2021-01-04,1
+2,Data Science,"Statistics, modeling and machine learning",902,2021-01-04,1
+3,Cloud Computing,"Infrastructure, containers and deployment",903,2021-01-04,1
+4,Cybersecurity,Defensive and offensive security practice,904,2021-01-04,1
+5,,"Uncategorised, pending review",905,2021-01-04,1

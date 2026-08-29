@@ -1,0 +1,6 @@
+pymt_type_id,pymt_type_name
+1,Credit Card
+2,Debit
+3,Bank Transfer
+4,Installment Plan
+5,Employer Sponsored
