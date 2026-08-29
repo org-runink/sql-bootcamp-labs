@@ -3,12 +3,14 @@
 Pandas continued, across two lectures: getting data into the shape you need
 (L04), and cleaning the values once it is there (L05).
 
-Ten worksheets plus four extra-practice sheets — 132 questions. Every one was
+Ten worksheets, four extra-practice sheets and a four-tier graded ladder —
+**170 questions**. Every one was
 executed in the lab image before it was written down, and every number quoted in the solutions is output that was
 actually observed — not predicted, not rounded for tidiness.
 
 ```
-exercises/                 worksheets 01–10
+exercises/                 worksheets 01–10, organised by topic
+exercises/graded/          a four-tier ladder, organised by difficulty
 exercises/more-practice/   a second sheet for four of the topics
 exercises/data/            the files they read
 exercises/wcd-originals/   the course's own lab, byte-identical
@@ -50,6 +52,35 @@ the main worksheets, all on the same real files.
 
 These live one directory down, so they read the data as **`../data/`**. That is
 the only difference from the main sheets.
+
+## Graded ladder — organised by difficulty, not by topic
+
+The numbered worksheets cover L04 and L05 **by subject**, one topic per sheet.
+These four cover the same ground **by difficulty**, mixing both lectures
+throughout. Start at tier 1 and stop when it hurts.
+
+| Tier | Sheet | Shape of every question |
+|---|---|---|
+| 1 | [`graded/01_tier1_foundations.ipynb`](exercises/graded/01_tier1_foundations.ipynb) | one operation, one or two lines |
+| 2 | [`graded/02_tier2_combining.ipynb`](exercises/graded/02_tier2_combining.ipynb) | chain two or three; in three of them the order matters |
+| 3 | [`graded/03_tier3_diagnosis.ipynb`](exercises/graded/03_tier3_diagnosis.ipynb) | here is code that **ran fine and is wrong** — find why |
+| 4 | [`graded/04_tier4_open.ipynb`](exercises/graded/04_tier4_open.ipynb) | a business question, no method prescribed |
+
+Difficulty rises **within** each sheet as well as between them, and every
+question is tagged `[easy]`, `[medium]`, `[harder]` or `[error]`.
+
+**Tier 3 is the one that matters.** Nine of its ten questions hand you code
+that produces a confident, plausible, wrong number — a `pivot_table` reporting
+means as if they were totals, a `cut` that silently drops 17% of revenue, a
+`groupby` that discards 50 rows, an outlier filter that removes 57% of the
+business. Only the tenth raises. That ratio is the point.
+
+**Tier 4 asks for three things per answer**: the figure, the denominator it is
+computed over, and one sentence on what would change it. Its first question —
+"which region is growing?" — has `Nunavut +728.5%` as the headline answer, off
+**nine orders in the entire file**.
+
+These live one directory down, so they read the data as `../data/`.
 
 ## The data
 
@@ -142,6 +173,10 @@ Restart & Run All reaches the bottom before anything raises.
 | mp 05 | `AttributeError: 'total' is not a valid function` | the name is `sum` |
 | mp 07 | `AttributeError: Can only use .str accessor with string values` | `.str` on a float column |
 | mp 09 | `ArrowNotImplementedError: Function 'quantile' has no kernel...` | pandas 3 backs strings with Arrow, so the error names a layer you did not know you were using |
+| graded 1 | `ValueError: Index contains duplicate entries` | `pivot` where `pivot_table` was needed |
+| graded 2 | `ValueError: Bin edges must be unique` | 10 quantiles from 4 distinct years |
+| graded 3 | `ValueError: Index contains duplicate entries` | the only one of ten that raises — the other nine just lie |
+| graded 4 | `TypeError: Cannot perform reduction 'mean' with string dtype` | "what is the average region?" is a category error, not a hard question |
 
 ## Where the slides and Python disagree
 
