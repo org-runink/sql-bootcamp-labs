@@ -166,7 +166,9 @@ sql-bootcamp-labs/
 └── scripts/
     ├── generate_superstore_data.py   # regenerates the superstore seed data
     ├── collect_solutions.py          # rebuilds the top-level solutions/ mirror
-    └── check_console.py              # verifies the console is serving what is on disk
+    ├── check_console.py              # verifies the console is serving what is on disk
+    ├── check_exercises.py            # every exercise has a solution, none leak answers
+    └── normalise_notebooks.py        # fixes notebook JSON churn after a JupyterLab save
 ```
 
 The top-level `solutions/` is a **generated mirror** of each class folder's
@@ -588,6 +590,29 @@ Two worksheets need a word of warning, both covered in their class README:
   pictures. You read the problem, draw your answer by editing a Markdown
   cell, run it to see the diagram, and write the DDL in a `%%sql` cell
   underneath — all in one place.
+
+## Checks worth running before a class
+
+```bash
+python3 scripts/check_console.py     # is the console serving what is on disk?
+python3 scripts/check_exercises.py   # does every exercise have a solution?
+python3 scripts/collect_solutions.py --check   # is the published mirror in sync?
+```
+
+All three exit non-zero on failure, so they work in a pre-commit hook or a
+pre-class script. `check_exercises.py` verifies that every exercise has a
+matching solution, that no exercise ships with answers or stored outputs, that
+the notebook JSON is normalised, and that any `data/` read by a relative path
+exists on both sides.
+
+It deliberately does **not** check whether the numbers quoted in a solution are
+right — that needs the notebooks executed in the lab image and the output
+compared against the prose, which is how each class was built.
+
+If a notebook has been opened in JupyterLab, its JSON key order drifts and the
+diff fills with noise. `python3 scripts/normalise_notebooks.py` puts it back;
+it touches key order and formatting only and refuses to write if cell contents
+would change.
 
 ## Troubleshooting
 
