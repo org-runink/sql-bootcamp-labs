@@ -42,8 +42,8 @@ SKIP_DIRS = {".ipynb_checkpoints", "__pycache__"}
 # Notebooks, plus the data files a notebook needs beside it. Several solutions
 # read data/ with a RELATIVE path, so the mirror has to carry those too or the
 # published answer cannot be re-run from the console:
-#   27/08 worksheet 08          .csv
-#   30/08 worksheets 11-14      .csv .tsv .json .xlsx
+#   week2_day5_morning worksheet 08     .csv
+#   week3_day1_afternoon 11-14        .csv .tsv .json .xlsx
 #
 # week3_day3_afternoon adds .sql and .html: worksheet 05 question 10 greps
 # snowflake-scripts/*.sql and labs/*.html by relative path, and its answer

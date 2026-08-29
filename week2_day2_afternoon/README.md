@@ -1,8 +1,8 @@
 # Week 2, day 2 (afternoon) — 24/08
 
-> Folders are named by position in the course; the worksheets inside still
-> carry the calendar date they were taught on. Both refer to the same
-> session.
+> Folders and worksheet titles both name the position in the course. The
+> calendar date this session was taught on is in the heading above, and
+> nowhere else.
 
 The full taught syllabus: building tables, aggregate functions, joins,
 subqueries and `CASE WHEN`.

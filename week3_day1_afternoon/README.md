@@ -1,8 +1,8 @@
 # Week 3, day 1 (afternoon) — 30/08
 
-> Folders are named by position in the course; the worksheets inside still
-> carry the calendar date they were taught on. Both refer to the same
-> session.
+> Folders and worksheet titles both name the position in the course. The
+> calendar date this session was taught on is in the heading above, and
+> nowhere else.
 
 Pandas, across three lectures: what a Series and a DataFrame actually are, the
 core operations you use on every dataset, and how data gets in and out.
@@ -90,7 +90,7 @@ That is the only difference from the main sheets.
 
 ## The data
 
-Everything in `data/` comes from the same real superstore extract the 27/08
+Everything in `data/` comes from the same real superstore extract week2_day5_morning
 class used — 1,093 orders joined to their customers and products. Nothing is
 invented, with one documented exception noted below.
 

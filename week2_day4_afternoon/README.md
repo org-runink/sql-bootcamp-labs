@@ -1,8 +1,8 @@
 # Week 2, day 4 (afternoon) — 26/08
 
-> Folders are named by position in the course; the worksheets inside still
-> carry the calendar date they were taught on. Both refer to the same
-> session.
+> Folders and worksheet titles both name the position in the course. The
+> calendar date this session was taught on is in the heading above, and
+> nowhere else.
 
 Python, not SQL. The four core data structures — lists, tuples, sets and
 dictionaries — the built-in functions that work across all of them, the
@@ -183,7 +183,7 @@ those cases raises an error. Getting the code to run is the easy half;
 knowing what the number does **not** entitle you to conclude is the half that
 matters — and it is the same lesson the SQL sessions ended on.
 
-If you did 24/08, worksheet 07 will feel familiar on purpose: `order_lines`
+If you did week 2, day 2 (afternoon), worksheet 07 will feel familiar on purpose: `order_lines`
 is one row per order **line**, not per order, exactly like `superstore.orders`.
 The `COUNT(*)` vs `COUNT(DISTINCT OrderID)` trap is waiting there in Python
 form.

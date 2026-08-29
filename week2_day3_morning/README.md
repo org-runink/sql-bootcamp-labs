@@ -1,14 +1,14 @@
 # Week 2, day 3 (morning) — 25/08
 
-> Folders are named by position in the course; the worksheets inside still
-> carry the calendar date they were taught on. Both refer to the same
-> session.
+> Folders and worksheet titles both name the position in the course. The
+> calendar date this session was taught on is in the heading above, and
+> nowhere else.
 
 Past the lectures: views, cross-database queries, data modelling, key design,
 report building, window functions, and a set of combined analytical
 challenges.
 
-This session assumes the afternoon class of 24/08 — aggregates, joins,
+This session assumes week 2, day 2 (afternoon) — aggregates, joins,
 subqueries and `CASE WHEN`. If any of those are shaky, the extra-practice
 sheets there (04, 06, 08, 10) are the place to go back to.
 
