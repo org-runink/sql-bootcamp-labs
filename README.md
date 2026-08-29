@@ -163,6 +163,7 @@ sql-bootcamp-labs/
 ├── solutions/                # ALL answers for all six sessions, in one place (generated)
 ├── jupyter-sql/               # shared browser SQL console (JupyterLab + jupysql), pre-wired to mysql-lan
 │                             #   also carries pandas + openpyxl/pyarrow/lxml for the 30/08 class
+│                             #   and curl, which the WeCloudData Advanced lab shells out to
 └── scripts/
     ├── generate_superstore_data.py   # regenerates the superstore seed data
     ├── collect_solutions.py          # rebuilds the top-level solutions/ mirror

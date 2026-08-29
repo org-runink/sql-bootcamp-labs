@@ -138,19 +138,23 @@ Kept **byte-identical**, split so the answers do not sit beside the exercise:
 | [`exercises/wcd-originals/`](exercises/wcd-originals) | `Lab - Pandas Advanced.ipynb` |
 | [`solutions/wcd-originals/`](solutions/wcd-originals) | `Lab - Pandas Advanced Solution.ipynb` |
 
-**Half of it will not run here.** The solution reads seven CSVs by bare
-filename. `telecom.csv` is fetched from
-`https://s3.amazonaws.com/weclouddata/datasets/genai/ml_fundamentals/telecom.csv`
-and was reachable from the lab container when this was written — 7,043 rows.
-The other six (`employee_departments.csv`, `employee_dept_emp.csv`,
-`employee_dept_manager.csv`, `employee_employees.csv`, `employee_salaries.csv`,
-`employee_titles.csv`) were **not shipped with the course and exist nowhere in
-this repo**, so those cells fail with `FileNotFoundError`. They are the MySQL
-`employees` sample schema; substituting invented data would have meant quoting
-numbers that describe nothing, so the notebook is left as it came.
+**It downloads its own data, and needs internet to do it.** The notebook
+fetches all seven CSVs with `!curl -sS -o ...` from
+`https://s3.amazonaws.com/weclouddata/datasets/genai/ml_fundamentals/` before
+reading them — `telecom.csv` in its first cell, and the six `employee_*.csv`
+files partway through. They are the MySQL `employees` sample schema, and all
+seven were reachable when this was written.
 
-The ten worksheets in this folder deliberately depend on neither: every file
-they read is in `data/`, on disk.
+Two practical notes. **`curl` is not in `base-notebook`** — the image installs
+it (see `jupyter-sql/Dockerfile`) precisely so this vendor notebook runs as
+written, rather than editing a file we keep byte-identical. And the download is
+**about 142 MB**, most of it `employee_salaries.csv` at 98.8 MB for 2.8 million
+rows, so on a slow classroom network that cell is not instant. Nothing is
+committed to this repo; the files land in the notebook's working directory at
+runtime.
+
+The ten worksheets in this folder deliberately depend on none of that: every
+file they read is in `data/`, on disk, and they work with the network down.
 
 ## Some cells are supposed to fail
 

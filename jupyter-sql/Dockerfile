@@ -14,6 +14,16 @@ RUN pip install --no-cache-dir \
       pandas numpy \
       openpyxl xlrd pyarrow lxml html5lib beautifulsoup4 tabulate matplotlib
 
+# curl is NOT in base-notebook, and the WeCloudData "Lab - Pandas Advanced"
+# notebook downloads its seven datasets with `!curl -sS -o ...` before reading
+# them. Without this the vendor notebook fails on its first cell, and since it
+# is kept byte-identical we fix the image rather than the notebook.
+USER root
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends curl \
+ && rm -rf /var/lib/apt/lists/*
+USER ${NB_UID}
+
 COPY --chown=${NB_UID}:${NB_GID} SQL_Console.ipynb /home/jovyan/work/SQL_Console.ipynb
 
 ENV JUPYTER_ENABLE_LAB=yes
