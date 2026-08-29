@@ -1,0 +1,5 @@
+USE LABDB;
+USE SCHEMA RAW;
+
+CREATE STAGE products_stage;
+CREATE STAGE sales_stage;

@@ -158,9 +158,16 @@ sql-bootcamp-labs/
 │   ├── exercises/            #   01–10 plus more-practice/
 │   │   └── data/             #     long, wide and deliberately messy CSVs
 │   └── solutions/            #   01–10, with the actual expected output
+├── week3_day3_afternoon/     # Snowflake: Snowsight (01-02) and batch ingestion (03-05)
+│   ├── README.md             #   01-02 run in Snowflake; 03-05 run locally and ARE verified
+│   ├── exercises/            #   01-05
+│   │   ├── data/             #     the lab's two real CSVs -- 1,215 products, 100,000 sales
+│   │   ├── snowflake-scripts/#     the lab's four .sql scripts, unmodified
+│   │   └── labs/             #     both lab pages, saved for offline reading
+│   └── solutions/            #   01-05; 03-05 quote observed output, 01-02 say they do not
 ├── Control_Flow_and_Iteration_Practice/   # the WeCloudData L05 zip, unpacked as shipped
 │                             #   same files also split under week2_day5_morning/wcd-originals/
-├── solutions/                # ALL answers for all six sessions, in one place (generated)
+├── solutions/                # ALL answers for all seven sessions, in one place (generated)
 ├── jupyter-sql/               # shared browser SQL console (JupyterLab + jupysql), pre-wired to mysql-lan
 │                             #   also carries pandas + openpyxl/pyarrow/lxml for the 30/08 class
 │                             #   and curl, which the WeCloudData Advanced lab shells out to
@@ -562,6 +569,14 @@ Go to your class's folder and start from its `README.md`:
   06–10 are data transformation: duplicates, `replace`/`map`/`.loc`, binning,
   outliers, and one-hot encoding with a capstone that runs the whole day end to
   end. Four extra-practice sheets alongside. Same pandas requirement as 30/08.
+- **[`week3_day3_afternoon/`](week3_day3_afternoon/README.md)** — **Snowflake**, two
+  labs. Worksheets 01–02 run in your own Snowflake account: Snowsight, the
+  `TPCH_SF1` sample data, named internal stages, and a transformational
+  `COPY INTO`. They carry **no code cells**, because nothing here can execute
+  them. Worksheets 03–05 run in the console, on the same two CSVs the ingestion
+  lab loads, and take apart what a successful load still leaves wrong — a
+  filename that contradicts its own dates, quotes that make `WHERE PRIORITY =
+  'High'` return zero rows, and a join that invents 606,705.92 of revenue.
 
 Each folder holds `exercises/` and its matching `solutions/`, numbered in
 teaching order. The 26/08 and 27/08 sessions also carry a

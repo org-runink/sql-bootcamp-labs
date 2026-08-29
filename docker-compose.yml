@@ -72,6 +72,10 @@ services:
       # week 3 day 2 continues Pandas: reshaping (L04) and transformation (L05).
       # Same image requirements as 30/08 -- pandas and friends must be present.
       - ./week3_day2_afternoon/exercises:/home/jovyan/work/week3_day2_afternoon
+      # week 3 day 3 is Snowflake. The Snowflake half runs in the student's own
+      # account, not here; the worksheets that DO run locally work on the same
+      # real CSVs the Snowflake lab ingests.
+      - ./week3_day3_afternoon/exercises:/home/jovyan/work/week3_day3_afternoon
       # ANSWERS ARE PUBLISHED TO EVERYONE. This console is shared across the
       # classroom LAN, so mounting solutions/ here means every student can read
       # every answer to every session -- including exercises they have not
