@@ -58,20 +58,20 @@ services:
       - sql-console-work:/home/jovyan/work
       # Mount each class's exercises/ -- never the class folder itself, which
       # would duplicate the solutions under a second path.
-      - ./afternoon-class-2408/exercises:/home/jovyan/work/afternoon-class-2408
-      - ./morning-class-2508/exercises:/home/jovyan/work/morning-class-2508
+      - ./week2_day2_afternoon/exercises:/home/jovyan/work/week2_day2_afternoon
+      - ./week2_day3_morning/exercises:/home/jovyan/work/week2_day3_morning
       # 26/08 is Python, not SQL -- it needs no database, but it lives in the
       # same console so students open it the same way as every other sheet.
-      - ./afternoon-class-2608/exercises:/home/jovyan/work/afternoon-class-2608
+      - ./week2_day4_afternoon/exercises:/home/jovyan/work/week2_day4_afternoon
       # 27/08 is Python too -- control flow and iteration. Also no database.
-      - ./morning-class-2708/exercises:/home/jovyan/work/morning-class-2708
+      - ./week2_day5_morning/exercises:/home/jovyan/work/week2_day5_morning
       # 30/08 is Pandas. Also no database, but it DOES need pandas + openpyxl +
       # pyarrow in the image -- see jupyter-sql/Dockerfile. base-notebook ships
       # none of them, so rebuild the image if these worksheets fail to import.
-      - ./afternoon-class-3008/exercises:/home/jovyan/work/afternoon-class-3008
+      - ./week3_day1_afternoon/exercises:/home/jovyan/work/week3_day1_afternoon
       # week 3 day 2 continues Pandas: reshaping (L04) and transformation (L05).
       # Same image requirements as 30/08 -- pandas and friends must be present.
-      - ./week3_day2/exercises:/home/jovyan/work/week3_day2
+      - ./week3_day2_afternoon/exercises:/home/jovyan/work/week3_day2_afternoon
       # ANSWERS ARE PUBLISHED TO EVERYONE. This console is shared across the
       # classroom LAN, so mounting solutions/ here means every student can read
       # every answer to every session -- including exercises they have not

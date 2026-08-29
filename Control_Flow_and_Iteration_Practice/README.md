@@ -19,14 +19,14 @@ Python Exercises 2_v1.ipynb                     7 questions over six CSV files
 Python Exercises 2 (Solutions)_v1.ipynb
 ```
 
-## The same files are also under `morning-class-2708/`
+## The same files are also under `week2_day5_morning/`
 
 Byte-for-byte identical, but **split** so questions and answers stay
 separable:
 
-- `morning-class-2708/exercises/wcd-originals/` — the three demos, the three
+- `week2_day5_morning/exercises/wcd-originals/` — the three demos, the three
   exercise notebooks, and `Python Exercises 2_v1.ipynb`
-- `morning-class-2708/solutions/wcd-originals/` — the three `_Solution`
+- `week2_day5_morning/solutions/wcd-originals/` — the three `_Solution`
   notebooks and `Python Exercises 2 (Solutions)_v1.ipynb`
 
 **That split copy is the one students reach.** `docker-compose.yml` mounts
@@ -39,7 +39,7 @@ If you edit either copy, edit both — nothing checks that they stay in sync.
 
 - **`Python Exercises 2` cannot be run as shipped.** It reads
   `data/orders.csv`, `data/customers.csv` and four more, and the `data/`
-  folder is not in the zip. `morning-class-2708/exercises/08_reading_real_files.ipynb`
+  folder is not in the zip. `week2_day5_morning/exercises/08_reading_real_files.ipynb`
   asks the same kinds of question against files that are actually present.
 - Its solutions use `def`, `import re` and `import datetime` — the first is
   the L06 lecture, the other two are later still.
@@ -47,5 +47,5 @@ If you edit either copy, edit both — nothing checks that they stay in sync.
   blocks waiting for you to type. Run those cells by hand; they cannot be
   re-run cleanly with Restart & Run All.
 
-See [`morning-class-2708/README.md`](../morning-class-2708/README.md) for how
+See [`week2_day5_morning/README.md`](../week2_day5_morning/README.md) for how
 these map onto the lab's own worksheets.

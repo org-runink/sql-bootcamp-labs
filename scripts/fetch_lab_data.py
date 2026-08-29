@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Fetch the WeCloudData Advanced-lab datasets once, so the lab runs offline.
 
-`week3_day2/.../Lab - Pandas Advanced` downloads seven CSVs with
+`week3_day2_afternoon/.../Lab - Pandas Advanced` downloads seven CSVs with
 `!curl -sS -o <name> <url>` and then reads them by bare filename. That needs
 internet every time it is run, which is no good in a classroom.
 
@@ -34,8 +34,8 @@ REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE = "https://s3.amazonaws.com/weclouddata/datasets/genai/ml_fundamentals"
 
 # Where the notebooks actually run from.
-PRIMARY = os.path.join(REPO, "week3_day2", "exercises", "wcd-originals")
-MIRROR = os.path.join(REPO, "solutions", "week3_day2", "wcd-originals")
+PRIMARY = os.path.join(REPO, "week3_day2_afternoon", "exercises", "wcd-originals")
+MIRROR = os.path.join(REPO, "solutions", "week3_day2_afternoon", "wcd-originals")
 
 # name -> (expected size in bytes, has a header row)
 FILES = {

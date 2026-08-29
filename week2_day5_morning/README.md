@@ -1,4 +1,8 @@
-# Morning class — 27/08
+# Week 2, day 5 (morning) — 27/08
+
+> Folders are named by position in the course; the worksheets inside still
+> carry the calendar date they were taught on. Both refer to the same
+> session.
 
 Python, not SQL. This folder holds **two lectures**: L05, control flow and
 iteration, and L06, functions and code reusability. Worksheets 01–08 are the
@@ -92,7 +96,7 @@ preserved — which is the point of Q4. The dimension files are complete, so
 most of their rows have no matching order, which is the point of Q3 and Q6.
 `products.csv` was transcoded from latin-1 to UTF-8; nothing else was altered.
 
-(`afternoon-class-2408/exercises/data/` holds a different, 400-row sample of
+(`week2_day2_afternoon/exercises/data/` holds a different, 400-row sample of
 the same tables, made for that session's `LOAD DATA LOCAL INFILE` exercise.
 The two are not interchangeable — this one deliberately keeps the repeated
 `OrderID`s that the 2408 sample does not have.)

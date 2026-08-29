@@ -27,12 +27,12 @@ REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEST = os.path.join(REPO, "solutions")
 
 CLASSES = [
-    "afternoon-class-2408",
-    "morning-class-2508",
-    "afternoon-class-2608",
-    "morning-class-2708",
-    "afternoon-class-3008",
-    "week3_day2",
+    "week2_day2_afternoon",
+    "week2_day3_morning",
+    "week2_day4_afternoon",
+    "week2_day5_morning",
+    "week3_day1_afternoon",
+    "week3_day2_afternoon",
 ]
 
 SKIP_DIRS = {".ipynb_checkpoints", "__pycache__"}

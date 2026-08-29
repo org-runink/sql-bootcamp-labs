@@ -5,21 +5,21 @@ have to hop between class folders while teaching.
 
 | Session | Notebooks | Covers |
 |---|---|---|
-| [`afternoon-class-2408/`](afternoon-class-2408) | 10 | SQL: DDL, aggregates, joins, subqueries, `CASE WHEN` |
-| [`morning-class-2508/`](morning-class-2508) | 7 | SQL: views, cross-database, modelling, keys, windows, capstone |
-| [`afternoon-class-2608/`](afternoon-class-2608) | 19 | Python: the four data structures, built-ins, strings/loops, capstone, data-engineering applications — plus `more-practice/` and the WeCloudData originals |
-| [`morning-class-2708/`](morning-class-2708) | 28 | Python, two lectures: L05 control flow and iteration (01–08), then L06 functions and code reusability (09–14) — plus `more-practice/` and the WeCloudData originals |
-| [`afternoon-class-3008/`](afternoon-class-3008) | 22 | Pandas, three lectures: L01 Series/DataFrame/Index (01–04), L02 core functionality (05–10), L03 reading and writing (11–14), plus a pipelines-and-roles synthesis sheet (15) — and `more-practice/` and the WeCloudData originals |
+| [`week2_day2_afternoon/`](week2_day2_afternoon) | 10 | SQL: DDL, aggregates, joins, subqueries, `CASE WHEN` |
+| [`week2_day3_morning/`](week2_day3_morning) | 7 | SQL: views, cross-database, modelling, keys, windows, capstone |
+| [`week2_day4_afternoon/`](week2_day4_afternoon) | 19 | Python: the four data structures, built-ins, strings/loops, capstone, data-engineering applications — plus `more-practice/` and the WeCloudData originals |
+| [`week2_day5_morning/`](week2_day5_morning) | 28 | Python, two lectures: L05 control flow and iteration (01–08), then L06 functions and code reusability (09–14) — plus `more-practice/` and the WeCloudData originals |
+| [`week3_day1_afternoon/`](week3_day1_afternoon) | 22 | Pandas, three lectures: L01 Series/DataFrame/Index (01–04), L02 core functionality (05–10), L03 reading and writing (11–14), plus a pipelines-and-roles synthesis sheet (15) — and `more-practice/` and the WeCloudData originals |
 
-| [`week3_day2/`](week3_day2) | 15 | Pandas continued: L04 reshaping and pivoting (01–05), L05 data transformation (06–10) — plus `more-practice/` and the WeCloudData Advanced lab |
+| [`week3_day2_afternoon/`](week3_day2_afternoon) | 15 | Pandas continued: L04 reshaping and pivoting (01–05), L05 data transformation (06–10) — plus `more-practice/` and the WeCloudData Advanced lab |
 
 101 notebooks in total, plus 15 data files. Several solutions read `data/` by a
 **relative** path, so the data has to travel with them or the published answer
 cannot be re-run from the console:
 
-- `morning-class-2708/08_reading_real_files_solution.ipynb` — four `.csv`
-- `afternoon-class-3008/` worksheets 11–14 — `.csv`, `.tsv`, `.json`, `.xlsx`
-- `week3_day2/` — all sheets read `data/`, and `more-practice/` reads `../data/`
+- `week2_day5_morning/08_reading_real_files_solution.ipynb` — four `.csv`
+- `week3_day1_afternoon/` worksheets 11–14 — `.csv`, `.tsv`, `.json`, `.xlsx`
+- `week3_day2_afternoon/` — all sheets read `data/`, and `more-practice/` reads `../data/`
 
 ## This folder is generated — do not edit it
 
@@ -32,7 +32,7 @@ python3 scripts/collect_solutions.py           # rebuild
 python3 scripts/collect_solutions.py --check   # verify it matches; exits 1 if not
 ```
 
-Fix an answer in `morning-class-2708/solutions/…`, then re-run the script.
+Fix an answer in `week2_day5_morning/solutions/…`, then re-run the script.
 Running `--check` before you commit will catch a mirror that has drifted.
 
 ## It IS served to students

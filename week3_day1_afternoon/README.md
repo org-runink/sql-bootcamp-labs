@@ -1,4 +1,8 @@
-# Afternoon class — 30/08
+# Week 3, day 1 (afternoon) — 30/08
+
+> Folders are named by position in the course; the worksheets inside still
+> carry the calendar date they were taught on. Both refer to the same
+> session.
 
 Pandas, across three lectures: what a Series and a DataFrame actually are, the
 core operations you use on every dataset, and how data gets in and out.
