@@ -49,6 +49,67 @@ solutions/                 the answers, with the real output quoted
 | 13 | [`13_json_data.ipynb`](exercises/13_json_data.ipynb) | flat vs nested JSON, `json_normalize`, `orient` |
 | 14 | [`14_excel_and_capstone.ipynb`](exercises/14_excel_and_capstone.ipynb) | sheets, `ExcelWriter`, `index=False`, and the full pipeline |
 
+## Joins and the medallion pipeline — worksheets 16-17
+
+| # | Sheet | Covers |
+|---|---|---|
+| 16 | [`16_joining_dataframes.ipynb`](exercises/16_joining_dataframes.ipynb) | `merge`, `how=`, `validate=`, `indicator=`, anti-joins, suffixes, and fan-out |
+| 17 | [`17_medallion_pipeline.ipynb`](exercises/17_medallion_pipeline.ipynb) | bronze → silver → gold, built with those joins |
+
+**Both sheets use one dataset and nothing else**: the superstore landing zone in
+[`exercises/data/bronze/`](exercises/data/bronze). Four files, three keys, and —
+the part that catches people — **three different grains**.
+
+```
+orders_2009.csv .. orders_2012.csv   the sales feed, one file per year   (LineID)
+customers.csv                        who bought                          (CustomerID)
+products.csv                         what they bought                    (ProductID)
+returns.csv                          what came back                      (OrderID)
+```
+
+It is the **real** superstore data, extracted from `db-init/` by
+[`scripts/generate_medallion_data.py`](../scripts/generate_medallion_data.py).
+Almost every property the sheets teach from is real, including all three of the
+interesting ones:
+
+- `orders` is at **line** grain — 8,060 rows for **5,361 distinct `OrderID`**
+- `returns` is keyed by `OrderID`, so its **558 rows match 837 order lines**
+- **20 customers have never ordered** — the anti-join exercise
+
+**One thing is planted, and only one.** `orders_2012.csv` carries the last 40
+line rows of 2011 as well as all of 2012 — a late re-delivery overlapping the
+previous partition. Landing zones do this constantly, and it is what makes
+"bronze is append-only, dedup on the way to silver" a real instruction rather
+than a slogan. The generator's docstring says so too.
+
+### What the two sheets find
+
+| Finding | Where |
+|---|---|
+| `LineID` is **not unique** — 40 duplicate rows silently inflating every total | 16 Q2 |
+| A safe `many_to_one` join: **8,060 in, 8,060 out, 0 added** | 16 Q3 |
+| `inner`/`left` give 8,060; `right`/`outer` give **8,080** — the gap is the data talking | 16 Q4 |
+| **20 customers** who never ordered, with a segment breakdown — a lead list, not a bug | 16 Q6 |
+| 558 returns → **837 rows**; `COUNT(*)` overstates returned orders by **50%** | 16 Q7 |
+| ...and yet `SUM(Sales)` is **identical either way** — 1,485,707.73 | 16 Q8 |
+| The duplicates are a **re-delivery**, not corruption: 40 rows in two files, dated 2011-12-24→31, identical apart from lineage | 17 Q2 |
+| Dropping them removes **62,694.27 — 0.462%** of phantom revenue | 17 Q3 |
+| Joining two gold tables: **32 rows either way**, and 108,566,485.03 instead of 13,570,810.63 | 17 Q8 |
+| Skipping silver overstates **every segment**, by **7,682.97 to 22,133.15** | 17 Q10 |
+
+Worksheet 16 question 8 is the one worth arguing about. The same join, over the
+same 837 rows, gives a **correct** revenue total and a **wrong** count — because
+a fan-out damages a measure only if the measure comes from the side that fanned
+out. "Is this join safe?" has no yes/no answer; the honest question is *safe for
+which column?*
+
+### Some cells are supposed to fail
+
+| Sheet | Raises | Why it is there |
+|---|---|---|
+| 16 | `MergeError: not a one-to-one merge` | `validate=` catches the fan-out before a single row is produced |
+| 17 | `AssertionError: bronze-derived gold overstates revenue by 62694.27` | building gold straight from bronze, and the shortcut looks completely fine |
+
 ## Synthesis — worksheet 15
 
 | # | Sheet | Covers |

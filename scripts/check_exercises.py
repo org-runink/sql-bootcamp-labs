@@ -177,13 +177,19 @@ def check_class(cls):
             fail("%s: solutions read data/ by a relative path but solutions/data does not exist"
                  % cls)
         else:
-            for name in sorted(os.listdir(a)):
-                pa, pb = os.path.join(a, name), os.path.join(b, name)
-                if not os.path.exists(pb):
-                    fail("%s: data/%s missing from solutions/" % (cls, name))
-                elif not filecmp.cmp(pa, pb, shallow=False):
-                    fail("%s: data/%s differs between exercises/ and solutions/"
-                         % (cls, name))
+            # Walk, rather than listdir: data/ may contain subfolders. The
+            # medallion landing zone in week3_day1_afternoon is data/bronze/,
+            # and filecmp.cmp on a directory is not a comparison.
+            for dirpath, dirnames, filenames in os.walk(a):
+                dirnames[:] = sorted(d for d in dirnames if d not in SKIP)
+                for name in sorted(filenames):
+                    rel = os.path.relpath(os.path.join(dirpath, name), a)
+                    pa, pb = os.path.join(a, rel), os.path.join(b, rel)
+                    if not os.path.exists(pb):
+                        fail("%s: data/%s missing from solutions/" % (cls, rel))
+                    elif not filecmp.cmp(pa, pb, shallow=False):
+                        fail("%s: data/%s differs between exercises/ and solutions/"
+                             % (cls, rel))
 
     print("  %d exercise/solution pairs" % len(ex))
 
