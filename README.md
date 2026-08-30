@@ -181,7 +181,7 @@ sql-bootcamp-labs/
     ├── generate_superstore_data.py   # regenerates the superstore seed data
     ├── generate_enrollment_data.py   # regenerates the L03 enrollment source database
     ├── collect_solutions.py          # rebuilds the top-level solutions/ mirror
-    ├── check_console.py              # verifies the console is serving what is on disk
+    ├── check_console.py              # console mounts are live AND its packages are right
     ├── check_exercises.py            # every exercise has a solution, none leak answers
     ├── fetch_lab_data.py             # one-time ~136MB fetch so the WCD Advanced lab runs offline
     ├── normalise_notebooks.py        # fixes notebook JSON churn after a JupyterLab save
@@ -762,8 +762,18 @@ podman exec sql-console-lan python3 /tmp/v.py
 ```
 
 It prints a version per package and exits non-zero on anything missing or at
-the wrong version. The same script runs as a **build step**, so a broken image
-fails the build rather than a worksheet in front of a class.
+the wrong version. The same script runs in three places:
+
+- as a **build step** in the Dockerfile, so a broken image fails the build
+  rather than a worksheet in front of a class
+- inside **`scripts/check_console.py`**, against the *running* container
+- by hand, with the two commands above
+
+The middle one matters most. A build-time guard cannot catch a **stale
+image**: `podman-compose up -d` without `--build` reuses whatever is already
+tagged, and this console image was SQL-only until commit `c4082db` added
+pandas. A container from before that starts fine, mounts fine, and dies on
+`import pandas`. `check_console.py` now catches it and tells you to rebuild.
 
 To rebuild:
 
