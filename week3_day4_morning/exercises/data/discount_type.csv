@@ -1,0 +1,7 @@
+discount_id,discount_type_id,discount_type_name,discount_amount
+1,10,Early Bird,500.0
+2,20,Alumni Referral,750.0
+3,30,Employer Partner,1200.0
+4,40,Scholarship,2000.0
+5,50,Spring Campaign,300.0
+6,60,Legacy Promotion,

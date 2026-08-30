@@ -1,0 +1,31 @@
+city_id,city_name,provn_id,provn_name,cntry_id,cntry_name
+1,Toronto,1,Ontario,1,Canada
+2,Ottawa,1,Ontario,1,Canada
+3,Mississauga,1,Ontario,1,Canada
+4,Hamilton,1,Ontario,1,Canada
+5,Montreal,2,Quebec,1,Canada
+6,Quebec City,2,Quebec,1,Canada
+7,Vancouver,3,British Columbia,1,Canada
+8,Victoria,3,British Columbia,1,Canada
+9,Calgary,4,Alberta,1,Canada
+10,Edmonton,4,Alberta,1,Canada
+11,Winnipeg,5,Manitoba,1,Canada
+12,Regina,6,Saskatchewan,1,Canada
+13,Halifax,7,Nova Scotia,1,Canada
+14,Fredericton,8,New Brunswick,1,Canada
+15,New York,9,New York,2,United States
+16,Buffalo,9,New York,2,United States
+17,Boston,10,Massachusetts,2,United States
+18,Chicago,11,Illinois,2,United States
+19,Seattle,12,Washington,2,United States
+20,San Francisco,13,California,2,United States
+21,Los Angeles,13,California,2,United States
+22,Austin,14,Texas,2,United States
+23,Denver,15,Colorado,2,United States
+24,Atlanta,16,Georgia,2,United States
+25,London,17,England,3,United Kingdom
+26,Manchester,17,England,3,United Kingdom
+27,Dublin,18,Leinster,4,Ireland
+28,Berlin,19,Berlin,5,Germany
+29,Lisbon,20,Lisboa,6,Portugal
+30,Sao Paulo,21,Sao Paulo,7,Brazil

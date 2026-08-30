@@ -1,8 +1,8 @@
 # Week 2, day 5 (morning) — 27/08
 
-> Folders are named by position in the course; the worksheets inside still
-> carry the calendar date they were taught on. Both refer to the same
-> session.
+> Folders and worksheet titles both name the position in the course. The
+> calendar date this session was taught on is in the heading above, and
+> nowhere else.
 
 Python, not SQL. This folder holds **two lectures**: L05, control flow and
 iteration, and L06, functions and code reusability. Worksheets 01–08 are the
@@ -307,7 +307,7 @@ substantively wrong:
 None of those raises an error. That is deliberate, and it is the most useful
 thing in these sessions: getting the code to run is the easy half, and knowing
 what the number does **not** entitle you to conclude is the half that matters.
-It is the same lesson the SQL sessions and 26/08 ended on.
+It is the same lesson the SQL sessions and week 2, day 4 ended on.
 
 Worksheet 07 Q8 is the sharpest version of it. A correct incremental run and a
 source file that never arrived print exactly the same thing: *0 rows

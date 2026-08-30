@@ -1,11 +1,21 @@
 #!/usr/bin/env python3
-"""Check that the Jupyter console is actually serving what is on disk.
+"""Check that the Jupyter console is serving what is on disk, and has what it needs.
 
-Run this before class. It compares, for every bind mount in
-docker-compose.yml, the inode of the host directory against the inode the
-container sees. If they differ, the mount is pointing at an orphaned
-directory and students will see an EMPTY folder while the files sit happily
-in your git clone.
+Run this before class. Two checks:
+
+  1. MOUNTS. For every bind mount in docker-compose.yml, compare the inode of
+     the host directory against the inode the container sees. If they differ,
+     the mount points at an orphaned directory and students see an EMPTY
+     folder while the files sit happily in your git clone.
+
+  2. PACKAGES. Ask the RUNNING container for its Python and package versions
+     and compare against jupyter-sql/verify_image.py.
+
+Check 2 exists because the build-time guard in the Dockerfile cannot catch a
+STALE IMAGE. `podman-compose up -d` without `--build` happily reuses whatever
+image is already tagged -- and the console image was SQL-only until commit
+c4082db added pandas. A container from before that runs fine, mounts fine, and
+fails on `import pandas` in front of a class.
 
     python3 scripts/check_console.py
 
@@ -73,6 +83,41 @@ def container_stat(path):
     return int(parts[0]), int(parts[1])
 
 
+def check_packages():
+    """Run jupyter-sql/verify_image.py inside the RUNNING container.
+
+    Catches the stale-image case the Dockerfile's build-time guard cannot:
+    an image tagged before a package was added, reused by `up -d` without
+    `--build`.
+    """
+    script = os.path.join(REPO, "jupyter-sql", "verify_image.py")
+    if not os.path.exists(script):
+        print("\n  (jupyter-sql/verify_image.py missing -- package check skipped)")
+        return True
+
+    print("\npackages in the running container:")
+    dest = "/tmp/_verify_image.py"
+    try:
+        subprocess.run(["podman", "cp", script, "%s:%s" % (CONTAINER, dest)],
+                       check=True, capture_output=True)
+        r = subprocess.run(["podman", "exec", CONTAINER, "python3", dest],
+                           capture_output=True, text=True)
+        subprocess.run(["podman", "exec", CONTAINER, "rm", "-f", dest],
+                       capture_output=True)
+    except (subprocess.CalledProcessError, FileNotFoundError) as exc:
+        print("  could not reach the container: %s" % exc)
+        return False
+
+    for line in r.stdout.rstrip().split("\n"):
+        print("  " + line if line else "")
+    if r.returncode != 0:
+        print("\nThe running container is missing packages the worksheets need.")
+        print("This is usually a STALE IMAGE -- rebuild, do not just restart:")
+        print("  podman-compose up -d --build --force-recreate sql-console")
+        return False
+    return True
+
+
 def main():
     running = subprocess.run(
         ["podman", "ps", "--filter", "name=" + CONTAINER, "--format", "{{.Names}}"],
@@ -119,6 +164,9 @@ def main():
         sys.exit(1)
 
     print("all mounts healthy — the console is serving what is on disk")
+
+    if not check_packages():
+        sys.exit(1)
 
 
 if __name__ == "__main__":

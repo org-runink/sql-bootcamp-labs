@@ -1,0 +1,25 @@
+course_id,course_name,course_desc,gov_code,full_time,hours,program_id,active_flg
+201,SQL for Data Engineers,"SQL for Data Engineers, applied",GOV-4000,1,42,101,1
+202,Data Modeling and ETL Design,"Data Modeling and ETL Design, applied",GOV-4001,0,30,102,1
+203,Python for Data Engineering,"Python for Data Engineering, applied",GOV-4002,0,42,103,1
+204,Streaming Fundamentals,"Streaming Fundamentals, applied",GOV-4003,0,42,104,1
+205,Analytics Engineering with dbt,"Analytics Engineering with dbt, applied",GOV-4004,1,24,105,1
+206,Dashboard Design,"Dashboard Design, applied",GOV-4005,1,24,106,1
+207,Statistics for Analysts,"Statistics for Analysts, applied",GOV-4006,0,42,107,1
+208,Machine Learning Foundations,"Machine Learning Foundations, applied",GOV-4007,0,24,108,1
+209,Deep Learning Foundations,"Deep Learning Foundations, applied",GOV-4008,0,48,101,1
+210,Feature Engineering,"Feature Engineering, applied",GOV-4009,1,42,102,1
+211,Containers and Orchestration,"Containers and Orchestration, applied",GOV-4010,0,24,103,1
+212,Infrastructure as Code,"Infrastructure as Code, applied",GOV-4011,0,42,104,1
+213,Cloud Networking,"Cloud Networking, applied",GOV-4012,0,30,105,1
+214,Observability and SRE Practice,"Observability and SRE Practice, applied",GOV-4013,1,36,106,1
+215,Incident Response,"Incident Response, applied",GOV-4014,0,42,107,1
+216,Threat Detection,"Threat Detection, applied",GOV-4015,1,36,108,1
+217,Secure Coding,"Secure Coding, applied",GOV-4016,1,48,101,1
+218,Identity and Access Management,"Identity and Access Management, applied",GOV-4017,0,42,102,1
+219,Linux for Engineers,"Linux for Engineers, applied",GOV-4018,1,36,103,1
+220,Version Control in Practice,"Version Control in Practice, applied",GOV-4019,0,30,104,1
+221,Data Warehousing on Snowflake,"Data Warehousing on Snowflake, applied",GOV-4020,0,48,105,1
+222,Distributed Systems Primer,"Distributed Systems Primer, applied",GOV-4021,1,36,106,1
+223,Career Foundations,"Career Foundations, applied",GOV-4022,0,30,107,0
+224,Capstone Project,"Capstone Project, applied",GOV-4023,0,30,108,1

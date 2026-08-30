@@ -107,7 +107,7 @@ starts:
 product line item, so `OrderID` repeats when an order has multiple
 products — `LineID` (`AUTO_INCREMENT`) is the actual primary key.
 
-The 26/08 and 27/08 sessions are **Python rather than SQL** — data structures
+The week 2 day 4 and day 5 sessions are **Python rather than SQL** — data structures
 on the first, then control flow, iteration and functions on the second — so
 they use neither database. They still live here, and still open in the same Jupyter console, so
 there is one place to find every worksheet.
@@ -165,19 +165,27 @@ sql-bootcamp-labs/
 │   │   ├── snowflake-scripts/#     the lab's four .sql scripts, unmodified
 │   │   └── labs/             #     both lab pages, saved for offline reading
 │   └── solutions/            #   01-05; 03-05 quote observed output, 01-02 say they do not
+├── week3_day4_morning/       # Dimensional modeling and ELT design (L03), end to end
+│   ├── README.md             #   builds slide 29's star schema from slide 24's source model
+│   ├── exercises/            #   01-10 coded, 11 the group design activity (no code cells)
+│   │   └── data/             #     12 CSVs matching slide 24's ER diagram, seeded generator
+│   └── solutions/            #   01-10 quote observed output; 11 is a worked example
 ├── Control_Flow_and_Iteration_Practice/   # the WeCloudData L05 zip, unpacked as shipped
 │                             #   same files also split under week2_day5_morning/wcd-originals/
-├── solutions/                # ALL answers for all seven sessions, in one place (generated)
+├── solutions/                # ALL answers for all eight sessions, in one place (generated)
 ├── jupyter-sql/               # shared browser SQL console (JupyterLab + jupysql), pre-wired to mysql-lan
-│                             #   also carries pandas + openpyxl/pyarrow/lxml for the 30/08 class
-│                             #   and curl, which the WeCloudData Advanced lab shells out to
+│   ├── Dockerfile            #   base pinned by DIGEST, every pip package pinned to an exact version
+│   └── verify_image.py       #   runs as a BUILD step: wrong/missing package -> the build fails
+│                             #   carries pandas 3.0.5 + openpyxl/pyarrow/lxml, and curl for the WCD lab
 └── scripts/
     ├── generate_superstore_data.py   # regenerates the superstore seed data
+    ├── generate_enrollment_data.py   # regenerates the L03 enrollment source database
     ├── collect_solutions.py          # rebuilds the top-level solutions/ mirror
-    ├── check_console.py              # verifies the console is serving what is on disk
+    ├── check_console.py              # console mounts are live AND its packages are right
     ├── check_exercises.py            # every exercise has a solution, none leak answers
     ├── fetch_lab_data.py             # one-time ~136MB fetch so the WCD Advanced lab runs offline
-    └── normalise_notebooks.py        # fixes notebook JSON churn after a JupyterLab save
+    ├── normalise_notebooks.py        # fixes notebook JSON churn after a JupyterLab save
+    └── retitle_worksheets.py         # worksheet titles -> course positions (idempotent)
 ```
 
 The top-level `solutions/` is a **generated mirror** of each class folder's
@@ -561,14 +569,15 @@ Go to your class's folder and start from its `README.md`:
   `apply`/`map`, and sorting and ranking. Worksheets 11–14 are reading and
   writing: CSV and TSV parameters, chunked reads, JSON including nested
   objects, and Excel workbooks with a full load-check-process-save capstone.
-  Needs no database, but it **does** need pandas — the base image ships
-  without it, so rebuild the console image if imports fail.
+  Needs no database, but it **does** need pandas — the upstream base image
+  ships without it, which is why `jupyter-sql/Dockerfile` installs it
+  explicitly. If an import fails, see *Checking the console image* below.
 - **[`week3_day2_afternoon/`](week3_day2_afternoon/README.md)** — **Pandas continued**, two more
   lectures. Worksheets 01–05 are reshaping and pivoting: long vs wide,
   MultiIndex, `unstack`, `stack`, and `pivot` versus `pivot_table`. Worksheets
   06–10 are data transformation: duplicates, `replace`/`map`/`.loc`, binning,
   outliers, and one-hot encoding with a capstone that runs the whole day end to
-  end. Four extra-practice sheets alongside. Same pandas requirement as 30/08.
+  end. Four extra-practice sheets alongside. Same pandas requirement as week3_day1_afternoon.
 - **[`week3_day3_afternoon/`](week3_day3_afternoon/README.md)** — **Snowflake**, two
   labs. Worksheets 01–02 run in your own Snowflake account: Snowsight, the
   `TPCH_SF1` sample data, named internal stages, and a transformational
@@ -577,9 +586,18 @@ Go to your class's folder and start from its `README.md`:
   lab loads, and take apart what a successful load still leaves wrong — a
   filename that contradicts its own dates, quotes that make `WHERE PRIORITY =
   'High'` return zero rows, and a join that invents 606,705.92 of revenue.
+- **[`week3_day4_morning/`](week3_day4_morning/README.md)** — **Dimensional
+  modeling and ELT design**, the L03 case study built rather than described.
+  Worksheets 01–04 are the concepts with numbers on them: OLTP vs OLAP, grain as
+  a testable claim, the three measure types, and star vs snowflake vs galaxy.
+  Worksheets 05–10 are the lecture's seven ELT steps — mapping, staging, business
+  rules, derived measures, dimension load, fact load, quality checks — ending
+  with a fact table that reconciles to `0.00` and answers five of six business
+  questions. Worksheet 11 is the group design activity, with **no code cells**.
+  Its data is generated by `scripts/generate_enrollment_data.py`.
 
 Each folder holds `exercises/` and its matching `solutions/`, numbered in
-teaching order. The 26/08 and 27/08 sessions also carry a
+teaching order. The week2_day4_afternoon and week2_day5_morning sessions also carry a
 `exercises/more-practice/` subfolder holding a second sheet per topic, with
 matching numbering — use those when something didn't land, or after class.
 
@@ -730,6 +748,57 @@ mysql -uroot -p123456 < db-init/00_superstore_schema.ipynb`, then the
 
 `week2_day2_afternoon/exercises/data/*.csv` (used only by worksheet 01,
 against a separate `superstore_practice` database) is synthetic, generated by
+## Checking the console image
+
+`quay.io/jupyter/base-notebook` ships **without pandas** — that is the
+`scipy-notebook` image. This repo's `jupyter-sql/Dockerfile` installs it, along
+with the twelve other packages the worksheets need.
+
+To ask the running console what it actually has:
+
+```bash
+podman cp jupyter-sql/verify_image.py sql-console-lan:/tmp/v.py
+podman exec sql-console-lan python3 /tmp/v.py
+```
+
+It prints a version per package and exits non-zero on anything missing or at
+the wrong version. The same script runs in three places:
+
+- as a **build step** in the Dockerfile, so a broken image fails the build
+  rather than a worksheet in front of a class
+- inside **`scripts/check_console.py`**, against the *running* container
+- by hand, with the two commands above
+
+The middle one matters most. A build-time guard cannot catch a **stale
+image**: `podman-compose up -d` without `--build` reuses whatever is already
+tagged, and this console image was SQL-only until commit `c4082db` added
+pandas. A container from before that starts fine, mounts fine, and dies on
+`import pandas`. `check_console.py` now catches it and tells you to rebuild.
+
+To rebuild:
+
+```bash
+podman-compose up -d --build --force-recreate sql-console
+```
+
+### Everything is pinned, and that is deliberate
+
+The base image is pinned by **digest**, not `:latest`, and every pip package to
+an exact version.
+
+This repo's guarantee is that every number quoted in a solution is output
+somebody observed. That guarantee lives or dies on the interpreter that
+produced it: an unpinned `pip install pandas` means a rebuild months from now
+can bring a pandas that changes a dtype, a repr or an error message, and
+silently invalidate hundreds of verified figures with nothing failing. 282
+notebooks also declare `"version": "3.13.15"` in their kernel metadata, which
+`scripts/normalise_notebooks.py` enforces — so the Python version is
+load-bearing too.
+
+To bump anything: change the pin, rebuild, run `verify_image.py`, and re-verify
+the classes whose solutions quote output. Each class README documents how its
+figures were checked.
+
 `scripts/generate_superstore_data.py` (fixed random seed, so output is
 reproducible). That script writes **only those four CSVs** — it deliberately
 does not touch `db-init/`, which holds the real dataset. Edit constants at the

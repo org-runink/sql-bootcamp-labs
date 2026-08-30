@@ -1,0 +1,15 @@
+emp_id,emp_name,emp_type_id,status,city_id,title,manager_id,active_flg
+901,Hiro Ferreira,3,active,11,Lead Instructor,,1
+902,Oscar Kowalski,1,active,2,Program Manager,901,1
+903,Viktor Petrov,1,active,26,Lead Instructor,901,1
+904,Chiara Ueda,1,active,2,Program Manager,901,1
+905,Jasper Zielinski,1,active,23,Director,901,1
+906,Celine Achebe,1,active,18,Director,901,1
+907,Jonas Ferreira,1,active,1,Lead Instructor,901,1
+908,Quinn Kowalski,1,active,29,Program Manager,901,1
+909,Xiomara Petrov,1,active,24,Lead Instructor,901,1
+910,Esther Ueda,1,active,25,Director,901,1
+911,Lucia Zielinski,2,active,16,Director,901,1
+912,Elena Achebe,1,active,14,Program Manager,901,1
+913,Liam Ferreira,3,active,12,Lead Instructor,901,1
+914,Sofia Kowalski,2,active,20,Lead Instructor,901,1

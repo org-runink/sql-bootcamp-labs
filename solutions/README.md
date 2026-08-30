@@ -1,6 +1,6 @@
 # All solutions, in one place
 
-Every answer notebook from all seven sessions, gathered here so you don't
+Every answer notebook from all eight sessions, gathered here so you don't
 have to hop between class folders while teaching.
 
 | Session | Notebooks | Covers |
@@ -12,8 +12,9 @@ have to hop between class folders while teaching.
 | [`week3_day1_afternoon/`](week3_day1_afternoon) | 22 | Pandas, three lectures: L01 Series/DataFrame/Index (01–04), L02 core functionality (05–10), L03 reading and writing (11–14), plus a pipelines-and-roles synthesis sheet (15) — and `more-practice/` and the WeCloudData originals |
 | [`week3_day2_afternoon/`](week3_day2_afternoon) | 19 | Pandas continued: L04 reshaping and pivoting (01–05), L05 data transformation (06–10) — plus `more-practice/` and the WeCloudData Advanced lab |
 | [`week3_day3_afternoon/`](week3_day3_afternoon) | 5 | Snowflake: Snowsight and `TPCH_SF1` (01), stages and `COPY INTO` (02) — both **not executed**, they run in your own account — then the same lab CSVs taken apart locally, where every number is observed (03–05) |
+| [`week3_day4_morning/`](week3_day4_morning) | 11 | Dimensional modeling and ELT design: OLTP vs OLAP, grain, measure types, star/snowflake/galaxy (01–04), then the lecture's seven ELT steps end to end (05–10), plus the group design activity (11, no code) |
 
-110 notebooks in total, plus 30 supporting files — 20 `.csv`, 4 `.sql`,
+121 notebooks in total, plus 42 supporting files — 32 `.csv`, 4 `.sql`,
 2 `.html`, 2 `.json`, 1 `.tsv`, 1 `.xlsx`. Several solutions read `data/` by a
 **relative** path, so the data has to travel with them or the published answer
 cannot be re-run from the console:
@@ -24,6 +25,7 @@ cannot be re-run from the console:
 - `week3_day3_afternoon/` — worksheets 03–05 read `data/`, and worksheet 05
   question 10 also reads `snowflake-scripts/*.sql` and `labs/*.html`, so those
   travel too — its answer quotes the file list it finds
+- `week3_day4_morning/` — worksheets 01–10 all read `data/`
 
 ## This folder is generated — do not edit it
 

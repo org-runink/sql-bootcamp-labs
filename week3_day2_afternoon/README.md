@@ -84,7 +84,8 @@ These live one directory down, so they read the data as `../data/`.
 
 ## The data
 
-Derived from the same real superstore extract as the 27/08 and 30/08 classes —
+Derived from the same real superstore extract as week2_day5_morning and
+week3_day1_afternoon —
 1,093 orders joined to their customers and products.
 
 | File | Rows | What it is for |
@@ -118,7 +119,8 @@ different encodings of "missing" and only one of them is visible to
 
 ## This class needs pandas
 
-Same image requirement as 30/08. `quay.io/jupyter/base-notebook` ships without
+Same image requirement as week3_day1_afternoon. `quay.io/jupyter/base-notebook`
+ships without
 pandas; `jupyter-sql/Dockerfile` installs it. If a worksheet fails on
 `import pandas`, rebuild:
 
