@@ -48,8 +48,14 @@ RUN pip install --no-cache-dir \
 
 # Fail the BUILD, not a worksheet in front of a class, if anything above is
 # missing or the wrong version. A broken image should never reach a student.
-COPY --chown=${NB_UID}:${NB_GID} verify_image.py /tmp/verify_image.py
-RUN python3 /tmp/verify_image.py && rm /tmp/verify_image.py
+#
+# The script STAYS in the image at a stable path, because the build-time gate
+# is only half the problem: it cannot catch a STALE image that is never
+# rebuilt. docker-compose.yml runs this same file as the container's
+# healthcheck, so a pre-c4082db console shows up as `unhealthy` in
+# `podman ps` without anybody having to run anything.
+COPY --chown=${NB_UID}:${NB_GID} verify_image.py /opt/verify_image.py
+RUN python3 /opt/verify_image.py
 
 # curl is NOT in base-notebook, and the WeCloudData "Lab - Pandas Advanced"
 # notebook downloads its seven datasets with `!curl -sS -o ...` before reading
