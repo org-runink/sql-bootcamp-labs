@@ -87,6 +87,7 @@ services:
       # real CSVs the Snowflake lab ingests.
       - ./week3_day3_afternoon/exercises:/home/jovyan/work/week3_day3_afternoon
       - ./week3_day4_morning/exercises:/home/jovyan/work/week3_day4_morning
+      - ./week3_recap/exercises:/home/jovyan/work/week3_recap
       # ANSWERS ARE PUBLISHED TO EVERYONE. This console is shared across the
       # classroom LAN, so mounting solutions/ here means every student can read
       # every answer to every session -- including exercises they have not
