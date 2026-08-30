@@ -253,7 +253,7 @@ The same one the SQL and Pandas sessions have run on: **the dangerous results
 are the ones that do not raise.**
 
 Worksheet 05 Q8 is the sharpest case. The eight regional averages for 2012
-average to `1995.20`; the `All` margin on the same table reads `1522.22`. Both
+average to `1995.2`; the `All` margin on the same table reads `1522.22`. Both
 are printed by the same call. The margin is the correct answer — it weights
 Nunavut's 9 orders against Ontario's 302 rather than treating them as equals —
 and a reader who checks the column by hand will get the other number and

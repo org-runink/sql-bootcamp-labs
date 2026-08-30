@@ -109,5 +109,8 @@
  "week3_day4_morning/08_load_dimensions_solution.ipynb": 1,
  "week3_day4_morning/09_load_fact_table_solution.ipynb": 1,
  "week3_day4_morning/10_quality_and_validation_solution.ipynb": 1,
- "week3_day4_morning/11_design_activity_solution.ipynb": 0
+ "week3_day4_morning/11_design_activity_solution.ipynb": 0,
+ "week3_recap/01_grain_and_fanout_solution.ipynb": 1,
+ "week3_recap/02_rows_that_disappear_solution.ipynb": 1,
+ "week3_recap/03_numbers_you_cannot_average_solution.ipynb": 1
 }
