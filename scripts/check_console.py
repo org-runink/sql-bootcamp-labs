@@ -8,7 +8,12 @@ Run this before class. Two checks:
      the mount points at an orphaned directory and students see an EMPTY
      folder while the files sit happily in your git clone.
 
-  2. PACKAGES. Ask the RUNNING container for its Python and package versions
+  2. STALE FOLDERS. A renamed class leaves its OLD name behind as an empty
+     directory inside the container's named volume, because the volume
+     persists across recreates. Students then see a folder that is empty for
+     no visible reason. This has happened at every folder rename so far.
+
+  3. PACKAGES. Ask the RUNNING container for its Python and package versions
      and compare against jupyter-sql/verify_image.py.
 
 Check 2 exists because the build-time guard in the Dockerfile cannot catch a
@@ -81,6 +86,42 @@ def container_stat(path):
     if len(parts) != 2:
         return None
     return int(parts[0]), int(parts[1])
+
+
+def check_stale_folders(expected):
+    """Empty directories in the volume that are not current bind mounts.
+
+    The volume outlives `podman-compose up --force-recreate`, so a class
+    folder renamed in git leaves its old name behind as an empty directory.
+    Nothing errors -- students just see a folder with nothing in it.
+    """
+    r = subprocess.run(
+        ["podman", "exec", CONTAINER, "bash", "-c",
+         'cd /home/jovyan/work && for d in */; do '
+         'printf "%s\t%s\n" "${d%/}" "$(ls -A "$d" 2>/dev/null | wc -l)"; done'],
+        capture_output=True, text=True)
+    if r.returncode != 0:
+        return True
+
+    stale = []
+    for line in r.stdout.strip().split("\n"):
+        if not line.strip():
+            continue
+        name, count = line.split("\t")
+        if int(count) == 0 and name not in expected:
+            stale.append(name)
+
+    if not stale:
+        print("\nno stale folders in the container volume")
+        return True
+    print("\n%d STALE FOLDER(S) in the container volume:" % len(stale))
+    for name in stale:
+        print("  - %s   (empty, and not a current mount)" % name)
+    print("\nA rename left these behind. Students see them as empty folders.")
+    print("Remove with:")
+    for name in stale:
+        print("  podman exec %s rmdir /home/jovyan/work/%s" % (CONTAINER, name))
+    return False
 
 
 def check_packages():
@@ -165,7 +206,10 @@ def main():
 
     print("all mounts healthy — the console is serving what is on disk")
 
-    if not check_packages():
+    expected = {c.rstrip("/").split("/")[-1] for _, c in bind_mounts()}
+    ok_stale = check_stale_folders(expected)
+    ok_pkgs = check_packages()
+    if not (ok_stale and ok_pkgs):
         sys.exit(1)
 
 

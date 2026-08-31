@@ -3,10 +3,10 @@ __pycache__/
 .DS_Store
 .ipynb_checkpoints/
 
-# WeCloudData Advanced-lab datasets, fetched once by
-# scripts/fetch_lab_data.py so the lab runs offline. About 136 MB, most of it
-# employee_salaries.csv at 94 MB -- past GitHub's warning threshold and near
-# its hard limit, so these are deliberately not committed.
-week3_day2_afternoon/exercises/wcd-originals/*.csv
-week3_day2_afternoon/solutions/wcd-originals/*.csv
-solutions/week3_day2_afternoon/wcd-originals/*.csv
+# Safety guard, not a fetch step. The Advanced lab reads its data straight from
+# S3 now, so no CSV under wcd-originals/ is ever meant to be committed -- but
+# leftover downloads from the old offline arrangement may still be on disk, and
+# one of them is 94 MB. This stops `git add -A` from staging them.
+*/exercises/wcd-originals/*.csv
+*/solutions/wcd-originals/*.csv
+solutions/*/wcd-originals/*.csv

@@ -152,7 +152,7 @@ sql-bootcamp-labs/
 │   │   └── data/             #     csv / tsv / json / xlsx built from the same superstore extract
 │   └── solutions/            #   01–14, with the actual expected output
 │       └── data/             #     the same files, so the solution can be re-run in place
-├── week3_day2_afternoon/               # Pandas continued: reshaping (L04) and transformation (L05)
+├── week3_day2_morning/               # Pandas continued: reshaping (L04) and transformation (L05)
 │   ├── README.md             #   also needs pandas in the image
 │   ├── slides/               #   the two lecture decks
 │   ├── exercises/            #   01–10 plus more-practice/
@@ -188,7 +188,6 @@ sql-bootcamp-labs/
     ├── collect_solutions.py          # rebuilds the top-level solutions/ mirror
     ├── check_console.py              # console mounts are live AND its packages are right
     ├── check_exercises.py            # every exercise has a solution, none leak answers
-    ├── fetch_lab_data.py             # one-time ~136MB fetch so the WCD Advanced lab runs offline
     ├── normalise_notebooks.py        # fixes notebook JSON churn after a JupyterLab save
     ├── retitle_worksheets.py         # worksheet titles -> course positions (idempotent)
     ├── generate_medallion_data.py    # extracts the bronze landing zone from db-init/
@@ -579,7 +578,7 @@ Go to your class's folder and start from its `README.md`:
   Needs no database, but it **does** need pandas — the upstream base image
   ships without it, which is why `jupyter-sql/Dockerfile` installs it
   explicitly. If an import fails, see *Checking the console image* below.
-- **[`week3_day2_afternoon/`](week3_day2_afternoon/README.md)** — **Pandas continued**, two more
+- **[`week3_day2_morning/`](week3_day2_morning/README.md)** — **Pandas continued**, two more
   lectures. Worksheets 01–05 are reshaping and pivoting: long vs wide,
   MultiIndex, `unstack`, `stack`, and `pivot` versus `pivot_table`. Worksheets
   06–10 are data transformation: duplicates, `replace`/`map`/`.loc`, binning,
@@ -647,7 +646,6 @@ Two worksheets need a word of warning, both covered in their class README:
 python3 scripts/check_console.py     # is the console serving what is on disk?
 python3 scripts/check_exercises.py   # does every exercise have a solution?
 python3 scripts/collect_solutions.py --check   # is the published mirror in sync?
-python3 scripts/fetch_lab_data.py --verify     # is the offline lab data in place?
 ```
 
 All three exit non-zero on failure, so they work in a pre-commit hook or a
