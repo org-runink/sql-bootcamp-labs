@@ -791,7 +791,7 @@ their result depends on the network rather than on this repo.
 
 `quay.io/jupyter/base-notebook` ships **without pandas** — that is the
 `scipy-notebook` image. This repo's `jupyter-sql/Dockerfile` installs it, along
-with the twelve other packages the worksheets need.
+with the fourteen other packages the worksheets need.
 
 To ask the running console what it actually has:
 
@@ -801,14 +801,23 @@ podman exec sql-console-lan python3 /tmp/v.py
 ```
 
 It prints a version per package and exits non-zero on anything missing or at
-the wrong version. The same script runs in three places:
+the wrong version. It also checks that a JVM is present, that
+`spark-defaults.conf` is in place and still says `2g`, and that the
+**JupyterLab theme default** is dark — so a rebuild cannot silently put the room
+back on white screens.
+
+The same script runs in four places:
 
 - as a **build step** in the Dockerfile, so a broken image fails the build
   rather than a worksheet in front of a class
-- inside **`scripts/check_console.py`**, against the *running* container
 - by hand, with the two commands above
-
+- inside **`scripts/check_console.py`**, against the *running* container
 - as the container's **healthcheck**, declared in `docker-compose.yml`
+
+The last two matter most. A build-time guard cannot catch a **stale image**:
+`podman-compose up -d` without `--build` reuses whatever is already tagged, and
+this console image was SQL-only until commit `c4082db` added pandas. A container
+from before that starts fine, mounts fine, and dies on `import pandas`.
 
 ### pyspark
 
@@ -909,14 +918,6 @@ Logs are compressed and cleaned after 7 days
 containers see the shared volume under different UIDs — the console saw
 `999:99` and could not write its event log, failing with a `chmod: cannot
 access` error that never mentions permissions.
-
-It also checks the **JupyterLab theme default**, so a rebuild cannot silently
-put the room back on white screens.
-
-The last two matter most. A build-time guard cannot catch a **stale image**:
-`podman-compose up -d` without `--build` reuses whatever is already tagged, and
-this console image was SQL-only until commit `c4082db` added pandas. A container
-from before that starts fine, mounts fine, and dies on `import pandas`.
 
 The healthcheck makes that visible with nothing to remember:
 
