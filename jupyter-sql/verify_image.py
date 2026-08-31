@@ -16,6 +16,8 @@ Keep this list in step with the pip pins in the Dockerfile.
 """
 
 import importlib.metadata as md
+import json
+import os
 import sys
 
 PYTHON = "3.13.15"
@@ -44,6 +46,30 @@ IMPORT_NAME = {
     "pymysql": "pymysql",
     "sqlalchemy": "sqlalchemy",
 }
+
+
+OVERRIDES = "/opt/conda/share/jupyter/lab/settings/overrides.json"
+
+
+def check_theme(failures):
+    """The console defaults to dark; a rebuild must not quietly drop it."""
+    if not os.path.exists(OVERRIDES):
+        failures.append("JupyterLab overrides.json is missing -- the console "
+                        "would start in the default light theme")
+        print("  %-16s %-10s MISSING" % ("lab theme", "-"))
+        return
+    try:
+        cfg = json.load(open(OVERRIDES))
+        theme = cfg["@jupyterlab/apputils-extension:themes"]["theme"]
+    except Exception as exc:
+        failures.append("overrides.json is unreadable: %s" % exc)
+        print("  %-16s %-10s UNREADABLE" % ("lab theme", "-"))
+        return
+    ok = theme == "JupyterLab Dark"
+    if not ok:
+        failures.append("lab theme is %r, expected 'JupyterLab Dark'" % theme)
+    print("  %-16s %-10s %s" % ("lab theme", "dark" if ok else theme,
+                                "ok" if ok else "MISMATCH"))
 
 
 def main():
@@ -78,13 +104,15 @@ def main():
                             % (dist, got, mod, type(exc).__name__))
         print("  %-16s %-10s %s" % (dist, got, status))
 
+    check_theme(failures)
+
     print()
     if failures:
         print("IMAGE VERIFICATION FAILED (%d problem(s)):" % len(failures))
         for f in failures:
             print("  -", f)
         sys.exit(1)
-    print("image verified: python %s and %d pinned packages, all importable"
+    print("image verified: python %s, %d pinned packages, dark theme default"
           % (PYTHON, len(EXPECTED)))
 
 

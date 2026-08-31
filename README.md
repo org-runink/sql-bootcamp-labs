@@ -180,7 +180,8 @@ sql-bootcamp-labs/
 ├── solutions/                # ALL answers for all eight sessions, in one place (generated)
 ├── jupyter-sql/               # shared browser SQL console (JupyterLab + jupysql), pre-wired to mysql-lan
 │   ├── Dockerfile            #   base pinned by DIGEST, every pip package pinned to an exact version
-│   └── verify_image.py       #   runs as a BUILD step: wrong/missing package -> the build fails
+│   ├── jupyterlab-overrides.json #   DARK theme by default (Settings -> Theme still switches it)
+│   └── verify_image.py       #   runs as a BUILD step: wrong/missing package or theme -> build fails
 │                             #   carries pandas 3.0.5 + openpyxl/pyarrow/lxml, and curl for the WCD lab
 └── scripts/
     ├── generate_superstore_data.py   # regenerates the superstore seed data
@@ -805,6 +806,9 @@ the wrong version. The same script runs in three places:
 - by hand, with the two commands above
 
 - as the container's **healthcheck**, declared in `docker-compose.yml`
+
+It also checks the **JupyterLab theme default**, so a rebuild cannot silently
+put the room back on white screens.
 
 The last two matter most. A build-time guard cannot catch a **stale image**:
 `podman-compose up -d` without `--build` reuses whatever is already tagged, and
