@@ -97,6 +97,13 @@ COPY --chown=${NB_UID}:${NB_GID} SQL_Console.ipynb /home/jovyan/work/SQL_Console
 # white screens is what people actually complain about. This is an OVERRIDE,
 # not a lock: Settings -> Theme still switches it per user, and the choice is
 # remembered in their browser.
+# Spark tuned for a ~8 GB workstation, not a cluster. Read by spark-submit
+# BEFORE the JVM starts, which is the only point at which spark.driver.memory
+# can still take effect -- builder.config() is too late and is silently
+# ignored. See the file itself for the reasoning behind each value.
+COPY --chown=${NB_UID}:${NB_GID} spark-defaults.conf \
+     /opt/conda/lib/python3.13/site-packages/pyspark/conf/spark-defaults.conf
+
 COPY --chown=${NB_UID}:${NB_GID} jupyterlab-overrides.json \
      /opt/conda/share/jupyter/lab/settings/overrides.json
 

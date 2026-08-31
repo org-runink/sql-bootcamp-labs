@@ -73,6 +73,40 @@ def check_java(failures):
     print("  %-16s %-10s %s" % ("java", "ok", ver[:46]))
 
 
+SPARK_CONF = ("/opt/conda/lib/python3.13/site-packages/pyspark/conf/"
+              "spark-defaults.conf")
+
+
+def check_spark_conf(failures):
+    """The workstation tuning must survive a rebuild.
+
+    Only the file is checked here, not a live SparkSession -- this also runs as
+    the container healthcheck every 60s, and starting a JVM for that would be
+    absurd. A session is started once, by hand, when the image changes.
+    """
+    if not os.path.exists(SPARK_CONF):
+        failures.append("spark-defaults.conf is missing -- Spark would use "
+                        "cluster defaults (1 GB heap, 200 shuffle partitions)")
+        print("  %-16s %-10s MISSING" % ("spark conf", "-"))
+        return
+    want = {"spark.driver.memory": "2g", "spark.sql.shuffle.partitions": "8"}
+    got = {}
+    for line in open(SPARK_CONF):
+        line = line.strip()
+        if not line or line.startswith("#"):
+            continue
+        parts = line.split(None, 1)
+        if len(parts) == 2:
+            got[parts[0]] = parts[1].strip()
+    bad = [k for k, v in want.items() if got.get(k) != v]
+    for k in bad:
+        failures.append("spark-defaults.conf has %s=%r, expected %r"
+                        % (k, got.get(k), want[k]))
+    print("  %-16s %-10s %s" % ("spark conf",
+                                got.get("spark.driver.memory", "-"),
+                                "ok" if not bad else "MISMATCH"))
+
+
 def check_theme(failures):
     """The console defaults to dark; a rebuild must not quietly drop it."""
     if not os.path.exists(OVERRIDES):
@@ -131,6 +165,7 @@ def main():
         print("  %-16s %-10s %s" % (dist, got, status))
 
     check_java(failures)
+    check_spark_conf(failures)
     check_theme(failures)
 
     print()
@@ -139,7 +174,7 @@ def main():
         for f in failures:
             print("  -", f)
         sys.exit(1)
-    print("image verified: python %s, %d pinned packages, JVM, dark theme"
+    print("image verified: python %s, %d pinned packages, JVM+conf, dark theme"
           % (PYTHON, len(EXPECTED)))
 
 

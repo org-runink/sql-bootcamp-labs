@@ -181,6 +181,7 @@ sql-bootcamp-labs/
 ├── jupyter-sql/               # shared browser SQL console (JupyterLab + jupysql), pre-wired to mysql-lan
 │   ├── Dockerfile            #   base pinned by DIGEST, every pip package pinned to an exact version
 │   ├── jupyterlab-overrides.json #   DARK theme by default (Settings -> Theme still switches it)
+│   ├── spark-defaults.conf   #   Spark tuned for ~8GB: 2g heap, 8 shuffle partitions
 │                             #   pandas/polars/pyspark(+JVM)/matplotlib, all pinned
 │   └── verify_image.py       #   runs as a BUILD step: wrong/missing package or theme -> build fails
 │                             #   carries pandas 3.0.5 + openpyxl/pyarrow/lxml, and curl for the WCD lab
@@ -824,6 +825,57 @@ Two things to know:
   3.0.0"*. Core Spark SQL and DataFrame work is fine (verified), but
   `toPandas()`, pandas UDFs and pandas-on-Spark may misbehave. Downgrading
   pandas is not an option: 300+ solutions were verified against 3.0.5.
+
+#### Tuned for a workstation, not a cluster
+
+`jupyter-sql/spark-defaults.conf` is baked into the image. Spark's out-of-the-box
+defaults assume a cluster and are actively bad on a laptop:
+
+| Setting | Spark default | Here | Why |
+|---|---|---|---|
+| `spark.driver.memory` | 1 GB heap | **2g** | in local mode the driver *is* the executor |
+| `spark.sql.shuffle.partitions` | **200** | **8** | 200 tasks of 50 rows each on a teaching dataset |
+| `spark.default.parallelism` | — | 8 | matches the above |
+| `spark.master` | — | `local[2]` | leaves cores for the browser and JupyterLab |
+| `spark.driver.maxResultSize` | unset | 512m | a runaway `.collect()` becomes an error, not a dead kernel |
+| `spark.serializer` | Java | Kryo | smaller, and memory is the binding constraint |
+
+**The budget it assumes**, on an 8 GB machine: ~3 GB for the OS and a browser,
+~0.5 GB for JupyterLab and its kernel, ~0.5 GB for the `mysql` container. That
+leaves about 4 GB, and Spark takes 2 of it.
+
+`spark.sql.shuffle.partitions` is the one that matters most. It applies to every
+join, `groupBy`, `distinct` and `orderBy`, and at the default of 200 a
+10,000-row DataFrame is split into 200 tasks of 50 rows — scheduling overhead
+that dwarfs the actual work, plus 200 output files.
+
+#### Giving Spark more memory
+
+Measured in this image, because the rule is not the obvious one:
+
+```python
+# WORKS -- first session in a fresh kernel, before any JVM exists
+spark = SparkSession.builder.config("spark.driver.memory", "6g").getOrCreate()
+# -> heap 6.00 GB
+
+# SILENTLY DOES NOTHING -- a session already exists, so the JVM is already up
+spark2 = SparkSession.builder.config("spark.driver.memory", "6g").getOrCreate()
+# -> heap stays 2.00 GB, and spark.conf.get() reports "2g", not the 6g asked for
+```
+
+So: set it on the **first** `getOrCreate()` in the kernel. If a session already
+exists, **restart the kernel first** — changing it afterwards leaves no trace
+that the request was dropped.
+
+To change the baseline for everyone, edit `jupyter-sql/spark-defaults.conf` and
+rebuild. `verify_image.py` checks the file is present and still says `2g`, so a
+rebuild cannot quietly drop back to cluster defaults.
+
+#### The Spark UI
+
+Enabled, on `:4040` inside the container, and **not published**. Add
+`"4040:4040"` to the `sql-console` ports in `docker-compose.yml` if you want to
+show students a job DAG.
 
 It also checks the **JupyterLab theme default**, so a rebuild cannot silently
 put the room back on white screens.
