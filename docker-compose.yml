@@ -81,7 +81,7 @@ services:
       - ./week3_day1_afternoon/exercises:/home/jovyan/work/week3_day1_afternoon
       # week 3 day 2 continues Pandas: reshaping (L04) and transformation (L05).
       # Same image requirements as 30/08 -- pandas and friends must be present.
-      - ./week3_day2_afternoon/exercises:/home/jovyan/work/week3_day2_afternoon
+      - ./week3_day2_morning/exercises:/home/jovyan/work/week3_day2_morning
       # week 3 day 3 is Snowflake. The Snowflake half runs in the student's own
       # account, not here; the worksheets that DO run locally work on the same
       # real CSVs the Snowflake lab ingests.
