@@ -1,7 +1,23 @@
 #!/usr/bin/env python3
-"""Fetch the WeCloudData Advanced-lab datasets once, so the lab runs offline.
+"""Fetch the WeCloudData Advanced-lab datasets. NOTHING READS THEM ANY MORE.
 
-`week3_day2_afternoon/.../Lab - Pandas Advanced` downloads seven CSVs with
+    STATUS: dead code, kept deliberately.
+
+The Advanced lab used to download these with `!curl -sS -o ...` and read them
+from disk, so pre-placing them here made the lab work offline. The notebook now
+reads the same files straight from S3 with `pd.read_csv(BASE + name)`, which
+removed its dependency on `curl` being installed -- and with it, any reason to
+have local copies.
+
+This script still works. It is kept only so the offline arrangement can be
+restored by re-editing the notebook. If that is not wanted, delete this file,
+its three .gitignore rules, and the relink step in collect_solutions.py.
+
+Original description follows.
+
+Fetch the WeCloudData Advanced-lab datasets once, so the lab runs offline.
+
+`week3_day2_morning/.../Lab - Pandas Advanced` downloads seven CSVs with
 `!curl -sS -o <name> <url>` and then reads them by bare filename. That needs
 internet every time it is run, which is no good in a classroom.
 
@@ -34,8 +50,8 @@ REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE = "https://s3.amazonaws.com/weclouddata/datasets/genai/ml_fundamentals"
 
 # Where the notebooks actually run from.
-PRIMARY = os.path.join(REPO, "week3_day2_afternoon", "exercises", "wcd-originals")
-MIRROR = os.path.join(REPO, "solutions", "week3_day2_afternoon", "wcd-originals")
+PRIMARY = os.path.join(REPO, "week3_day2_morning", "exercises", "wcd-originals")
+MIRROR = os.path.join(REPO, "solutions", "week3_day2_morning", "wcd-originals")
 
 # name -> (expected size in bytes, has a header row)
 FILES = {

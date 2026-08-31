@@ -56,7 +56,7 @@ POSITION = {
     "week2_day4_afternoon": "Week 2, day 4 (afternoon)",
     "week2_day5_morning":   "Week 2, day 5 (morning)",
     "week3_day1_afternoon": "Week 3, day 1 (afternoon)",
-    "week3_day2_afternoon": "Week 3, day 2 (afternoon)",
+    "week3_day2_morning":   "Week 3, day 2 (morning)",
 }
 
 # `# Afternoon class 24/08` at the start of a line, and nothing more.

@@ -7,7 +7,7 @@ and sometimes strips cell ids on save, producing a diff that is pure noise.
 
     python3 scripts/normalise_notebooks.py --check    # report, change nothing
     python3 scripts/normalise_notebooks.py            # rewrite in place
-    python3 scripts/normalise_notebooks.py week3_day2_afternoon # one class
+    python3 scripts/normalise_notebooks.py week3_day2_morning # one class
 
 The shape, matching what scripts/check_exercises.py enforces:
 

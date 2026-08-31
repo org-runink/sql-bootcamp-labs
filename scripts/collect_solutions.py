@@ -32,7 +32,7 @@ CLASSES = [
     "week2_day4_afternoon",
     "week2_day5_morning",
     "week3_day1_afternoon",
-    "week3_day2_afternoon",
+    "week3_day2_morning",
     "week3_day3_afternoon",
     "week3_day4_morning",
     "week3_recap",

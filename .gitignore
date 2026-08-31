@@ -7,6 +7,6 @@ __pycache__/
 # scripts/fetch_lab_data.py so the lab runs offline. About 136 MB, most of it
 # employee_salaries.csv at 94 MB -- past GitHub's warning threshold and near
 # its hard limit, so these are deliberately not committed.
-week3_day2_afternoon/exercises/wcd-originals/*.csv
-week3_day2_afternoon/solutions/wcd-originals/*.csv
-solutions/week3_day2_afternoon/wcd-originals/*.csv
+week3_day2_morning/exercises/wcd-originals/*.csv
+week3_day2_morning/solutions/wcd-originals/*.csv
+solutions/week3_day2_morning/wcd-originals/*.csv

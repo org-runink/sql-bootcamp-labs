@@ -10,7 +10,7 @@ have to hop between class folders while teaching.
 | [`week2_day4_afternoon/`](week2_day4_afternoon) | 19 | Python: the four data structures, built-ins, strings/loops, capstone, data-engineering applications — plus `more-practice/` and the WeCloudData originals |
 | [`week2_day5_morning/`](week2_day5_morning) | 28 | Python, two lectures: L05 control flow and iteration (01–08), then L06 functions and code reusability (09–14) — plus `more-practice/` and the WeCloudData originals |
 | [`week3_day1_afternoon/`](week3_day1_afternoon) | 22 | Pandas, three lectures: L01 Series/DataFrame/Index (01–04), L02 core functionality (05–10), L03 reading and writing (11–14), plus a pipelines-and-roles synthesis sheet (15) — and `more-practice/` and the WeCloudData originals |
-| [`week3_day2_afternoon/`](week3_day2_afternoon) | 19 | Pandas continued: L04 reshaping and pivoting (01–05), L05 data transformation (06–10) — plus `more-practice/` and the WeCloudData Advanced lab |
+| [`week3_day2_morning/`](week3_day2_morning) | 19 | Pandas continued: L04 reshaping and pivoting (01–05), L05 data transformation (06–10) — plus `more-practice/` and the WeCloudData Advanced lab |
 | [`week3_day3_afternoon/`](week3_day3_afternoon) | 5 | Snowflake: Snowsight and `TPCH_SF1` (01), stages and `COPY INTO` (02) — both **not executed**, they run in your own account — then the same lab CSVs taken apart locally, where every number is observed (03–05) |
 | [`week3_day4_morning/`](week3_day4_morning) | 11 | Dimensional modeling and ELT design: OLTP vs OLAP, grain, measure types, star/snowflake/galaxy (01–04), then the lecture's seven ELT steps end to end (05–10), plus the group design activity (11, no code) |
 
@@ -21,7 +21,7 @@ cannot be re-run from the console:
 
 - `week2_day5_morning/08_reading_real_files_solution.ipynb` — four `.csv`
 - `week3_day1_afternoon/` worksheets 11–14 — `.csv`, `.tsv`, `.json`, `.xlsx`
-- `week3_day2_afternoon/` — all sheets read `data/`, and `more-practice/` reads `../data/`
+- `week3_day2_morning/` — all sheets read `data/`, and `more-practice/` reads `../data/`
 - `week3_day3_afternoon/` — worksheets 03–05 read `data/`, and worksheet 05
   question 10 also reads `snowflake-scripts/*.sql` and `labs/*.html`, so those
   travel too — its answer quotes the file list it finds

@@ -131,6 +131,6 @@ worksheet they cite, not accepted on trust.
 
 That check caught a real error: this recap originally cited day 2's figure as
 `1995.20`, and day 2's notebook prints `1995.2`. The trailing zero was wrong in
-`week3_day2_afternoon/README.md` too, and has been corrected there.
+`week3_day2_morning/README.md` too, and has been corrected there.
 
 Verified against **pandas 3.0.5** on Python 3.13.15.

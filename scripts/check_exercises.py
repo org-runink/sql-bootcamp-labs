@@ -13,7 +13,7 @@ and verifies the things that are easy to get wrong and invisible once wrong:
      and identical under solutions/, so the published copy still runs
 
     python3 scripts/check_exercises.py            # all classes
-    python3 scripts/check_exercises.py week3_day2_afternoon # one class
+    python3 scripts/check_exercises.py week3_day2_morning # one class
 
 Exits non-zero if anything fails, so it can go in a pre-commit hook.
 
@@ -46,7 +46,7 @@ CLASSES = {
     "week2_day4_afternoon": "python",
     "week2_day5_morning": "python",
     "week3_day1_afternoon": "python",
-    "week3_day2_afternoon": "python",
+    "week3_day2_morning": "python",
     "week3_day3_afternoon": "python",
     "week3_day4_morning": "python",
     "week3_recap": "python",

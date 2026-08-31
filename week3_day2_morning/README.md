@@ -1,4 +1,4 @@
-# Week 3, day 2 — reshaping and transformation
+# Week 3, day 2 (morning) — reshaping and transformation
 
 Pandas continued, across two lectures: getting data into the shape you need
 (L04), and cleaning the values once it is there (L05).
@@ -140,32 +140,38 @@ Kept **byte-identical**, split so the answers do not sit beside the exercise:
 | [`exercises/wcd-originals/`](exercises/wcd-originals) | `Lab - Pandas Advanced.ipynb` |
 | [`solutions/wcd-originals/`](solutions/wcd-originals) | `Lab - Pandas Advanced Solution.ipynb` |
 
-**It runs offline, after a one-time fetch.** The notebook downloads seven
-CSVs with `!curl -sS -o ...` from
-`https://s3.amazonaws.com/weclouddata/datasets/genai/ml_fundamentals/` — the
-telecom dataset, and six tables of the MySQL `employees` sample schema. Needing
-the network mid-class is no good, so fetch them once:
+**It reads its data directly from S3.** The solution notebook loads the telecom
+dataset and six tables of the MySQL `employees` sample schema straight from
+`https://s3.amazonaws.com/weclouddata/datasets/genai/ml_fundamentals/`:
 
-```bash
-python3 scripts/fetch_lab_data.py            # ~136 MB, run once per machine
-python3 scripts/fetch_lab_data.py --verify   # check they are in place
+```python
+BASE = "https://s3.amazonaws.com/weclouddata/datasets/genai/ml_fundamentals/"
+data = pd.read_csv(BASE + "telecom.csv")
 ```
 
-After that the lab works with the network **down**. The `curl` cells fail
-visibly and harmlessly — curl gives up at DNS resolution, *before* it opens the
-output file, so the pre-placed CSV is untouched — and the `read_csv` cells that
-follow find the data already there. Verified: with the host unreachable, both
-files came through byte-identical and `read_csv` returned `(7043, 21)` and
-`(9, 2)`.
+**This needs the network, every run.** It used to download the files with
+`!curl -sS -o ...` and read them locally, which meant the lab worked offline
+once `scripts/fetch_lab_data.py` had pre-placed them — but it also meant the
+notebook could not run at all without `curl` in the image. Reading from S3
+removes that dependency; the trade-off is that a classroom with no internet, or
+a slow one, now has a problem it did not have before.
 
-The data is **not committed**. `employee_salaries.csv` alone is 94 MB — past
-GitHub's warning threshold and near its hard limit — so all seven are in
-`.gitignore`. The copy under `solutions/` is hardlinked to the one under
-`exercises/`, so 136 MB is used once rather than twice, and
-`collect_solutions.py` re-links them after it rebuilds the mirror.
+Two things to know if you hit that:
 
-`curl` itself is not in `base-notebook`; `jupyter-sql/Dockerfile` installs it,
-so the vendor notebook runs exactly as shipped rather than being edited.
+- **`employee_salaries.csv` is 94 MB**, and it is downloaded on every run, by
+  every student. On a shared connection that is the slow part of the lab.
+- `scripts/fetch_lab_data.py` still fetches those seven files, but **nothing
+  reads them any more** — the notebook no longer looks at the local copies. It
+  is kept only so the offline arrangement can be restored if wanted.
+
+The data is **not committed** — `employee_salaries.csv` alone is past GitHub's
+warning threshold — so all seven remain in `.gitignore`.
+
+**This notebook is no longer byte-identical to the vendor original.** Four code
+cells were rewritten to drop the `curl` step. That is a deliberate exception to
+the wcd-originals policy, made because the download step was the only thing
+standing between the lab and a working console. The starter notebook is
+untouched.
 
 The ten worksheets in this folder deliberately depend on none of that: every
 file they read is in `data/`, on disk, and they work with the network down.
