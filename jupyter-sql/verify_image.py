@@ -36,6 +36,8 @@ EXPECTED = {
     "beautifulsoup4": "4.15.0",
     "tabulate": "0.10.0",
     "matplotlib": "3.11.1",
+    "polars": "1.44.1",
+    "pyspark": "4.2.0",
 }
 
 # Distributions whose import name differs from their package name. Installing
@@ -49,6 +51,26 @@ IMPORT_NAME = {
 
 
 OVERRIDES = "/opt/conda/share/jupyter/lab/settings/overrides.json"
+
+
+def check_java(failures):
+    """pyspark is a Python API over a JVM. Without Java it imports fine and
+    dies at SparkSession.builder with an error that never mentions Java."""
+    import shutil
+    import subprocess
+    java = shutil.which("java")
+    if not java:
+        failures.append("java is NOT on PATH -- pyspark will import but no "
+                        "SparkSession can start")
+        print("  %-16s %-10s MISSING" % ("java", "-"))
+        return
+    try:
+        out = subprocess.run([java, "-version"], capture_output=True, text=True)
+        ver = (out.stderr or out.stdout).split("\n")[0].strip()
+    except Exception as exc:
+        failures.append("java is present but unrunnable: %s" % exc)
+        ver = "unrunnable"
+    print("  %-16s %-10s %s" % ("java", "ok", ver[:46]))
 
 
 def check_theme(failures):
@@ -97,13 +119,18 @@ def main():
 
         mod = IMPORT_NAME.get(dist, dist)
         try:
+            # BaseException, not Exception: a module that calls sys.exit()
+            # during import raises SystemExit, which `except Exception` misses
+            # -- the interpreter then dies mid-check and the failure looks like
+            # a crash rather than a result. jupysql + pyspark did exactly that.
             __import__(mod)
-        except Exception as exc:
+        except BaseException as exc:
             status = "IMPORT FAILED"
             failures.append("%s %s installed but `import %s` raised %s"
                             % (dist, got, mod, type(exc).__name__))
         print("  %-16s %-10s %s" % (dist, got, status))
 
+    check_java(failures)
     check_theme(failures)
 
     print()
@@ -112,7 +139,7 @@ def main():
         for f in failures:
             print("  -", f)
         sys.exit(1)
-    print("image verified: python %s, %d pinned packages, dark theme default"
+    print("image verified: python %s, %d pinned packages, JVM, dark theme"
           % (PYTHON, len(EXPECTED)))
 
 

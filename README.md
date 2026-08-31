@@ -181,6 +181,7 @@ sql-bootcamp-labs/
 ├── jupyter-sql/               # shared browser SQL console (JupyterLab + jupysql), pre-wired to mysql-lan
 │   ├── Dockerfile            #   base pinned by DIGEST, every pip package pinned to an exact version
 │   ├── jupyterlab-overrides.json #   DARK theme by default (Settings -> Theme still switches it)
+│                             #   pandas/polars/pyspark(+JVM)/matplotlib, all pinned
 │   └── verify_image.py       #   runs as a BUILD step: wrong/missing package or theme -> build fails
 │                             #   carries pandas 3.0.5 + openpyxl/pyarrow/lxml, and curl for the WCD lab
 └── scripts/
@@ -806,6 +807,23 @@ the wrong version. The same script runs in three places:
 - by hand, with the two commands above
 
 - as the container's **healthcheck**, declared in `docker-compose.yml`
+
+### pyspark
+
+`pyspark[connect]` and a headless JRE are in the image, and `JAVA_HOME` is set —
+`pip install pyspark` alone gives you the Python API with nothing to run it on.
+
+Two things to know:
+
+- **The `[connect]` extra is load-bearing.** jupysql activates optional Spark
+  support as soon as pyspark is importable, and that path imports
+  `pyspark.sql.connect`, which calls `sys.exit(0)` during import when grpcio is
+  absent. Without the extra, `%load_ext sql` **kills the kernel** and every SQL
+  worksheet with it.
+- **PySpark 4.2 warns on pandas 3.x** — *"does not yet fully support pandas >=
+  3.0.0"*. Core Spark SQL and DataFrame work is fine (verified), but
+  `toPandas()`, pandas UDFs and pandas-on-Spark may misbehave. Downgrading
+  pandas is not an option: 300+ solutions were verified against 3.0.5.
 
 It also checks the **JupyterLab theme default**, so a rebuild cannot silently
 put the room back on white screens.
