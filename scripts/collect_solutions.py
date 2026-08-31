@@ -32,7 +32,7 @@ CLASSES = [
     "week2_day4_afternoon",
     "week2_day5_morning",
     "week3_day1_afternoon",
-    "week3_day2_afternoon",
+    "week3_day2_morning",
     "week3_day3_afternoon",
     "week3_day4_morning",
     "week3_recap",
@@ -66,37 +66,6 @@ def sources():
                     continue
                 full = os.path.join(dirpath, name)
                 yield cls, os.path.relpath(full, root)
-
-
-def relink_lab_data():
-    """Restore the fetched Advanced-lab CSVs the rebuild just removed.
-
-    scripts/fetch_lab_data.py downloads ~136 MB into
-    <class>/exercises/wcd-originals/ and hardlinks it into the published
-    mirror so the lab runs offline. This function rmtree's that mirror, so
-    the links have to be remade -- hardlinked again, not copied, so the data
-    still occupies its space once.
-
-    The files are gitignored; this only keeps the working tree usable.
-    """
-    for cls in CLASSES:
-        src_dir = os.path.join(REPO, cls, "exercises", "wcd-originals")
-        if not os.path.isdir(src_dir):
-            continue
-        csvs = [n for n in sorted(os.listdir(src_dir)) if n.endswith(".csv")]
-        if not csvs:
-            continue
-        dst_dir = os.path.join(DEST, cls, "wcd-originals")
-        os.makedirs(dst_dir, exist_ok=True)
-        for name in csvs:
-            src, dst = os.path.join(src_dir, name), os.path.join(dst_dir, name)
-            if os.path.exists(dst):
-                continue
-            try:
-                os.link(src, dst)
-            except OSError:
-                shutil.copy2(src, dst)
-        print("  relinked %d lab data file(s) into %s/wcd-originals" % (len(csvs), cls))
 
 
 def build(check):
@@ -134,11 +103,6 @@ def build(check):
                 rel = os.path.relpath(os.path.join(dirpath, name), DEST)
                 if rel in expected:
                     continue
-                # The Advanced-lab datasets live under wcd-originals/ and are
-                # owned by scripts/fetch_lab_data.py, not by this mirror --
-                # they are hardlinked in by relink_lab_data() and gitignored.
-                if "wcd-originals" in rel and name.endswith(".csv"):
-                    continue
                 problems.append("stale, no longer in any class folder: %s" % rel)
 
     return pairs, problems
@@ -162,9 +126,6 @@ def main():
             print("  -", p)
         print("\nRun: python3 scripts/collect_solutions.py")
         sys.exit(1)
-
-    if not args.check:
-        relink_lab_data()
 
     verb = "in sync" if args.check else "written"
     print("solutions/ %s — %d files" % (verb, len(pairs)))
