@@ -54,6 +54,13 @@ RUN pip install --no-cache-dir \
 # rebuilt. docker-compose.yml runs this same file as the container's
 # healthcheck, so a pre-c4082db console shows up as `unhealthy` in
 # `podman ps` without anybody having to run anything.
+# Dark by default. JupyterLab ships "JupyterLab Light" and a room full of
+# white screens is what people actually complain about. This is an OVERRIDE,
+# not a lock: Settings -> Theme still switches it per user, and the choice is
+# remembered in their browser.
+COPY --chown=${NB_UID}:${NB_GID} jupyterlab-overrides.json \
+     /opt/conda/share/jupyter/lab/settings/overrides.json
+
 COPY --chown=${NB_UID}:${NB_GID} verify_image.py /opt/verify_image.py
 RUN python3 /opt/verify_image.py
 
