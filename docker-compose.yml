@@ -64,8 +64,15 @@ services:
     userns_mode: "keep-id:uid=1000,gid=100"
     ports:
       - "0.0.0.0:8888:8888"
+      # The live Spark UI. Only serves while a SparkContext is alive -- when the
+      # notebook's session stops, this port stops answering. That is normal;
+      # completed runs live on the history server at :18080.
+      - "0.0.0.0:4040:4040"
     volumes:
       - sql-console-work:/home/jovyan/work
+      # Shared with spark-history: the console writes event logs here, the
+      # history server replays them.
+      - spark-events:/home/jovyan/spark-events
       # Mount each class's exercises/ -- never the class folder itself, which
       # would duplicate the solutions under a second path.
       - ./week2_day2_afternoon/exercises:/home/jovyan/work/week2_day2_afternoon
@@ -98,6 +105,48 @@ services:
       mysql:
         condition: service_healthy
 
+  # ---------------------------------------------------------------------------
+  # Spark History Server -- completed applications, after the fact.
+  #
+  # Same image as the console, so it needs no separate build and can never
+  # drift out of version with the Spark that produced the logs. It only reads
+  # the shared event-log volume.
+  #
+  # COSTS MEMORY. This is a second JVM on a machine the rest of this setup
+  # assumes has 8 GB, so it is capped at 512 MB and is safe to stop when not
+  # teaching Spark:
+  #
+  #     podman-compose stop spark-history
+  # ---------------------------------------------------------------------------
+  spark-history:
+    build: ./jupyter-sql
+    container_name: spark-history
+    depends_on:
+      - sql-console
+    # MUST match sql-console's mapping. Without it the two containers see the
+    # shared volume under different UIDs -- the console saw 999:99 and could
+    # not write its event log, while this container saw 1000:100 and could.
+    userns_mode: "keep-id:uid=1000,gid=100"
+    environment:
+      SPARK_DAEMON_MEMORY: "512m"
+      SPARK_NO_DAEMONIZE: "true"
+    command:
+      - /opt/conda/lib/python3.13/site-packages/pyspark/bin/spark-class
+      - org.apache.spark.deploy.history.HistoryServer
+    ports:
+      - "0.0.0.0:18080:18080"
+    volumes:
+      - spark-events:/home/jovyan/spark-events
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python3", "-c",
+             "import urllib.request;urllib.request.urlopen('http://localhost:18080',timeout=5)"]
+      interval: 60s
+      timeout: 15s
+      retries: 3
+      start_period: 40s
+
 volumes:
   mysql-data:
   sql-console-work:
+  spark-events:

@@ -182,6 +182,7 @@ sql-bootcamp-labs/
 │   ├── Dockerfile            #   base pinned by DIGEST, every pip package pinned to an exact version
 │   ├── jupyterlab-overrides.json #   DARK theme by default (Settings -> Theme still switches it)
 │   ├── spark-defaults.conf   #   Spark tuned for ~8GB: 2g heap, 8 shuffle partitions
+│                             #   + event logs, replayed by the spark-history service
 │                             #   pandas/polars/pyspark(+JVM)/matplotlib, all pinned
 │   └── verify_image.py       #   runs as a BUILD step: wrong/missing package or theme -> build fails
 │                             #   carries pandas 3.0.5 + openpyxl/pyarrow/lxml, and curl for the WCD lab
@@ -871,11 +872,43 @@ To change the baseline for everyone, edit `jupyter-sql/spark-defaults.conf` and
 rebuild. `verify_image.py` checks the file is present and still says `2g`, so a
 rebuild cannot quietly drop back to cluster defaults.
 
-#### The Spark UI
+#### The two Spark UIs
 
-Enabled, on `:4040` inside the container, and **not published**. Add
-`"4040:4040"` to the `sql-console` ports in `docker-compose.yml` if you want to
-show students a job DAG.
+Both are published:
+
+| | URL | Shows | Lives while |
+|---|---|---|---|
+| **Live UI** | http://localhost:4040 | the running job — stages, DAG, task timeline | a `SparkSession` is alive |
+| **History Server** | http://localhost:18080 | every completed application | always (its own container) |
+
+**:4040 stops answering the moment the session stops.** That is not a fault —
+it belongs to the driver process. Close the notebook or call `spark.stop()` and
+the DAG you wanted to show the class is gone. That is exactly why the history
+server exists: `spark.eventLog.enabled` is on, every application writes to a
+shared `spark-events` volume, and `spark-history` replays them afterwards.
+
+```bash
+podman-compose up -d spark-history      # start it
+podman-compose stop spark-history       # stop it when not teaching Spark
+curl -s localhost:18080/api/v1/applications | head   # or just use a browser
+```
+
+**It costs memory.** The history server is a second JVM, capped at 512 MB via
+`SPARK_DAEMON_MEMORY`. On the 8 GB machine this setup assumes, that takes the
+budget to roughly: 3 GB OS and browser, 0.5 GB JupyterLab, 0.5 GB mysql, 2 GB
+Spark driver, 0.5 GB history server. **Stop it when you are not teaching
+Spark** — nothing else depends on it, and event logs keep accumulating for it
+to read later.
+
+Logs are compressed and cleaned after 7 days
+(`spark.history.fs.cleaner.maxAge`), so the volume does not grow forever.
+
+**One trap worth knowing**, because it cost a debugging cycle here: the
+`spark-history` service **must** carry the same
+`userns_mode: "keep-id:uid=1000,gid=100"` as `sql-console`. Without it the two
+containers see the shared volume under different UIDs — the console saw
+`999:99` and could not write its event log, failing with a `chmod: cannot
+access` error that never mentions permissions.
 
 It also checks the **JupyterLab theme default**, so a rebuild cannot silently
 put the room back on white screens.
