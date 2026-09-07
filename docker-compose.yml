@@ -123,6 +123,17 @@ services:
       # jupyter-sql/Dockerfile) -- rebuild if `dbt --version` fails in 01. The
       # data/ CSVs travel with the exercises so worksheet 02 can COPY-load them.
       - ./week4_day2_afternoon/exercises:/home/jovyan/work/week4_day2_afternoon
+      # The dbt project, at its OWN top-level path rather than nested inside the
+      # mount above. Nesting a bind mount inside another makes the runtime create
+      # the mountpoint in the underlying filesystem -- i.e. it would leave empty
+      # dbt-project/ and snowflake-sql/ directories inside the host's
+      # week4_day2_afternoon/exercises/.
+      #
+      # It is here so the project can be parsed and linted locally (dbt is in the
+      # image) before it is uploaded to Snowflake. The snowflake-sql/ scripts are
+      # deliberately NOT mounted: they are pasted into a Snowsight worksheet, and
+      # nothing runs them here.
+      - ./week4_day2_afternoon/dbt-project:/home/jovyan/work/week4_dbt_project
       # ANSWERS ARE PUBLISHED TO EVERYONE. This console is shared across the
       # classroom LAN, so mounting solutions/ here means every student can read
       # every answer to every session -- including exercises they have not
