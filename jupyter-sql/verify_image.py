@@ -16,6 +16,8 @@ Keep this list in step with the pip pins in the Dockerfile.
 """
 
 import importlib.metadata as md
+import json
+import os
 import sys
 
 PYTHON = "3.13.15"
@@ -34,6 +36,8 @@ EXPECTED = {
     "beautifulsoup4": "4.15.0",
     "tabulate": "0.10.0",
     "matplotlib": "3.11.1",
+    "polars": "1.44.1",
+    "pyspark": "4.2.0",
 }
 
 # Distributions whose import name differs from their package name. Installing
@@ -44,6 +48,102 @@ IMPORT_NAME = {
     "pymysql": "pymysql",
     "sqlalchemy": "sqlalchemy",
 }
+
+# The dbt + Snowflake stack for week4_day2_afternoon is checked for PRESENCE,
+# import, and a MINIMUM (major, minor) -- not an exact pin. The exact-pin rule
+# above exists to protect the numbers quoted in solutions, and that day's
+# solutions quote none: they run against each student's own Snowflake account,
+# which nothing in this image can reach, so no output was observed to protect.
+# What matters is only that the tools import and are new enough for Python 3.13
+# and the lab's features. See the matching note in the Dockerfile.
+#   dist -> (import module or None, minimum (major, minor))
+PRESENT = {
+    "snowflake-connector-python": ("snowflake.connector", (3, 12)),
+    "dbt-core": ("dbt.cli.main", (1, 10)),
+    "dbt-snowflake": ("dbt.adapters.snowflake", (1, 10)),
+    "faker": ("faker", (20, 0)),
+    # The `mf` CLI for the MetricFlow semantic layer. Import name is metricflow,
+    # which ships as a dependency of dbt-metricflow.
+    "dbt-metricflow": ("metricflow", (0, 14)),
+}
+
+
+OVERRIDES = "/opt/conda/share/jupyter/lab/settings/overrides.json"
+
+
+def check_java(failures):
+    """pyspark is a Python API over a JVM. Without Java it imports fine and
+    dies at SparkSession.builder with an error that never mentions Java."""
+    import shutil
+    import subprocess
+    java = shutil.which("java")
+    if not java:
+        failures.append("java is NOT on PATH -- pyspark will import but no "
+                        "SparkSession can start")
+        print("  %-16s %-10s MISSING" % ("java", "-"))
+        return
+    try:
+        out = subprocess.run([java, "-version"], capture_output=True, text=True)
+        ver = (out.stderr or out.stdout).split("\n")[0].strip()
+    except Exception as exc:
+        failures.append("java is present but unrunnable: %s" % exc)
+        ver = "unrunnable"
+    print("  %-16s %-10s %s" % ("java", "ok", ver[:46]))
+
+
+SPARK_CONF = ("/opt/conda/lib/python3.13/site-packages/pyspark/conf/"
+              "spark-defaults.conf")
+
+
+def check_spark_conf(failures):
+    """The workstation tuning must survive a rebuild.
+
+    Only the file is checked here, not a live SparkSession -- this also runs as
+    the container healthcheck every 60s, and starting a JVM for that would be
+    absurd. A session is started once, by hand, when the image changes.
+    """
+    if not os.path.exists(SPARK_CONF):
+        failures.append("spark-defaults.conf is missing -- Spark would use "
+                        "cluster defaults (1 GB heap, 200 shuffle partitions)")
+        print("  %-16s %-10s MISSING" % ("spark conf", "-"))
+        return
+    want = {"spark.driver.memory": "2g", "spark.sql.shuffle.partitions": "8"}
+    got = {}
+    for line in open(SPARK_CONF):
+        line = line.strip()
+        if not line or line.startswith("#"):
+            continue
+        parts = line.split(None, 1)
+        if len(parts) == 2:
+            got[parts[0]] = parts[1].strip()
+    bad = [k for k, v in want.items() if got.get(k) != v]
+    for k in bad:
+        failures.append("spark-defaults.conf has %s=%r, expected %r"
+                        % (k, got.get(k), want[k]))
+    print("  %-16s %-10s %s" % ("spark conf",
+                                got.get("spark.driver.memory", "-"),
+                                "ok" if not bad else "MISMATCH"))
+
+
+def check_theme(failures):
+    """The console defaults to dark; a rebuild must not quietly drop it."""
+    if not os.path.exists(OVERRIDES):
+        failures.append("JupyterLab overrides.json is missing -- the console "
+                        "would start in the default light theme")
+        print("  %-16s %-10s MISSING" % ("lab theme", "-"))
+        return
+    try:
+        cfg = json.load(open(OVERRIDES))
+        theme = cfg["@jupyterlab/apputils-extension:themes"]["theme"]
+    except Exception as exc:
+        failures.append("overrides.json is unreadable: %s" % exc)
+        print("  %-16s %-10s UNREADABLE" % ("lab theme", "-"))
+        return
+    ok = theme == "JupyterLab Dark"
+    if not ok:
+        failures.append("lab theme is %r, expected 'JupyterLab Dark'" % theme)
+    print("  %-16s %-10s %s" % ("lab theme", "dark" if ok else theme,
+                                "ok" if ok else "MISMATCH"))
 
 
 def main():
@@ -71,12 +171,44 @@ def main():
 
         mod = IMPORT_NAME.get(dist, dist)
         try:
+            # BaseException, not Exception: a module that calls sys.exit()
+            # during import raises SystemExit, which `except Exception` misses
+            # -- the interpreter then dies mid-check and the failure looks like
+            # a crash rather than a result. jupysql + pyspark did exactly that.
             __import__(mod)
-        except Exception as exc:
+        except BaseException as exc:
             status = "IMPORT FAILED"
             failures.append("%s %s installed but `import %s` raised %s"
                             % (dist, got, mod, type(exc).__name__))
         print("  %-16s %-10s %s" % (dist, got, status))
+
+    for dist, (mod, minver) in sorted(PRESENT.items()):
+        try:
+            got = md.version(dist)
+        except md.PackageNotFoundError:
+            failures.append("%s is NOT INSTALLED (need >= %s)"
+                            % (dist, ".".join(map(str, minver))))
+            print("  %-28s %-10s MISSING" % (dist, "-"))
+            continue
+
+        nums = tuple(int(x) for x in got.split(".")[:2] if x.isdigit())
+        status = "ok"
+        if nums < minver:
+            status = "TOO OLD"
+            failures.append("%s is %s, need >= %s"
+                            % (dist, got, ".".join(map(str, minver))))
+        if mod:
+            try:
+                __import__(mod)
+            except BaseException as exc:
+                status = "IMPORT FAILED"
+                failures.append("%s %s installed but `import %s` raised %s"
+                                % (dist, got, mod, type(exc).__name__))
+        print("  %-28s %-10s %s" % (dist, got, status))
+
+    check_java(failures)
+    check_spark_conf(failures)
+    check_theme(failures)
 
     print()
     if failures:
@@ -84,8 +216,8 @@ def main():
         for f in failures:
             print("  -", f)
         sys.exit(1)
-    print("image verified: python %s and %d pinned packages, all importable"
-          % (PYTHON, len(EXPECTED)))
+    print("image verified: python %s, %d pinned + %d present packages, "
+          "JVM+conf, dark theme" % (PYTHON, len(EXPECTED), len(PRESENT)))
 
 
 if __name__ == "__main__":

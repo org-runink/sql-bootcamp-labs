@@ -1,6 +1,6 @@
 # All solutions, in one place
 
-Every answer notebook from all eight sessions, gathered here so you don't
+Every answer notebook from all ten sessions, gathered here so you don't
 have to hop between class folders while teaching.
 
 | Session | Notebooks | Covers |
@@ -9,15 +9,17 @@ have to hop between class folders while teaching.
 | [`week2_day3_morning/`](week2_day3_morning) | 7 | SQL: views, cross-database, modelling, keys, windows, capstone |
 | [`week2_day4_afternoon/`](week2_day4_afternoon) | 19 | Python: the four data structures, built-ins, strings/loops, capstone, data-engineering applications — plus `more-practice/` and the WeCloudData originals |
 | [`week2_day5_morning/`](week2_day5_morning) | 28 | Python, two lectures: L05 control flow and iteration (01–08), then L06 functions and code reusability (09–14) — plus `more-practice/` and the WeCloudData originals |
-| [`week3_day1_afternoon/`](week3_day1_afternoon) | 22 | Pandas, three lectures: L01 Series/DataFrame/Index (01–04), L02 core functionality (05–10), L03 reading and writing (11–14), plus a pipelines-and-roles synthesis sheet (15) — and `more-practice/` and the WeCloudData originals |
+| [`week3_day1_afternoon/`](week3_day1_afternoon) | 24 | Pandas, three lectures: L01 Series/DataFrame/Index (01–04), L02 core functionality (05–10), L03 reading and writing (11–14), plus a pipelines-and-roles synthesis sheet (15) — and `more-practice/` and the WeCloudData originals |
 | [`week3_day2_morning/`](week3_day2_morning) | 19 | Pandas continued: L04 reshaping and pivoting (01–05), L05 data transformation (06–10) — plus `more-practice/` and the WeCloudData Advanced lab |
 | [`week3_day3_afternoon/`](week3_day3_afternoon) | 5 | Snowflake: Snowsight and `TPCH_SF1` (01), stages and `COPY INTO` (02) — both **not executed**, they run in your own account — then the same lab CSVs taken apart locally, where every number is observed (03–05) |
 | [`week3_day4_morning/`](week3_day4_morning) | 11 | Dimensional modeling and ELT design: OLTP vs OLAP, grain, measure types, star/snowflake/galaxy (01–04), then the lecture's seven ELT steps end to end (05–10), plus the group design activity (11, no code) |
+| [`week3_recap/`](week3_recap) | 3 | Recap, not a class: three sheets on the week's recurring traps |
+| [`week4_day2_afternoon/`](week4_day2_afternoon) | 1 | dbt, **executable**, one notebook of 54 questions: the project and layers (raw→staging→edw→marts), seeds driving business requirements, snapshots, a **Type 6 SCD** and **star schema** on surrogate keys, dbt-expectations quality checks, **unit tests**, **lineage**, and a **MetricFlow semantic layer** exporting extra marts. Direct Snowflake commands live in `snowflake-console/`. The cells run against your own Snowflake account, so they ship **runnable but not executed** (no stored output); the finished dbt project is browsable under `dbt-project/demo/` |
 
-121 notebooks in total, plus 42 supporting files — 32 `.csv`, 4 `.sql`,
-2 `.html`, 2 `.json`, 1 `.tsv`, 1 `.xlsx`. Several solutions read `data/` by a
-**relative** path, so the data has to travel with them or the published answer
-cannot be re-run from the console:
+127 notebooks in total, plus 86 supporting files — 43 `.csv`, 23 `.sql`,
+14 `.yml`, 2 `.html`, 2 `.json`, 1 `.tsv`, 1 `.xlsx`. Several solutions read
+`data/` by a **relative** path, so the data has to travel with them or the
+published answer cannot be re-run from the console:
 
 - `week2_day5_morning/08_reading_real_files_solution.ipynb` — four `.csv`
 - `week3_day1_afternoon/` worksheets 11–14 — `.csv`, `.tsv`, `.json`, `.xlsx`
@@ -26,6 +28,14 @@ cannot be re-run from the console:
   question 10 also reads `snowflake-scripts/*.sql` and `labs/*.html`, so those
   travel too — its answer quotes the file list it finds
 - `week3_day4_morning/` — worksheets 01–10 all read `data/`
+
+`week4_day2_afternoon/` is different: its notebooks connect to Snowflake and
+build a dbt project at runtime (under a git-ignored `demo/`), so they don't read
+`data/` by a relative path. Its `.sql` and `.yml` supporting files here are the
+finished dbt project under `dbt-project/demo/` (the models, snapshot, macro,
+sources, tests, and a credential-free `profiles.example.yml`), kept as a
+browsable reference; the two CSVs under `data/` are what worksheet 02
+`COPY`-loads into Snowflake.
 
 ## This folder is generated — do not edit it
 
@@ -61,7 +71,9 @@ this mirror is the single published copy.
 Each solution quotes the **actual result** — real query output for the SQL
 sessions, real printed output for the Python one — so a student can check
 themselves without guessing, and see *where* they diverged rather than only
-*that* they did.
+*that* they did. The one exception is `week4_day2_afternoon`, whose cells run
+against your own Snowflake account: those ship runnable but without stored
+output, and each shows what it should return in the markdown beneath it.
 
 If you're a student who found this folder: you'll learn more from being stuck
 for five minutes than from reading ahead. Use the next line, not the whole

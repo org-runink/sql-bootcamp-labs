@@ -51,8 +51,13 @@ INNER = "/tmp/_run_all_solutions_inner.py"
 INNER_SRC = r'''
 import json, os, subprocess, sys
 ROOT = "/home/jovyan/work/SOLUTIONS"
+# week4_day2_afternoon connects to the student's own Snowflake account, which
+# this container cannot reach (same reason wcd-originals is skipped: it needs
+# the network). Its solutions would all "fail" here for lack of a connection,
+# which says nothing about whether they are correct -- so they are not run.
+# `demo/` is the dbt project those notebooks scaffold at runtime; skip it too.
 SKIP = {"wcd-originals", ".ipynb_checkpoints", "data", "bronze",
-        "more-practice-data"}
+        "more-practice-data", "week4_day2_afternoon", "demo"}
 result = {}
 for dirpath, dirnames, filenames in os.walk(ROOT):
     dirnames[:] = sorted(d for d in dirnames if d not in SKIP)

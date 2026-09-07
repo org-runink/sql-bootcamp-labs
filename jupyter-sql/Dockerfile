@@ -27,6 +27,25 @@ FROM quay.io/jupyter/base-notebook@sha256:23fbe16371af3c0fdc833fa0962b42fd07811e
 #   pyarrow   .parquet                    lxml     read_html / read_xml
 #   html5lib + beautifulsoup4             read_html's fallback parser
 #   tabulate  DataFrame.to_markdown()     matplotlib  plotting
+#   polars    the DataFrame alternative    pyspark     distributed DataFrames
+#
+# PYSPARK NEEDS A JVM. `pip install pyspark` gives you the Python API and
+# nothing to run it on -- base-notebook ships no Java, so the JRE is installed
+# below and JAVA_HOME is set. Without both, `SparkSession.builder...` fails at
+# runtime with an error that does not mention Java.
+#
+# THE [connect] EXTRA IS NOT OPTIONAL HERE. jupysql has optional Spark
+# support that activates the moment pyspark is importable, and it imports
+# pyspark.sql.connect. Without grpcio that module calls sys.exit(0) DURING
+# IMPORT -- so `%load_ext sql` would kill the Jupyter kernel and take every SQL
+# worksheet with it. [connect] pulls grpcio and the exit goes away. Verified:
+# jupysql imports cleanly, and a SparkSession still starts and runs a job.
+#
+# PYSPARK 4.2.0 WARNS ON pandas 3.x: "PySpark does not yet fully support
+# pandas >= 3.0.0". Core Spark SQL and DataFrame work is unaffected -- verified
+# by starting a session and running a job -- but toPandas(), pandas UDFs and
+# pandas-on-Spark may misbehave. Downgrading pandas is not an option: 300+
+# solutions were verified against 3.0.5 and their quoted output would change.
 #
 # base-notebook deliberately ships WITHOUT pandas -- that is the
 # scipy-notebook image -- so every one of these has to be named explicitly or
@@ -44,18 +63,42 @@ RUN pip install --no-cache-dir \
       html5lib==1.1 \
       beautifulsoup4==4.15.0 \
       tabulate==0.10.0 \
-      matplotlib==3.11.1
+      matplotlib==3.11.1 \
+      polars==1.44.1 \
+      "pyspark[connect]==4.2.0"
 
-# Fail the BUILD, not a worksheet in front of a class, if anything above is
-# missing or the wrong version. A broken image should never reach a student.
+
+# THE dbt + SNOWFLAKE STACK, for week4_day2_afternoon.
 #
-# The script STAYS in the image at a stable path, because the build-time gate
-# is only half the problem: it cannot catch a STALE image that is never
-# rebuilt. docker-compose.yml runs this same file as the container's
-# healthcheck, so a pre-c4082db console shows up as `unhealthy` in
-# `podman ps` without anybody having to run anything.
-COPY --chown=${NB_UID}:${NB_GID} verify_image.py /opt/verify_image.py
-RUN python3 /opt/verify_image.py
+# That day's worksheets connect to the student's OWN Snowflake account and run
+# the object creation and the dbt models from the notebook cells:
+#   snowflake-connector-python  the notebook's connection + PUT/COPY data load
+#   dbt-core                    the `dbt` CLI the worksheets shell out to
+#   dbt-snowflake               the adapter dbt uses to reach Snowflake
+# (dbt_utils and dbt_expectations are dbt PACKAGES, installed per-project by
+#  `dbt deps` from packages.yml, not pip — so they are not here.)
+#
+# These three are the ONLY pins in this file that are ranges, not exact
+# versions, and that is deliberate. The exact-pin rule everywhere else exists to
+# protect the numbers quoted in solutions; week4_day2_afternoon's solutions quote
+# NONE — nothing in this image can reach Snowflake, so no output was ever
+# observed to protect. What matters is only that the tools import and are recent
+# enough for this image's Python 3.13 and the lab's features (merge /
+# delete+insert incremental strategies, snapshots). dbt gained Python 3.13
+# support in the 1.10 line, hence the floor. If you want stricter
+# reproducibility, freeze the resolved versions here and in verify_image.py.
+# faker generates the synthetic data for that day's unit-testing worksheet.
+# dbt-metricflow adds the `mf` CLI for the semantic layer: dbt-core PARSES
+# semantic_models/metrics on its own, but querying them (`mf query`, `mf
+# list metrics`, `mf validate-configs`) needs this package. It requires
+# dbt-core<1.13, which the floor above satisfies.
+RUN pip install --no-cache-dir \
+      "snowflake-connector-python>=3.12,<4" \
+      "dbt-core>=1.10,<2" \
+      "dbt-snowflake>=1.10,<2" \
+      "faker>=20" \
+      "dbt-metricflow[snowflake]>=0.14,<1"
+
 
 # curl is NOT in base-notebook, and the WeCloudData "Lab - Pandas Advanced"
 # notebook downloads its seven datasets with `!curl -sS -o ...` before reading
@@ -63,11 +106,41 @@ RUN python3 /opt/verify_image.py
 # is kept byte-identical we fix the image rather than the notebook.
 USER root
 RUN apt-get update \
- && apt-get install -y --no-install-recommends curl \
+ && apt-get install -y --no-install-recommends curl openjdk-17-jre-headless \
  && rm -rf /var/lib/apt/lists/*
+ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
 USER ${NB_UID}
 
 COPY --chown=${NB_UID}:${NB_GID} SQL_Console.ipynb /home/jovyan/work/SQL_Console.ipynb
+
+# LAST STEP ON PURPOSE. This gate validates the FINISHED image -- packages,
+# the JVM pyspark needs, and the dark theme. Placing it earlier means it
+# checks a half-built image and passes on things that are added afterwards;
+# that mistake has been made twice in this file's history.
+#
+# Fail the BUILD, not a worksheet in front of a class.
+#
+# The script STAYS in the image at a stable path, because the build-time gate
+# is only half the problem: it cannot catch a STALE image that is never
+# rebuilt. docker-compose.yml runs this same file as the container's
+# healthcheck, so a pre-c4082db console shows up as `unhealthy` in
+# `podman ps` without anybody having to run anything.
+# Dark by default. JupyterLab ships "JupyterLab Light" and a room full of
+# white screens is what people actually complain about. This is an OVERRIDE,
+# not a lock: Settings -> Theme still switches it per user, and the choice is
+# remembered in their browser.
+# Spark tuned for a ~8 GB workstation, not a cluster. Read by spark-submit
+# BEFORE the JVM starts, which is the only point at which spark.driver.memory
+# can still take effect -- builder.config() is too late and is silently
+# ignored. See the file itself for the reasoning behind each value.
+COPY --chown=${NB_UID}:${NB_GID} spark-defaults.conf \
+     /opt/conda/lib/python3.13/site-packages/pyspark/conf/spark-defaults.conf
+
+COPY --chown=${NB_UID}:${NB_GID} jupyterlab-overrides.json \
+     /opt/conda/share/jupyter/lab/settings/overrides.json
+
+COPY --chown=${NB_UID}:${NB_GID} verify_image.py /opt/verify_image.py
+RUN python3 /opt/verify_image.py
 
 ENV JUPYTER_ENABLE_LAB=yes
 WORKDIR /home/jovyan/work
