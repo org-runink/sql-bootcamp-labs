@@ -49,6 +49,24 @@ IMPORT_NAME = {
     "sqlalchemy": "sqlalchemy",
 }
 
+# The dbt + Snowflake stack for week4_day2_afternoon is checked for PRESENCE,
+# import, and a MINIMUM (major, minor) -- not an exact pin. The exact-pin rule
+# above exists to protect the numbers quoted in solutions, and that day's
+# solutions quote none: they run against each student's own Snowflake account,
+# which nothing in this image can reach, so no output was observed to protect.
+# What matters is only that the tools import and are new enough for Python 3.13
+# and the lab's features. See the matching note in the Dockerfile.
+#   dist -> (import module or None, minimum (major, minor))
+PRESENT = {
+    "snowflake-connector-python": ("snowflake.connector", (3, 12)),
+    "dbt-core": ("dbt.cli.main", (1, 10)),
+    "dbt-snowflake": ("dbt.adapters.snowflake", (1, 10)),
+    "faker": ("faker", (20, 0)),
+    # The `mf` CLI for the MetricFlow semantic layer. Import name is metricflow,
+    # which ships as a dependency of dbt-metricflow.
+    "dbt-metricflow": ("metricflow", (0, 14)),
+}
+
 
 OVERRIDES = "/opt/conda/share/jupyter/lab/settings/overrides.json"
 
@@ -164,6 +182,30 @@ def main():
                             % (dist, got, mod, type(exc).__name__))
         print("  %-16s %-10s %s" % (dist, got, status))
 
+    for dist, (mod, minver) in sorted(PRESENT.items()):
+        try:
+            got = md.version(dist)
+        except md.PackageNotFoundError:
+            failures.append("%s is NOT INSTALLED (need >= %s)"
+                            % (dist, ".".join(map(str, minver))))
+            print("  %-28s %-10s MISSING" % (dist, "-"))
+            continue
+
+        nums = tuple(int(x) for x in got.split(".")[:2] if x.isdigit())
+        status = "ok"
+        if nums < minver:
+            status = "TOO OLD"
+            failures.append("%s is %s, need >= %s"
+                            % (dist, got, ".".join(map(str, minver))))
+        if mod:
+            try:
+                __import__(mod)
+            except BaseException as exc:
+                status = "IMPORT FAILED"
+                failures.append("%s %s installed but `import %s` raised %s"
+                                % (dist, got, mod, type(exc).__name__))
+        print("  %-28s %-10s %s" % (dist, got, status))
+
     check_java(failures)
     check_spark_conf(failures)
     check_theme(failures)
@@ -174,8 +216,8 @@ def main():
         for f in failures:
             print("  -", f)
         sys.exit(1)
-    print("image verified: python %s, %d pinned packages, JVM+conf, dark theme"
-          % (PYTHON, len(EXPECTED)))
+    print("image verified: python %s, %d pinned + %d present packages, "
+          "JVM+conf, dark theme" % (PYTHON, len(EXPECTED), len(PRESENT)))
 
 
 if __name__ == "__main__":

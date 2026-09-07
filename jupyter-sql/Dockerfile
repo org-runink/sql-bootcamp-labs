@@ -68,6 +68,38 @@ RUN pip install --no-cache-dir \
       "pyspark[connect]==4.2.0"
 
 
+# THE dbt + SNOWFLAKE STACK, for week4_day2_afternoon.
+#
+# That day's worksheets connect to the student's OWN Snowflake account and run
+# the object creation and the dbt models from the notebook cells:
+#   snowflake-connector-python  the notebook's connection + PUT/COPY data load
+#   dbt-core                    the `dbt` CLI the worksheets shell out to
+#   dbt-snowflake               the adapter dbt uses to reach Snowflake
+# (dbt_utils and dbt_expectations are dbt PACKAGES, installed per-project by
+#  `dbt deps` from packages.yml, not pip — so they are not here.)
+#
+# These three are the ONLY pins in this file that are ranges, not exact
+# versions, and that is deliberate. The exact-pin rule everywhere else exists to
+# protect the numbers quoted in solutions; week4_day2_afternoon's solutions quote
+# NONE — nothing in this image can reach Snowflake, so no output was ever
+# observed to protect. What matters is only that the tools import and are recent
+# enough for this image's Python 3.13 and the lab's features (merge /
+# delete+insert incremental strategies, snapshots). dbt gained Python 3.13
+# support in the 1.10 line, hence the floor. If you want stricter
+# reproducibility, freeze the resolved versions here and in verify_image.py.
+# faker generates the synthetic data for that day's unit-testing worksheet.
+# dbt-metricflow adds the `mf` CLI for the semantic layer: dbt-core PARSES
+# semantic_models/metrics on its own, but querying them (`mf query`, `mf
+# list metrics`, `mf validate-configs`) needs this package. It requires
+# dbt-core<1.13, which the floor above satisfies.
+RUN pip install --no-cache-dir \
+      "snowflake-connector-python>=3.12,<4" \
+      "dbt-core>=1.10,<2" \
+      "dbt-snowflake>=1.10,<2" \
+      "faker>=20" \
+      "dbt-metricflow[snowflake]>=0.14,<1"
+
+
 # curl is NOT in base-notebook, and the WeCloudData "Lab - Pandas Advanced"
 # notebook downloads its seven datasets with `!curl -sS -o ...` before reading
 # them. Without this the vendor notebook fails on its first cell, and since it

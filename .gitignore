@@ -10,3 +10,11 @@ __pycache__/
 */exercises/wcd-originals/*.csv
 */solutions/wcd-originals/*.csv
 solutions/*/wcd-originals/*.csv
+
+# week4_day2_afternoon's notebooks SCAFFOLD a dbt project under demo/ at runtime
+# (the written models, dbt_packages/, target/, logs/). That is ephemeral student
+# work -- the committed reference is week4_day2_afternoon/solutions/dbt-project/.
+# NB: these patterns deliberately do NOT match .../solutions/dbt-project/demo/.
+week4_day2_afternoon/exercises/demo/
+week4_day2_afternoon/solutions/demo/
+solutions/week4_day2_afternoon/demo/
