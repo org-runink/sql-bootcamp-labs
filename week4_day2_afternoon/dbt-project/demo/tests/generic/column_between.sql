@@ -12,9 +12,8 @@
 -- Usage in a properties file:
 --   tests:
 --     - column_between:
---         arguments:
---           min_value: 0
---           max_value: 1000
+--         min_value: 0
+--         max_value: 1000
 
 {% test column_between(model, column_name, min_value=none, max_value=none) %}
 

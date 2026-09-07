@@ -25,8 +25,7 @@ seeds:
         tests:
           - not_null
           - accepted_values:
-              arguments:
-                values: ['East', 'West', 'Central', 'North', 'South']
+              values: ['East', 'West', 'Central', 'North', 'South']
 
   - name: category_targets
     description: "Annual sales target per product category (planning input)."

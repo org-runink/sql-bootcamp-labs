@@ -154,8 +154,12 @@ readable and lets you build one layer at a time (`dbt run --select staging`).
   *logic*, deterministically, with no warehouse data. Ideal for SCD rules, which
   are otherwise only exercised when a source happens to change.
 
-> A generic test's parameters go under `arguments:` in current dbt. The lecture
-> slides show the older top-level form; it still runs but dbt warns.
+> Write a generic test's parameters at the **top level** under the test name —
+> the form the lecture slides use. dbt 1.12 on a laptop accepts a nested
+> `arguments:` key and deprecation-warns the top-level form, but the dbt runtime
+> **inside Snowflake is older and rejects the nested form outright**:
+> `macro 'dbt_macro__test_accepted_values' takes no keyword argument 'arguments'`.
+> The top-level form works on both, so it is the portable one.
 
 ### The semantic layer (MetricFlow)
 
@@ -311,7 +315,10 @@ Six bugs were found and fixed by that testing, all worth knowing:
 
 1. **dbt renders every file as Jinja before parsing, and does not skip SQL/YAML
    comments** — a literal loop tag inside a `--` comment failed the whole project.
-2. Generic-test parameters must nest under `arguments:` in current dbt.
+2. Generic-test parameters must be written at the **top level**, not nested
+   under `arguments:` — the dbt inside Snowflake predates dbt 1.12 and errors
+   on the nested form, while 1.12 accepts the top-level form with only a
+   deprecation notice. Portability wins.
 3. The semantic layer **requires a time spine model**, or nothing parses.
 4. A semantic model with dimensions must declare a **primary entity**.
 5. The credential-free `profiles.yml` is **only** valid inside Snowflake; local

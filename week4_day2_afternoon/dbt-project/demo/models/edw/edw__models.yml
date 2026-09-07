@@ -5,9 +5,13 @@
 #   accepted_values        a column's values are from a known set
 #   relationships          referential integrity — every fact FK finds its dim
 #
-# A generic test's parameters go under `arguments:` in current dbt. Older
-# material (including the lecture slides) puts them at the top level; that still
-# runs but dbt now warns it is deprecated.
+# Test parameters are written at the TOP LEVEL under the test name, not nested
+# under an `arguments:` key. That is the form the lecture slides use, and the
+# only form the dbt runtime inside Snowflake accepts -- it is older than dbt
+# 1.12 and rejects the nested form outright:
+#     macro 'dbt_macro__test_accepted_values' takes no keyword argument 'arguments'
+# dbt 1.12 on a laptop accepts this form too, with a deprecation notice. So the
+# top-level form is the portable one; prefer it.
 
 version: 2
 
@@ -36,8 +40,7 @@ models:
       - name: status_code_name
         tests:
           - accepted_values:
-              arguments:
-                values: ['active']
+              values: ['active']
 
   - name: dim_store
     description: "Type 1 store dimension, built from the store_master seed."
@@ -49,8 +52,7 @@ models:
       - name: region
         tests:
           - accepted_values:
-              arguments:
-                values: ['East', 'West', 'Central', 'North', 'South']
+              values: ['East', 'West', 'Central', 'North', 'South']
 
   - name: dim_date
     description: "Date dimension derived from the dates present in sales."
@@ -69,20 +71,17 @@ models:
           - not_null
           # Referential integrity: every date_key must exist in dim_date.
           - relationships:
-              arguments:
-                to: ref('dim_date')
-                field: date_key
+              to: ref('dim_date')
+              field: date_key
       - name: product_sk
         tests:
           - not_null
           - relationships:
-              arguments:
-                to: ref('dim_product_t6')
-                field: product_sk
+              to: ref('dim_product_t6')
+              field: product_sk
       - name: store_sk
         tests:
           - not_null
           - relationships:
-              arguments:
-                to: ref('dim_store')
-                field: store_sk
+              to: ref('dim_store')
+              field: store_sk

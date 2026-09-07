@@ -9,8 +9,7 @@
 -- Usage:
 --   tests:
 --     - row_count_between:
---         arguments:
---           min_value: 1
+--         min_value: 1
 
 {% test row_count_between(model, min_value=1, max_value=none) %}
 
