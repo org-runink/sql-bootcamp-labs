@@ -302,6 +302,12 @@ No cell was executed against Snowflake — this repo has no account — so the
 solution ships **without stored output** and each answer states what it should
 return. What *was* verified mechanically, in the lab image:
 
+- **The project compiles inside Snowflake.** Confirmed on **dbt 1.9.4 /
+  dbt-snowflake 1.9.2** in a Workspace: `compile --target dev` resolves 10
+  models, 2 snapshots, 1 analysis, 2 seeds, 42 data tests, 2 sources, 1
+  exposure, 11 metrics, 3 semantic models, 3 saved queries and 2 unit tests —
+  the same inventory the lab image reports on dbt 1.12, so the project is
+  portable across both.
 - **`dbt parse` is clean on the project as it sits in the repo, with
   `dbt_packages` absent** — the exact condition that made the packaged version
   fail. `mf validate-configs` reports **ERRORS: 0**.

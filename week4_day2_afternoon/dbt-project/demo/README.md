@@ -1,5 +1,16 @@
 # `demo` — the dbt project you upload to Snowflake
 
+> **Verified runtime: dbt 1.9.4 with dbt-snowflake 1.9.2**, compiled inside a
+> Snowflake Workspace. `compile` resolves the whole project: 10 models,
+> 2 snapshots, 1 analysis, 2 seeds, 42 data tests, 2 sources, 1 exposure,
+> 11 metrics, 3 semantic models, 3 saved queries, 2 unit tests.
+>
+> That version matters. Write generic-test parameters at the **top level**, not
+> nested under `arguments:` — that key needs dbt 1.12 and 1.9.4 rejects it with
+> *"macro 'dbt_macro__test_accepted_values' takes no keyword argument
+> 'arguments'"*. The YAML snapshot in `snapshots/sales_snapshot.yml` needs
+> ≥ 1.9, so it works here but would not on 1.8.
+
 This is the complete project the lab builds. **Upload this folder to a Snowflake
 stage**, then create a `DBT PROJECT` object from it and run it with
 `EXECUTE DBT PROJECT`. The notebook (`../../exercises/dbt_lab.ipynb`) drives all
