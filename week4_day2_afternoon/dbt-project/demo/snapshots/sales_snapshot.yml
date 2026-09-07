@@ -1,0 +1,18 @@
+# The MODERN, YAML-based snapshot configuration (dbt >= 1.9), recommended over
+# the SQL snapshot block for new snapshots — compare with product_snapshot.sql.
+#
+# This one uses the TIMESTAMP strategy, which is preferred whenever the source
+# has a trustworthy "last updated" column: dbt trusts trans_dt instead of
+# comparing every column, which is cheaper and records the real change time.
+# Use the check strategy (as product_snapshot does) only when no such column
+# exists.
+
+snapshots:
+  - name: sales_snapshot
+    relation: source('stg', 'sales')
+    description: "Timestamp-strategy snapshot of raw.sales, keyed on trans_id."
+    config:
+      schema: stg
+      unique_key: trans_id
+      strategy: timestamp
+      updated_at: trans_dt

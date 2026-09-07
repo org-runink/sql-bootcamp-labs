@@ -1,0 +1,51 @@
+# UNIT TESTS — automated test scenarios for the Type 6 SCD logic.
+#
+# A DATA test runs against whatever is in the warehouse. A UNIT test (dbt >= 1.8)
+# feeds the model MOCK rows and asserts the exact output, so it checks the LOGIC
+# with no real data, deterministically, in seconds. That is what you want for
+# SCD rules, which are otherwise only exercised when a source happens to change.
+#
+# The scenario below is a product with THREE versions: it starts in category-1,
+# moves to category-2, then to category-3 (the current one). That single fixture
+# pins down all three Type 6 behaviours at once.
+
+version: 2
+
+unit_tests:
+  - name: type6_scd_tracks_all_three_views
+    description: >
+      Given three versions of one product, dim_product_t6 must emit three rows
+      carrying the Type 2 (as-of), Type 1 (current, repeated) and Type 3
+      (previous) values, with only the newest row flagged is_current.
+    model: dim_product_t6
+    given:
+      - input: ref('product_snapshot')
+        rows:
+          - {prod_key: 1, prod_name: 'Widget', brand_name: 'b1', category_name: 'category-1', subcategory_name: 's1', status_code_name: 'active', dbt_valid_from: '2024-01-01', dbt_valid_to: '2024-06-01'}
+          - {prod_key: 1, prod_name: 'Widget', brand_name: 'b1', category_name: 'category-2', subcategory_name: 's1', status_code_name: 'active', dbt_valid_from: '2024-06-01', dbt_valid_to: '2024-09-01'}
+          - {prod_key: 1, prod_name: 'Widget', brand_name: 'b1', category_name: 'category-3', subcategory_name: 's1', status_code_name: 'active', dbt_valid_from: '2024-09-01', dbt_valid_to: null}
+    expect:
+      rows:
+        # Type 2 = category_name (differs per row)
+        # Type 1 = current_category_name (category-3 on EVERY row)
+        # Type 3 = previous_category_name (null on the first version)
+        - {prod_key: 1, category_name: 'category-1', current_category_name: 'category-3', previous_category_name: null,        is_current: false}
+        - {prod_key: 1, category_name: 'category-2', current_category_name: 'category-3', previous_category_name: 'category-1', is_current: false}
+        - {prod_key: 1, category_name: 'category-3', current_category_name: 'category-3', previous_category_name: 'category-2', is_current: true}
+
+  - name: date_dimension_flags_weekends
+    description: "dim_date's is_weekend flag is right on the boundary days."
+    model: dim_date
+    given:
+      - input: ref('stg_sales')
+        rows:
+          - {cal_dt: '2024-01-05'}   # Friday
+          - {cal_dt: '2024-01-06'}   # Saturday
+          - {cal_dt: '2024-01-07'}   # Sunday
+          - {cal_dt: '2024-01-08'}   # Monday
+    expect:
+      rows:
+        - {date_key: 20240105, is_weekend: false}
+        - {date_key: 20240106, is_weekend: true}
+        - {date_key: 20240107, is_weekend: true}
+        - {date_key: 20240108, is_weekend: false}

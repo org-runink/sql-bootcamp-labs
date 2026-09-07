@@ -1,0 +1,30 @@
+# EXAMPLE profiles.yml — placeholders only, NO real credentials.
+#
+# profiles.yml holds the connection to your data platform. dbt reads
+# dbt_project.yml to find the profile NAME ('demo'), then looks for a profile
+# with that name here. dbt looks in ~/.dbt/ by default; set DBT_PROFILES_DIR to
+# point somewhere else. The file must always be called profiles.yml.
+#
+# The notebook writes a working version of this that reads every value from
+# SNOWFLAKE_* environment variables, so no secret is ever written to disk.
+#
+# `schema:` is dbt's DEFAULT build schema (target.schema). This project overrides
+# it per folder to stg / edw / marts / seed via the custom generate_schema_name
+# macro, so the default only applies to models that set no schema of their own.
+
+demo:
+  target: dev
+  outputs:
+    dev:
+      type: snowflake
+      account: <your_account_locator>       # e.g. ab12345.us-east-1
+      user: <your_username>
+      # Prefer key-pair or SSO over a plaintext password, and pull secrets from
+      # the environment rather than committing them.
+      password: <your_password>
+      role: <your_role>
+      database: <your_database>             # the database holding the RAW schema
+      warehouse: <your_warehouse>
+      schema: dev
+      threads: 4
+      client_session_keep_alive: false

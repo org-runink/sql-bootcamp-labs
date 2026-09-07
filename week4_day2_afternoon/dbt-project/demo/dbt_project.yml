@@ -1,0 +1,67 @@
+# demo — the dbt project this lab builds.
+#
+# Every dbt project needs this file; it is how dbt knows a directory is a
+# project. It names the project, points at a profile in profiles.yml, and sets
+# project-level defaults for each folder.
+
+name: 'demo'
+version: '1.0.0'
+config-version: 2
+
+profile: 'demo'
+
+model-paths: ["models"]
+snapshot-paths: ["snapshots"]
+macro-paths: ["macros"]
+seed-paths: ["seeds"]
+test-paths: ["tests"]
+analysis-paths: ["analyses"]
+
+target-path: "target"
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+# vars: read in a model by calling var('name', default) in Jinja.
+#   (the dbt_date timezone var is gone with dbt-expectations -- no packages now)
+#   heavy_wgt_threshold  used by the unit-tested weight_class logic.
+vars:
+  heavy_wgt_threshold: 20
+
+# ONE FOLDER PER LAYER — the analytics-engineering convention, and the lineage
+# you trace in Part H: raw -> staging -> edw -> marts.
+#
+#   staging/  -> STG    thin, 1:1 with the raw sources. Views: no storage, and
+#                       downstream models always see the freshest rows.
+#   edw/      -> EDW    conformed dimensions and facts (the star schema).
+#                       Tables: end users and BI query these constantly.
+#   marts/    -> MARTS  business-facing reports. Tables, for speed.
+#   seeds     -> SEED   version-controlled reference data.
+#
+# The custom generate_schema_name macro (macros/generate_schema_name.sql) makes
+# these names literal; dbt's default would prefix them with the target schema.
+models:
+  demo:
+    staging:
+      +materialized: view
+      +schema: stg
+    edw:
+      +materialized: table
+      +schema: edw
+    marts:
+      +materialized: table
+      +schema: marts
+    # The semantic folder holds the MetricFlow time spine (a dense calendar).
+    # It is warehouse infrastructure the metrics sit on, so it lands in EDW —
+    # without this it would fall back to the profile's default schema.
+    semantic:
+      +materialized: table
+      +schema: edw
+
+seeds:
+  demo:
+    +schema: seed
+
+snapshots:
+  demo:
+    +schema: stg

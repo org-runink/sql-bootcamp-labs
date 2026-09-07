@@ -1,0 +1,63 @@
+# SAVED QUERIES — reusable metric queries that can be EXPORTED as tables.
+#
+# This is how the semantic layer produces EXTRA DATA MARTS without writing more
+# SQL. A saved query names metrics + group-bys once; its `exports` tell dbt to
+# materialize the result into the MARTS schema when you run
+# `dbt build --select saved_query:*` (or `dbt sl export`).
+#
+# Compare with the hand-written models in models/marts/: those spell out the
+# joins and aggregation. These are declared from metric definitions, so they
+# cannot drift from the agreed numbers — change margin_rate once and every mart
+# below follows.
+
+saved_queries:
+
+  - name: sales_by_region_monthly
+    description: "Regional performance by month — the executive view."
+    query_params:
+      metrics:
+        - total_sales
+        - total_margin
+        - margin_rate
+        - order_lines
+      group_by:
+        - Dimension('store__region')
+        - TimeDimension('sales__sale_date', 'month')
+    exports:
+      - name: mart_sales_by_region_monthly
+        config:
+          export_as: table
+          schema: marts
+
+  - name: sales_by_category_monthly
+    description: "Category performance by month, using the Type 1 (current) category."
+    query_params:
+      metrics:
+        - total_sales
+        - total_quantity
+        - gross_profit
+        - avg_line_value
+      group_by:
+        - Dimension('product__category')
+        - TimeDimension('sales__sale_date', 'month')
+    exports:
+      - name: mart_sales_by_category_monthly
+        config:
+          export_as: table
+          schema: marts
+
+  - name: brand_region_daily
+    description: "Brand x region daily sales, with the trailing 28-day window."
+    query_params:
+      metrics:
+        - total_sales
+        - sales_rolling_28d
+      group_by:
+        - Dimension('product__brand')
+        - Dimension('store__region')
+        - TimeDimension('sales__sale_date', 'day')
+    exports:
+      - name: mart_brand_region_daily
+        config:
+          export_as: table
+          schema: marts
