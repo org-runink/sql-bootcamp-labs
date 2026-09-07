@@ -1,0 +1,117 @@
+# SEMANTIC MODELS — the MetricFlow layer over the star schema.
+#
+# A semantic model describes ONE dbt model in three parts:
+#
+#   entities    the keys. `primary` on a dimension, `foreign` on the fact —
+#               MetricFlow uses matching entity NAMES to work out the joins, so
+#               you never write a JOIN again.
+#   dimensions  what you group/filter by: categorical, or time.
+#   measures    the aggregatable columns, each with its aggregation.
+#
+# Metrics (sem_metrics.yml) are then defined on top of the measures. The payoff:
+# "total sales by region by month" is a metric + two dimensions, resolved
+# against the star schema automatically, instead of a hand-written join that
+# every analyst re-implements slightly differently.
+
+# The TIME SPINE registration. MetricFlow needs a dense day-grain calendar to
+# anchor cumulative and windowed metrics; this points it at the spine model.
+models:
+  - name: metricflow_time_spine
+    description: "Dense one-row-per-day calendar backing all time-based metrics."
+    time_spine:
+      standard_granularity_column: date_day
+    columns:
+      - name: date_day
+        granularity: day
+
+semantic_models:
+
+  # ------------------------------------------------------------------ the fact
+  - name: sales
+    description: "Sales facts at (date, product version, store) grain."
+    model: ref('fct_sales')
+    # A semantic model that has dimensions must declare a PRIMARY entity. The
+    # fact has no single natural key column (its grain is the three-part
+    # combination), so `primary_entity` names a conceptual one instead of
+    # pointing at a column. Without it: "contains dimensions, but it does not
+    # define a primary entity".
+    primary_entity: sale
+    defaults:
+      agg_time_dimension: sale_date
+    entities:
+      # Foreign keys into the dimensions. The NAMES must match the primary
+      # entities below — that is the join.
+      - name: product
+        type: foreign
+        expr: product_sk
+      - name: store
+        type: foreign
+        expr: store_sk
+    dimensions:
+      - name: sale_date
+        type: time
+        expr: full_date
+        type_params:
+          time_granularity: day
+    measures:
+      - name: sales_amount
+        description: "Gross sales amount."
+        agg: sum
+        expr: sales_amt
+      - name: sales_quantity
+        agg: sum
+        expr: sales_qty
+      - name: sales_cost_amount
+        agg: sum
+        expr: sales_cost
+      - name: sales_margin_amount
+        agg: sum
+        expr: sales_mgrn
+      - name: order_line_count
+        description: "Number of fact rows — the count of aggregated order lines."
+        agg: count
+        expr: 1
+
+  # ------------------------------------------------------- the Type 6 dimension
+  - name: product
+    description: "Product dimension (Type 6). Only the current version is exposed."
+    model: ref('dim_product_t6')
+    entities:
+      - name: product
+        type: primary
+        expr: product_sk
+    dimensions:
+      # The Type 1 columns are what you normally slice by: they re-state all
+      # history under today's value, so a category rename does not split a trend.
+      - name: category
+        type: categorical
+        expr: current_category_name
+      - name: subcategory
+        type: categorical
+        expr: current_subcategory_name
+      # The Type 2 column, for "as was" reporting.
+      - name: category_at_the_time
+        type: categorical
+        expr: category_name
+      - name: brand
+        type: categorical
+        expr: brand_name
+      - name: is_current_version
+        type: categorical
+        expr: is_current
+
+  # ------------------------------------------------------- the seeded dimension
+  - name: store
+    description: "Store dimension, sourced from the store_master seed."
+    model: ref('dim_store')
+    entities:
+      - name: store
+        type: primary
+        expr: store_sk
+    dimensions:
+      - name: region
+        type: categorical
+      - name: country
+        type: categorical
+      - name: store_name
+        type: categorical

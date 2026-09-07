@@ -1,0 +1,37 @@
+# Seeds are reference data that lives in the repo and is loaded by `dbt seed`.
+# They exist to answer a BUSINESS REQUIREMENT that the source system cannot:
+#
+#   store_master      the source only has a store_key. The business reports by
+#                     REGION, so the key->region map lives here, in version
+#                     control, where a change is a reviewable diff.
+#   category_targets  annual sales target per category — a planning number that
+#                     exists in a spreadsheet, not in any source table. The
+#                     marts layer measures actuals against it.
+#
+# Seeds are referenced with ref(), exactly like models.
+
+version: 2
+
+seeds:
+  - name: store_master
+    description: "Store key -> name, region, country. Drives all regional reporting."
+    columns:
+      - name: store_key
+        description: "Natural key of the store, as it appears in raw.sales."
+        tests:
+          - unique
+          - not_null
+      - name: region
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['East', 'West', 'Central', 'North', 'South']
+
+  - name: category_targets
+    description: "Annual sales target per product category (planning input)."
+    columns:
+      - name: category_name
+        tests:
+          - unique
+          - not_null

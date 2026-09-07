@@ -1,0 +1,44 @@
+# PACKAGES -- deliberately EMPTY. Read this before adding any.
+#
+# A package is an installable library of macros, tests and sometimes models,
+# from the dbt Hub. `dbt deps` downloads them into dbt_packages/.
+#
+# THIS PROJECT DEPENDS ON NONE, ON PURPOSE.
+#
+# Code running inside Snowflake has no outbound internet by default, so
+# `dbt deps` cannot reach hub.getdbt.com. If packages.yml LISTS a package that
+# is not installed, every dbt command fails before it runs anything:
+#
+#     Compilation Error
+#     dbt found 2 package(s) specified in packages.yml, but only 0 package(s)
+#     installed in dbt_packages. Run "dbt deps" to install package dependencies.
+#
+# So the two things this lab would have used from packages are written by hand
+# instead, and they are worth reading:
+#
+#   dbt_utils.generate_surrogate_key   -> macros/surrogate_key.sql
+#   dbt_utils.date_spine               -> models/semantic/metricflow_time_spine.sql
+#   dbt_expectations range/shape tests -> tests/generic/column_between.sql
+#                                         tests/generic/row_count_between.sql
+#
+# Nine lines of Jinja and two small tests replace 400+ files of dependency, and
+# you can see exactly what they do.
+#
+# TO USE PACKAGES ANYWAY, you need ONE of:
+#
+#   (a) Outbound network. An ACCOUNTADMIN creates a network rule and an external
+#       access integration allowing hub.getdbt.com and codeload.github.com, and
+#       the dbt project is created with that integration attached. Check the
+#       current Snowflake docs for the exact syntax -- it is a young feature.
+#
+#   (b) Vendoring. Run `dbt deps` somewhere with internet, then upload the whole
+#       dbt_packages/ folder alongside the project. It is ~400 files and ~7.5 MB,
+#       so script the upload rather than using the browser.
+#
+# Only then uncomment something like:
+#
+# packages:
+#   - package: dbt-labs/dbt_utils
+#     version: 1.1.1
+#   - package: calogica/dbt_expectations
+#     version: [">=0.9.0", "<0.10.0"]

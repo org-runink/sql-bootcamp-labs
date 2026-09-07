@@ -1,0 +1,20 @@
+# SOURCES — the raw tables your Extract/Load step landed in Snowflake (you
+# created and loaded them with the snowflake-console/ scripts).
+#
+# Declaring them lets models select from them by calling source('stg','product')
+# in Jinja, puts them on the lineage graph, and lets you test and freshness-check
+# the inputs. The source is NAMED 'stg' but the tables live in the RAW schema, so
+# `schema: raw` is required — by default dbt looks for a schema matching the name.
+
+version: 2
+
+sources:
+  - name: stg
+    database: "{{ target.database }}"
+    schema: raw
+    description: "Raw landing zone, loaded from the lab's two CSVs."
+    tables:
+      - name: product
+        description: "Product master, one row per product (mutable — it changes over time)."
+      - name: sales
+        description: "Sales transactions, one row per line item."

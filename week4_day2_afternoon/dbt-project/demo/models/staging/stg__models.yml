@@ -1,0 +1,39 @@
+# Documentation and tests for the staging layer.
+#
+# Descriptions live beside the models they describe. The prod_key description
+# reuses the doc block in _stg__docs.md via the doc() function.
+#
+# NOTE: dbt renders .yml files as Jinja BEFORE parsing them, and that includes
+# '#' comment lines — so a live tag written in a comment here would actually be
+# executed. Describe Jinja in words in comments; use it for real in values.
+
+version: 2
+
+models:
+  - name: stg_product_incr
+    description: "Staging of raw.product, captured incrementally with a start_date stamp."
+    columns:
+      - name: prod_key
+        description: '{{ doc("prod_key_doc") }}'
+        tests:
+          - not_null
+      - name: start_date
+        description: "When this version of the product row was captured."
+        tests:
+          - not_null
+
+  - name: stg_sales
+    description: "Staging of raw.sales — renamed and typed, one row per transaction line."
+    columns:
+      - name: trans_id
+        description: "Transaction identifier from the source. NOT unique on its own."
+        tests:
+          - not_null
+      - name: prod_key
+        description: '{{ doc("prod_key_doc") }}'
+        tests:
+          - not_null
+      - name: cal_dt
+        description: "Calendar date of the transaction (renamed from trans_dt)."
+        tests:
+          - not_null

@@ -1,0 +1,100 @@
+# METRICS — the business definitions, written ONCE.
+#
+# This is the point of the semantic layer. "Margin rate" is defined here, in
+# version control, tested and reviewed. Every consumer — BI tool, notebook, saved
+# query — gets the same number, instead of five dashboards each dividing slightly
+# different columns.
+#
+# The metric types:
+#   simple      one measure
+#   ratio       numerator / denominator, joined correctly for you
+#   derived     an expression over other metrics
+#   cumulative  a running or windowed total over the time dimension
+
+metrics:
+
+  # ------------------------------------------------------------------- simple
+  - name: total_sales
+    label: "Total Sales"
+    description: "Gross sales amount."
+    type: simple
+    type_params:
+      measure: sales_amount
+
+  - name: total_quantity
+    label: "Units Sold"
+    type: simple
+    type_params:
+      measure: sales_quantity
+
+  - name: total_cost
+    label: "Total Cost"
+    type: simple
+    type_params:
+      measure: sales_cost_amount
+
+  - name: total_margin
+    label: "Total Margin"
+    type: simple
+    type_params:
+      measure: sales_margin_amount
+
+  - name: order_lines
+    label: "Order Lines"
+    type: simple
+    type_params:
+      measure: order_line_count
+
+  # -------------------------------------------------------------------- ratio
+  - name: margin_rate
+    label: "Margin Rate"
+    description: "Margin as a share of sales. Defined once, so every report agrees."
+    type: ratio
+    type_params:
+      numerator: total_margin
+      denominator: total_sales
+
+  - name: avg_line_value
+    label: "Average Line Value"
+    description: "Sales amount per aggregated order line."
+    type: ratio
+    type_params:
+      numerator: total_sales
+      denominator: order_lines
+
+  # ------------------------------------------------------------------ derived
+  - name: gross_profit
+    label: "Gross Profit"
+    description: "Sales minus cost — computed from other metrics, not from raw columns."
+    type: derived
+    type_params:
+      expr: total_sales - total_cost
+      metrics:
+        - name: total_sales
+        - name: total_cost
+
+  # --------------------------------------------------------------- cumulative
+  - name: sales_rolling_28d
+    label: "Sales (rolling 28 days)"
+    description: "Trailing 28-day sales — a window, handled by the semantic layer."
+    type: cumulative
+    type_params:
+      measure: sales_amount
+      cumulative_type_params:
+        window: 28 days
+
+  - name: sales_to_date
+    label: "Sales To Date"
+    description: "Running total of sales from the beginning of time."
+    type: cumulative
+    type_params:
+      measure: sales_amount
+
+  # ---------------------------------------------------------- filtered metric
+  - name: sales_east_region
+    label: "Sales — East Region"
+    description: "A metric carrying its own filter, so the definition cannot be misapplied."
+    type: simple
+    type_params:
+      measure: sales_amount
+    filter: "{{ Dimension('store__region') }} = 'East'"

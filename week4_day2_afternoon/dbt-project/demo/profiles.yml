@@ -1,0 +1,26 @@
+# profiles.yml for DBT PROJECTS ON SNOWFLAKE.
+#
+# Use this version when the project runs INSIDE Snowflake as a native DBT
+# PROJECT object (rename it to profiles.yml in the uploaded project). Snowflake
+# authenticates with the ROLE that executes the project, so there is no account,
+# user, password or key here at all — the credential problem disappears.
+#
+# Compare with:
+#   profiles.example.yml  the local/CLI version, which does need connection details
+#   the notebook's copy    the local version, reading SNOWFLAKE_* from env vars
+#
+# `database`, `schema`, `warehouse` and `role` are still declared: they set the
+# defaults the models build into. The custom generate_schema_name macro then
+# routes each folder to STG / EDW / MARTS / SEED as usual.
+
+demo:
+  target: dev
+  outputs:
+    dev:
+      type: snowflake
+      # No account/user/password: the executing role supplies the identity.
+      database: DEMO_DB
+      schema: dev          # default only; the layers override it per folder
+      warehouse: COMPUTE_WH
+      role: SYSADMIN
+      threads: 4

@@ -1,0 +1,22 @@
+# EXPOSURES document a downstream USE of the data — a dashboard, a report, an ML
+# model. They build nothing; they declare "this dashboard depends on these
+# models", which puts it on the lineage graph and in the docs site. Then
+# `dbt ls --select +exposure:sales_dashboard` shows everything a change would
+# affect, before you make it.
+
+version: 2
+
+exposures:
+  - name: sales_dashboard
+    label: "Regional Sales Dashboard"
+    type: dashboard
+    maturity: high
+    url: https://bi.example.com/dashboards/regional-sales
+    description: "Regional sales, target attainment and the category pivot."
+    depends_on:
+      - ref('rpt_sales_by_region')
+      - ref('rpt_category_vs_target')
+      - ref('rpt_category_pivot')
+    owner:
+      name: Analytics Team
+      email: analytics@example.com

@@ -195,55 +195,46 @@ does not propagate. That is why it is the command you schedule.
 
 ## Part 2 — the day
 
-### One notebook, imported into Snowflake
+### Two artefacts, and that is all
 
-The whole lab is a single notebook — `exercises/dbt_lab.ipynb` — that you
-**import into Snowsight** (Projects → Notebooks → Import .ipynb). It mixes two
-kinds of cell:
+| What | Where | You do |
+|---|---|---|
+| **The notebook** | `exercises/dbt_lab.ipynb` | import into Snowsight and work down it |
+| **The dbt project** | `dbt-project/demo/` | upload the folder to a Snowflake stage |
 
-| Cell type | Does |
-|---|---|
-| **SQL** (18) | the warehouse work: schemas, raw tables, stages, `COPY INTO`, `EXECUTE DBT PROJECT`, inspection, the schedule |
-| **Python** (34) | writes the dbt project files, and uploads them to a stage |
+The notebook is **26 questions, all SQL**. It contains no inline project code:
+every model, macro, test and YAML file is a real file in `dbt-project/demo/`,
+which you upload once. Read that folder's `README.md` before uploading — it lists
+exactly what to include and why `packages.yml` is empty.
 
-**There are no credentials anywhere in it.** `get_active_session()` returns the
-session you are already authenticated in, and dbt runs as the executing role.
-Nothing to configure, nothing to leak, nothing to rotate.
+**There are no credentials anywhere.** A Snowflake notebook is already
+authenticated, and dbt runs as the role that executes the project.
 
 ### Before you start
 
 - A role that can create a database, schemas, stages, tasks and a `DBT PROJECT`,
-  plus a warehouse attached to the notebook.
-- The two CSVs to hand — `data/products.csv` (1,214 rows) and `data/sales.csv`
-  (100,000 rows). Question 4 uploads them to `DEMO_DB.RAW.LOAD_STAGE` through
-  the Snowsight stage UI, then `COPY INTO`s them.
-
-Both stages live in the **RAW** schema: `RAW.LOAD_STAGE` for the CSVs and
-`RAW.DBT_PROJECT_STAGE` for the dbt project the notebook uploads.
+  with a warehouse attached to the notebook.
+- `data/products.csv` (1,214 rows) and `data/sales.csv` (100,000 rows) — uploaded
+  in Question 7.
+- The `dbt-project/demo/` folder — uploaded in Question 9.
 
 ### The worksheet
 
-52 questions plus one given setup cell, in eight parts:
+26 questions plus a given setup cell, in five parts:
 
 | Part | Questions | Covers |
 |---|---|---|
-| **A** | 1–5 | database, the five layer schemas, raw tables, stages, load + verify |
-| **B** | 6–15 | writing the dbt project: config, credential-free profile, packages, custom-schema macro, sources, staging models, docs |
-| **C** | 16–27 | seeds, snapshots (check *and* timestamp), the **Type 6 SCD**, the **star schema**, tests and **unit tests** |
-| **D** | 28–37 | marts, the Jinja pivot macro, dbt-expectations checks, the **MetricFlow** time spine, semantic models, metrics and saved queries |
-| **E** | 38–43 | upload to the stage, `CREATE DBT PROJECT`, `EXECUTE DBT PROJECT` for deps/build/selectors |
-| **F** | 44–46 | **lineage** upstream, downstream, and by layer |
-| **G** | 47–50 | inspect the Type 6 dimension and the star; watch history actually accumulate |
-| **H** | 51–52 | scheduling with a Snowflake **TASK** |
+| **A** | 1–8 | warehouse, role and grants, database, the five layer schemas, raw tables, named file format, both stages, `COPY INTO`, verification |
+| **B** | 9–13 | upload the project, `CREATE DBT PROJECT`, `EXECUTE DBT PROJECT` for build / selectors / full-refresh / saved queries |
+| **C** | 14–19 | inspect: staging, snapshots, the **Type 6** dimension, surrogate-key uniqueness, the **star**, the marts, and making history actually happen |
+| **D** | 20–22 | **lineage** upstream, downstream, and the physical layers |
+| **E** | 23–26 | `GET_DDL` on what dbt wrote, a scheduling **TASK**, task history, teardown |
 
-Question 50 is the one to sit with: it changes a product, re-snapshots, rebuilds,
-and shows the Type 6 columns diverging — Type 2 keeping the old value, Type 1
-updating on *both* rows, Type 3 naming what it changed from.
+Question 19 is the one to sit with: change a product, re-snapshot, rebuild, and
+watch the Type 6 columns diverge — Type 2 keeping the old value, Type 1 updating
+on *both* rows, Type 3 naming what it changed from.
 
-### How dbt actually runs
-
-The notebook writes the project to `/tmp/demo`, uploads it to
-`RAW.DBT_PROJECT_STAGE` with `session.file.put(...)`, then:
+### How dbt runs
 
 ```sql
 CREATE OR REPLACE DBT PROJECT DEMO_DB.PUBLIC.SALES_DBT
@@ -252,89 +243,85 @@ CREATE OR REPLACE DBT PROJECT DEMO_DB.PUBLIC.SALES_DBT
 EXECUTE DBT PROJECT DEMO_DB.PUBLIC.SALES_DBT ARGS = 'build';
 ```
 
-`ARGS` takes the same flags as the CLI — `run --select edw`, `test --select
-dim_product_t6`, `build --full-refresh`, `ls --select +rpt_sales_by_region`.
+`ARGS` takes the same flags as the CLI. The project object is a **snapshot of the
+stage, not a live link** — re-upload and re-run `CREATE OR REPLACE` after any
+change to a model.
 
-**The packages problem.** `dbt deps` fetches dbt_utils and dbt_expectations over
-the internet, and code inside Snowflake has no outbound network by default.
-Either have an ACCOUNTADMIN create a network rule plus an external access
-integration for `hub.getdbt.com`, or vendor `dbt_packages/` into the upload. The
-notebook documents both; vendoring is the predictable classroom choice.
+### No packages, on purpose
 
-**What does not come along:** the MetricFlow `mf` CLI (`mf query`, `mf list
-metrics`) is a local tool. The semantic models and metrics still parse, and the
-saved-query exports still build — you just cannot run `mf` from inside Snowflake.
+Code inside Snowflake has no outbound internet by default, so `dbt deps` cannot
+reach the dbt Hub. A `packages.yml` that *lists* an uninstalled package makes
+every dbt command fail before it runs anything:
+
+```
+Compilation Error
+  dbt found 2 package(s) specified in packages.yml, but only 0 package(s)
+  installed in dbt_packages.
+```
+
+So the three things a package would have supplied are written by hand:
+
+| Would have been | Is now |
+|---|---|
+| `dbt_utils.generate_surrogate_key` | `macros/surrogate_key.sql` |
+| `dbt_utils.date_spine` | Snowflake `GENERATOR` in the MetricFlow time spine |
+| `dbt_expectations` range/shape tests | `tests/generic/column_between.sql`, `row_count_between.sql` |
+
+Writing a generic test is also the fastest way to see that *every* dbt test is
+just a query returning the offending rows. Because you control the upload, you
+can vendor `dbt_packages/` and re-enable packages if you want — the project
+README explains both routes.
+
+The MetricFlow `mf` CLI does not come along either; it is a local tool. The
+semantic models still parse and the saved-query exports still build.
 
 ### What the project builds
 
 | Object | Schema | Kind |
 |---|---|---|
-| `stg_product_incr` | STG | incremental, `merge` |
-| `stg_sales` | STG | view |
+| `stg_product_incr` / `stg_sales` | STG | incremental (`merge`) / view |
 | `product_snapshot` / `sales_snapshot` | STG | snapshots (check / timestamp) |
 | `store_master`, `category_targets` | SEED | seeds |
 | `dim_product_t6` | EDW | **Type 6** SCD + surrogate key |
 | `dim_store`, `dim_date` | EDW | Type 1 dim; smart-key date dim |
-| `fct_sales` | EDW | incremental, `delete+insert` — the star's fact |
+| `fct_sales` | EDW | incremental (`delete+insert`) — the star's fact |
 | `metricflow_time_spine` | EDW | dense calendar the semantic layer needs |
-| `rpt_sales_by_region`, `rpt_category_vs_target`, `rpt_category_pivot` | MARTS | hand-written |
+| `rpt_*` (3) | MARTS | hand-written models |
 | `mart_*` (3) | MARTS | exported from MetricFlow saved queries |
 
-Plus 3 macros, an exposure, an analysis, 44 data tests, 2 unit tests, 3 semantic
-models and 11 metrics.
-
-The same project is browsable at `solutions/dbt-project/demo/` — the notebook
-writes exactly those files, verified byte-for-byte.
+Plus 4 macros, 2 custom generic tests, an exposure, an analysis, 42 data tests,
+2 unit tests, 3 semantic models and 11 metrics.
 
 ### Verification
 
-No cell was executed against Snowflake: this repo has no account, so the
+No cell was executed against Snowflake — this repo has no account — so the
 solution ships **without stored output** and each answer states what it should
-return instead. What *was* verified mechanically, in the lab image:
+return. What *was* verified mechanically, in the lab image:
 
-- **The notebook's Python cells were actually executed.** All 33 file-writing
-  cells run without error and produce a 32-file project **byte-identical** to
-  the committed reference.
-- **`dbt parse` succeeds** on that project and **`mf validate-configs` reports
-  ERRORS: 0** — models, macros, seeds, snapshots, tests, unit tests, exposures
-  and the semantic layer all resolve.
-- `mf list metrics` returns **11 metrics** with dimensions resolved across the
-  entity graph, which is proof the semantic joins onto the star schema work.
-- Cell metadata is valid for Snowsight import: every cell has a unique `name`,
-  and every code cell declares `language` as `sql` or `python`.
+- **`dbt parse` is clean on the project as it sits in the repo, with
+  `dbt_packages` absent** — the exact condition that made the packaged version
+  fail. `mf validate-configs` reports **ERRORS: 0**.
+- The manifest shows 10 models, 42 data tests, the custom generic tests and the
+  `surrogate_key` macro all registered.
+- Cell metadata is valid for Snowsight import: every cell has a unique `name`
+  and every code cell declares its `language`.
 - `scripts/check_exercises.py` invariants hold.
 
-Five bugs were found and fixed by that testing, all worth knowing:
+Six bugs were found and fixed by that testing, all worth knowing:
 
-1. **dbt renders every file as a Jinja template before parsing, and does not skip
-   SQL/YAML comments.** A literal loop tag inside a `--` comment opened a
-   control-flow block and failed the project with *"block definition inside
-   control flow"*. The project's comments describe Jinja in words for that reason.
+1. **dbt renders every file as Jinja before parsing, and does not skip SQL/YAML
+   comments** — a literal loop tag inside a `--` comment failed the whole project.
 2. Generic-test parameters must nest under `arguments:` in current dbt.
-3. **The semantic layer requires a time spine model**, or the project will not
-   parse at all.
-4. **A semantic model with dimensions must declare a primary entity** — the fact
-   has no single natural key, so it uses `primary_entity:`.
-5. **The credential-free `profiles.yml` is only valid inside Snowflake.** Local
-   dbt rejects it with *"'account' is a required property"* — which is correct,
-   and worth knowing before someone tries to run this project on a laptop.
+3. The semantic layer **requires a time spine model**, or nothing parses.
+4. A semantic model with dimensions must declare a **primary entity**.
+5. The credential-free `profiles.yml` is **only** valid inside Snowflake; local
+   dbt rejects it with *"'account' is a required property"*.
+6. A `packages.yml` listing uninstalled packages **fails every command** — the
+   error this lab is now built to avoid.
 
-**Not verified**, and labelled as such where it appears: the
-`CREATE DBT PROJECT` / `EXECUTE DBT PROJECT` / `TASK` statements (written from
-Snowflake's documented syntax, never run — it is a young feature), and anything
-needing a live warehouse: the load, the model results, the Type 6 history
-accumulating, and the test outcomes.
+**Not verified**, and labelled where it appears: `CREATE`/`EXECUTE DBT PROJECT`,
+the `TASK`, and the warehouse/role DDL are written from Snowflake's documented
+syntax but never executed. Nor is anything needing a live warehouse: the load,
+the model results, the Type 6 history accumulating, or the test outcomes.
 
 `scripts/run_all_solutions.py` skips this day — it cannot reach Snowflake.
-
-### A note on the older files
-
-`exercises/snowflake-console/*.sql` predates the single-notebook design: every
-statement in it now lives in the notebook itself. It is kept only as a standalone
-SQL reference and **can be deleted** — I was blocked from removing it. If you
-keep it, note it duplicates the notebook and can drift.
-
-The local JupyterLab path (the `docker-compose.yml` mount and the dbt / faker /
-metricflow additions to `jupyter-sql/Dockerfile`) is still in place. Students do
-not need it for this Snowsight notebook, but it is what makes the verification
-above possible, so it is worth keeping.

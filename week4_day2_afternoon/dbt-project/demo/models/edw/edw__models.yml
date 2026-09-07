@@ -1,0 +1,88 @@
+# Documentation and DATA TESTS for the EDW star schema.
+#
+# All four generic tests dbt ships with appear here:
+#   unique / not_null      column-level integrity
+#   accepted_values        a column's values are from a known set
+#   relationships          referential integrity — every fact FK finds its dim
+#
+# A generic test's parameters go under `arguments:` in current dbt. Older
+# material (including the lecture slides) puts them at the top level; that still
+# runs but dbt now warns it is deprecated.
+
+version: 2
+
+models:
+  - name: dim_product_t6
+    description: >
+      Type 6 product dimension. One row per product VERSION, carrying the Type 2
+      value as of that version, the Type 1 current value, and the Type 3
+      previous value.
+    columns:
+      - name: product_sk
+        description: '{{ doc("surrogate_key_doc") }}'
+        tests:
+          # This is the point of the surrogate key: prod_key is NOT unique here
+          # (a product has one row per version), but product_sk is.
+          - unique
+          - not_null
+      - name: prod_key
+        description: '{{ doc("prod_key_doc") }}'
+        tests:
+          - not_null
+      - name: is_current
+        description: "True on the one row per product whose valid_to is null."
+        tests:
+          - not_null
+      - name: status_code_name
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['active']
+
+  - name: dim_store
+    description: "Type 1 store dimension, built from the store_master seed."
+    columns:
+      - name: store_sk
+        tests: [unique, not_null]
+      - name: store_key
+        tests: [unique, not_null]
+      - name: region
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['East', 'West', 'Central', 'North', 'South']
+
+  - name: dim_date
+    description: "Date dimension derived from the dates present in sales."
+    columns:
+      - name: date_key
+        description: "Smart integer key, YYYYMMDD."
+        tests: [unique, not_null]
+      - name: full_date
+        tests: [unique, not_null]
+
+  - name: fct_sales
+    description: "Sales fact. Grain: one row per (date, product version, store)."
+    columns:
+      - name: date_key
+        tests:
+          - not_null
+          # Referential integrity: every date_key must exist in dim_date.
+          - relationships:
+              arguments:
+                to: ref('dim_date')
+                field: date_key
+      - name: product_sk
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_product_t6')
+                field: product_sk
+      - name: store_sk
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_store')
+                field: store_sk
