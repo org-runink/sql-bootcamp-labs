@@ -197,6 +197,7 @@ sql-bootcamp-labs/
     ├── collect_solutions.py          # rebuilds the top-level solutions/ mirror
     ├── check_console.py              # console mounts are live AND its packages are right
     ├── check_exercises.py            # every exercise has a solution, none leak answers
+    ├── check_dbt_project.py          # week4's dbt project can actually run in Snowflake
     ├── normalise_notebooks.py        # fixes notebook JSON churn after a JupyterLab save
     ├── retitle_worksheets.py         # worksheet titles -> course positions (idempotent)
     ├── generate_medallion_data.py    # extracts the bronze landing zone from db-init/
@@ -675,10 +676,11 @@ Two worksheets need a word of warning, both covered in their class README:
 ```bash
 python3 scripts/check_console.py     # is the console serving what is on disk?
 python3 scripts/check_exercises.py   # does every exercise have a solution?
+python3 scripts/check_dbt_project.py # will week4's dbt project run in Snowflake?
 python3 scripts/collect_solutions.py --check   # is the published mirror in sync?
 ```
 
-All three exit non-zero on failure, so they work in a pre-commit hook or a
+All four exit non-zero on failure, so they work in a pre-commit hook or a
 pre-class script. `check_exercises.py` verifies that every exercise has a
 matching solution, that no exercise ships with answers or stored outputs, that
 the notebook JSON is normalised, and that any `data/` read by a relative path

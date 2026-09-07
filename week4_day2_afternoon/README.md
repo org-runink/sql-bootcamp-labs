@@ -316,6 +316,13 @@ return. What *was* verified mechanically, in the lab image:
 - Cell metadata is valid for Snowsight import: every cell has a unique `name`
   and every code cell declares its `language`.
 - `scripts/check_exercises.py` invariants hold.
+- **`scripts/check_dbt_project.py`** passes. It encodes every failure this lab
+  actually hit in Snowflake, so a bad edit is caught here rather than in front
+  of a class: nested `arguments:` in a test, a package declared without a
+  vendored `dbt_packages/`, credentials in the uploaded `profiles.yml`, a live
+  Jinja tag inside a comment, `dbt_project.yml` not at the project root, and
+  committed `target/`. Each rule was regression-tested by reintroducing the bug
+  and confirming the checker fires.
 
 Six bugs were found and fixed by that testing, all worth knowing:
 
