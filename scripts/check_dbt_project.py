@@ -6,24 +6,37 @@ Every rule below is here because it FAILED for real, inside Snowflake, in a way
 touches the warehouse is `run`. So a checker that runs on the files is the only
 thing standing between a bad edit and a broken class.
 
-    python3 scripts/check_dbt_project.py
+    python3 scripts/check_dbt_project.py            # file rules only, no container
+    python3 scripts/check_dbt_project.py --parse    # also run `dbt parse` in the console
 
 Exits non-zero if anything fails, so it can go in a pre-commit hook.
 
+--parse needs the sql-console-lan container up, with the project mounted (see
+docker-compose.yml). It supplies a THROWAWAY profile inside the container,
+because the project's committed profiles.yml is the credential-free one for
+running inside Snowflake -- local dbt rejects it with
+
+    Credentials in profile "demo", target "dev" invalid:
+    'account' is a required property
+
+which is correct, not a bug. Nothing is written into the repo.
+
 THE TARGET RUNTIME IS dbt 1.9.4 / dbt-snowflake 1.9.2 -- confirmed by running
-`compile` in a Snowflake Workspace. That version is older than the dbt on a
-current laptop, and several rules exist only because of the gap.
+`compile` in a Snowflake Workspace. The console image has a NEWER dbt, so
+--parse catches structural errors but will happily accept things Snowflake
+rejects; the file rules above are what encode the version gap.
 
 WHAT IT DELIBERATELY DOES NOT CHECK
 -----------------------------------
 Whether the models are CORRECT. That needs a warehouse with the raw tables
-loaded. This checks the things that break before any SQL runs, plus the two
-Snowflake-side preconditions (ownership, and build-vs-run) that are documented
-in the notebook rather than enforceable from here.
+loaded. This checks the things that break before any SQL runs, plus the
+Snowflake-side preconditions (ownership, build-vs-run) reported at the end.
 """
 
+import argparse
 import os
 import re
+import subprocess
 import sys
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -172,16 +185,100 @@ def check_yaml():
 
 # --------------------------------------------------------- 7. no build output
 def check_no_build_output():
-    """target/ and logs/ must not be committed -- they are per-run artefacts and
-    would be uploaded to the stage along with everything else."""
+    """Build output must never be COMMITTED, and must not be uploaded.
+
+    Running dbt locally drops target/ and logs/ beside the project. That is
+    harmless as long as git ignores them -- so this fails only when they would
+    actually be committed, and otherwise just reminds you to leave them out of
+    the upload.
+    """
     for d in ("target", "logs", "dbt_packages"):
         p = os.path.join(PROJECT, d)
-        if os.path.isdir(p) and d != "dbt_packages":
-            fail("%s/ is present in the project -- build output should not be "
-                 "committed or uploaded" % d)
+        if not os.path.isdir(p):
+            continue
+        ignored = subprocess.run(["git", "check-ignore", "-q", p],
+                                 cwd=REPO, capture_output=True).returncode == 0
+        if ignored:
+            print("  note  %s/ exists locally (git-ignored) -- do not include "
+                  "it in the upload" % d)
+        else:
+            fail("%s/ is present and NOT git-ignored -- build output must not "
+                 "be committed" % d)
+
+
+CONTAINER = "sql-console-lan"
+MOUNT = "/home/jovyan/work/week4_dbt_project/demo"   # per docker-compose.yml
+
+# A throwaway profile, written inside the container only. The project's own
+# profiles.yml is credential-free for running inside Snowflake, which local dbt
+# will not accept -- it requires `account` even to parse.
+THROWAWAY = """demo:
+  target: dev
+  outputs:
+    dev:
+      type: snowflake
+      account: none
+      user: none
+      password: none
+      role: SYSADMIN
+      database: DEMO_DB
+      warehouse: COMPUTE_WH
+      schema: dev
+      threads: 4
+"""
+
+
+def check_parse():
+    """Run `dbt parse` against the mounted project, in the console container."""
+    probe = subprocess.run(["podman", "exec", CONTAINER, "test", "-f",
+                            MOUNT + "/dbt_project.yml"], capture_output=True)
+    if probe.returncode != 0:
+        fail("--parse: %s is not reachable in %s. Is the container up, and was "
+             "it RECREATED after the mount was added? A bind mount keeps "
+             "pointing at a deleted inode, so a restart is not enough:\n"
+             "        podman rm -f --depend %s && podman-compose up -d"
+             % (MOUNT, CONTAINER, CONTAINER))
+        return
+
+    # Heredoc rather than string formatting: the profile is multi-line YAML and
+    # the shell command contains printf-style tokens, so % formatting mangles
+    # both. `dbt parse`'s exit code is captured before the cleanup runs.
+    script = f"""
+d=$(mktemp -d)
+cat > "$d/profiles.yml" <<'PROFILE_EOF'
+{THROWAWAY}PROFILE_EOF
+cd {MOUNT} || exit 9
+# --target-path / --log-path keep dbt's artefacts in the temp dir, so parsing
+# leaves no target/ or logs/ inside the mounted (and version-controlled) project.
+dbt parse --profiles-dir "$d" --target-path "$d/target" --log-path "$d/logs" 2>&1
+rc=$?
+rm -rf "$d"
+exit $rc
+"""
+    r = subprocess.run(["podman", "exec", CONTAINER, "bash", "-lc", script],
+                       capture_output=True, text=True)
+    out = re.sub(r"\x1b\[[0-9;]*m", "", r.stdout + r.stderr)
+
+    for line in out.splitlines():
+        if re.search(r"Found \d+ model|Compilation Error|Runtime Error|\[ERROR\]", line):
+            print("    " + line.strip()[:110])
+
+    if r.returncode != 0:
+        fail("--parse: dbt parse failed inside %s (rc=%d). Full output:\n%s"
+             % (CONTAINER, r.returncode, "\n".join("        " + l
+                                                   for l in out.splitlines()[-8:])))
+    else:
+        print("  dbt parse: clean (dbt in the image is NEWER than Snowflake's "
+              "1.9.4, so this does not prove 1.9.4 compatibility)")
 
 
 def main():
+    ap = argparse.ArgumentParser(description=__doc__,
+                                 formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--parse", action="store_true",
+                    help="also run `dbt parse` in the %s container" % CONTAINER)
+    args = ap.parse_args()
+
     if not os.path.isdir(PROJECT):
         sys.exit("no dbt project at %s" % os.path.relpath(PROJECT, REPO))
 
@@ -193,6 +290,8 @@ def main():
     check_profiles()
     check_jinja_in_comments()
     check_no_build_output()
+    if args.parse:
+        check_parse()
 
     n_models = len(list(walk(".sql")))
     n_yml = len(list(walk(".yml")))

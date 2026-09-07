@@ -87,8 +87,16 @@ or it keeps consuming credits.
 | `RAW.PRODUCT does not exist` | Run scripts 02 and 03 first |
 | `Got a block definition inside control flow` | A live Jinja tag inside a comment — dbt renders comments too |
 
-Before uploading a changed project, run `python3 scripts/check_dbt_project.py`.
-It catches all of the above on disk.
+Before uploading a changed project:
+
+```bash
+python3 scripts/check_dbt_project.py           # file rules — catches all of the above
+python3 scripts/check_dbt_project.py --parse   # also runs dbt parse in the console
+```
+
+`--parse` needs the console container up and leaves the project untouched. Note
+the image has a *newer* dbt than Snowflake's 1.9.4, so a clean parse does not
+prove 1.9.4 compatibility — the file rules are what encode the version gap.
 
 **Verified runtime: dbt 1.9.4 / dbt-snowflake 1.9.2.** `compile` resolves the
 whole project: 10 models, 2 snapshots, 1 analysis, 2 seeds, 42 data tests,

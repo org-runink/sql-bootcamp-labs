@@ -18,3 +18,12 @@ solutions/*/wcd-originals/*.csv
 week4_day2_afternoon/exercises/demo/
 week4_day2_afternoon/solutions/demo/
 solutions/week4_day2_afternoon/demo/
+
+# Running dbt against the committed project -- locally or in the console --
+# drops build output beside it. None of it belongs in git, and none of it
+# should be uploaded to Snowflake with the project either.
+week4_day2_afternoon/dbt-project/demo/target/
+week4_day2_afternoon/dbt-project/demo/logs/
+week4_day2_afternoon/dbt-project/demo/dbt_packages/
+week4_day2_afternoon/dbt-project/demo/package-lock.yml
+week4_day2_afternoon/dbt-project/demo/.user.yml

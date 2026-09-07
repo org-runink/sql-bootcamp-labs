@@ -677,6 +677,7 @@ Two worksheets need a word of warning, both covered in their class README:
 python3 scripts/check_console.py     # is the console serving what is on disk?
 python3 scripts/check_exercises.py   # does every exercise have a solution?
 python3 scripts/check_dbt_project.py # will week4's dbt project run in Snowflake?
+python3 scripts/check_dbt_project.py --parse   # ...and does dbt parse it cleanly?
 python3 scripts/collect_solutions.py --check   # is the published mirror in sync?
 ```
 
