@@ -175,12 +175,20 @@ sql-bootcamp-labs/
 │   ├── exercises/            #   01-03, thirty questions, all on ONE dataset
 │   │   └── data/bronze/      #     the same superstore landing zone as week3_day1
 │   └── solutions/            #   with the real output quoted
+├── week4_day2_afternoon/     # dbt: raw -> staging -> edw -> marts, ONE executable notebook
+│   ├── README.md             #   dbt concepts primer + the day; not executed here (needs Snowflake)
+│   ├── exercises/            #   dbt_lab.ipynb, 54 questions; snowflake-console/ the Snowsight SQL
+│   │                         #   data/ the two lab CSVs; wcd-originals/ the lab page
+│   └── solutions/            #   the runnable answers; dbt-project/demo/ is the finished project
 ├── Control_Flow_and_Iteration_Practice/   # the WeCloudData L05 zip, unpacked as shipped
 │                             #   same files also split under week2_day5_morning/wcd-originals/
-├── solutions/                # ALL answers for all eight sessions, in one place (generated)
+├── solutions/                # ALL answers for all ten sessions, in one place (generated)
 ├── jupyter-sql/               # shared browser SQL console (JupyterLab + jupysql), pre-wired to mysql-lan
 │   ├── Dockerfile            #   base pinned by DIGEST, every pip package pinned to an exact version
 │   ├── jupyterlab-overrides.json #   DARK theme by default (Settings -> Theme still switches it)
+│   ├── spark-defaults.conf   #   Spark tuned for ~8GB: 2g heap, 8 shuffle partitions
+│                             #   + event logs, replayed by the spark-history service
+│                             #   pandas/polars/pyspark(+JVM)/matplotlib, all pinned
 │   └── verify_image.py       #   runs as a BUILD step: wrong/missing package or theme -> build fails
 │                             #   carries pandas 3.0.5 + openpyxl/pyarrow/lxml, and curl for the WCD lab
 └── scripts/
@@ -611,6 +619,27 @@ Go to your class's folder and start from its `README.md`:
   disappear, 03 is numbers that must not be averaged. Chosen from the deliberate
   errors the week's own worksheets end on, not by feel.
 
+- **[`week4_day2_afternoon/`](week4_day2_afternoon/README.md)** — **dbt**, the
+  first transformation-tool session: the WeCloudData *Create a dbt Project* lab
+  plus the *dbt Fundamentals* lecture, as **one executable notebook** of 54
+  questions. You build the full path **raw → staging → edw → marts**: sources and
+  staging (with a `merge` incremental), **seeds** that answer real business
+  requirements, **snapshots** (check *and* timestamp strategies), a **Type 6**
+  slowly-changing dimension and a **star schema** joined on surrogate keys, marts
+  with a Jinja pivot macro, **dbt-expectations** (Great-Expectations-style)
+  quality checks, **unit tests** for the SCD logic, **lineage** traced up and down
+  each layer, and a **MetricFlow semantic layer** whose saved queries export extra
+  data marts. Its README opens with a **dbt concepts primer** for students new to
+  the tool. The split: every direct Snowflake command (create database, create and
+  load the raw tables, inspect results) is a script in `snowflake-console/` run in
+  **Snowsight**; the notebook drives dbt. The lab image carries `dbt-core`,
+  `dbt-snowflake`, `dbt-metricflow`, `snowflake-connector-python` and `faker`; you
+  supply credentials via `SNOWFLAKE_*` env vars. This repo has no Snowflake
+  account, so the solution ships **runnable but not executed** (no stored output) —
+  though `dbt parse` and `mf validate-configs` are verified clean in the lab image.
+  The finished project is browsable under `solutions/dbt-project/demo/`, and the
+  two CSVs come from the lab's own `create_dbt_project_datasets.zip`.
+
 Each folder holds `exercises/` and its matching `solutions/`, numbered in
 teaching order. The week2_day4_afternoon and week2_day5_morning sessions also carry a
 `exercises/more-practice/` subfolder holding a second sheet per topic, with
@@ -788,7 +817,7 @@ their result depends on the network rather than on this repo.
 
 `quay.io/jupyter/base-notebook` ships **without pandas** — that is the
 `scipy-notebook` image. This repo's `jupyter-sql/Dockerfile` installs it, along
-with the twelve other packages the worksheets need.
+with the fourteen other packages the worksheets need.
 
 To ask the running console what it actually has:
 
@@ -798,22 +827,123 @@ podman exec sql-console-lan python3 /tmp/v.py
 ```
 
 It prints a version per package and exits non-zero on anything missing or at
-the wrong version. The same script runs in three places:
+the wrong version. It also checks that a JVM is present, that
+`spark-defaults.conf` is in place and still says `2g`, and that the
+**JupyterLab theme default** is dark — so a rebuild cannot silently put the room
+back on white screens.
+
+The same script runs in four places:
 
 - as a **build step** in the Dockerfile, so a broken image fails the build
   rather than a worksheet in front of a class
-- inside **`scripts/check_console.py`**, against the *running* container
 - by hand, with the two commands above
-
+- inside **`scripts/check_console.py`**, against the *running* container
 - as the container's **healthcheck**, declared in `docker-compose.yml`
-
-It also checks the **JupyterLab theme default**, so a rebuild cannot silently
-put the room back on white screens.
 
 The last two matter most. A build-time guard cannot catch a **stale image**:
 `podman-compose up -d` without `--build` reuses whatever is already tagged, and
 this console image was SQL-only until commit `c4082db` added pandas. A container
 from before that starts fine, mounts fine, and dies on `import pandas`.
+
+### pyspark
+
+`pyspark[connect]` and a headless JRE are in the image, and `JAVA_HOME` is set —
+`pip install pyspark` alone gives you the Python API with nothing to run it on.
+
+Two things to know:
+
+- **The `[connect]` extra is load-bearing.** jupysql activates optional Spark
+  support as soon as pyspark is importable, and that path imports
+  `pyspark.sql.connect`, which calls `sys.exit(0)` during import when grpcio is
+  absent. Without the extra, `%load_ext sql` **kills the kernel** and every SQL
+  worksheet with it.
+- **PySpark 4.2 warns on pandas 3.x** — *"does not yet fully support pandas >=
+  3.0.0"*. Core Spark SQL and DataFrame work is fine (verified), but
+  `toPandas()`, pandas UDFs and pandas-on-Spark may misbehave. Downgrading
+  pandas is not an option: 300+ solutions were verified against 3.0.5.
+
+#### Tuned for a workstation, not a cluster
+
+`jupyter-sql/spark-defaults.conf` is baked into the image. Spark's out-of-the-box
+defaults assume a cluster and are actively bad on a laptop:
+
+| Setting | Spark default | Here | Why |
+|---|---|---|---|
+| `spark.driver.memory` | 1 GB heap | **2g** | in local mode the driver *is* the executor |
+| `spark.sql.shuffle.partitions` | **200** | **8** | 200 tasks of 50 rows each on a teaching dataset |
+| `spark.default.parallelism` | — | 8 | matches the above |
+| `spark.master` | — | `local[2]` | leaves cores for the browser and JupyterLab |
+| `spark.driver.maxResultSize` | unset | 512m | a runaway `.collect()` becomes an error, not a dead kernel |
+| `spark.serializer` | Java | Kryo | smaller, and memory is the binding constraint |
+
+**The budget it assumes**, on an 8 GB machine: ~3 GB for the OS and a browser,
+~0.5 GB for JupyterLab and its kernel, ~0.5 GB for the `mysql` container. That
+leaves about 4 GB, and Spark takes 2 of it.
+
+`spark.sql.shuffle.partitions` is the one that matters most. It applies to every
+join, `groupBy`, `distinct` and `orderBy`, and at the default of 200 a
+10,000-row DataFrame is split into 200 tasks of 50 rows — scheduling overhead
+that dwarfs the actual work, plus 200 output files.
+
+#### Giving Spark more memory
+
+Measured in this image, because the rule is not the obvious one:
+
+```python
+# WORKS -- first session in a fresh kernel, before any JVM exists
+spark = SparkSession.builder.config("spark.driver.memory", "6g").getOrCreate()
+# -> heap 6.00 GB
+
+# SILENTLY DOES NOTHING -- a session already exists, so the JVM is already up
+spark2 = SparkSession.builder.config("spark.driver.memory", "6g").getOrCreate()
+# -> heap stays 2.00 GB, and spark.conf.get() reports "2g", not the 6g asked for
+```
+
+So: set it on the **first** `getOrCreate()` in the kernel. If a session already
+exists, **restart the kernel first** — changing it afterwards leaves no trace
+that the request was dropped.
+
+To change the baseline for everyone, edit `jupyter-sql/spark-defaults.conf` and
+rebuild. `verify_image.py` checks the file is present and still says `2g`, so a
+rebuild cannot quietly drop back to cluster defaults.
+
+#### The two Spark UIs
+
+Both are published:
+
+| | URL | Shows | Lives while |
+|---|---|---|---|
+| **Live UI** | http://localhost:4040 | the running job — stages, DAG, task timeline | a `SparkSession` is alive |
+| **History Server** | http://localhost:18080 | every completed application | always (its own container) |
+
+**:4040 stops answering the moment the session stops.** That is not a fault —
+it belongs to the driver process. Close the notebook or call `spark.stop()` and
+the DAG you wanted to show the class is gone. That is exactly why the history
+server exists: `spark.eventLog.enabled` is on, every application writes to a
+shared `spark-events` volume, and `spark-history` replays them afterwards.
+
+```bash
+podman-compose up -d spark-history      # start it
+podman-compose stop spark-history       # stop it when not teaching Spark
+curl -s localhost:18080/api/v1/applications | head   # or just use a browser
+```
+
+**It costs memory.** The history server is a second JVM, capped at 512 MB via
+`SPARK_DAEMON_MEMORY`. On the 8 GB machine this setup assumes, that takes the
+budget to roughly: 3 GB OS and browser, 0.5 GB JupyterLab, 0.5 GB mysql, 2 GB
+Spark driver, 0.5 GB history server. **Stop it when you are not teaching
+Spark** — nothing else depends on it, and event logs keep accumulating for it
+to read later.
+
+Logs are compressed and cleaned after 7 days
+(`spark.history.fs.cleaner.maxAge`), so the volume does not grow forever.
+
+**One trap worth knowing**, because it cost a debugging cycle here: the
+`spark-history` service **must** carry the same
+`userns_mode: "keep-id:uid=1000,gid=100"` as `sql-console`. Without it the two
+containers see the shared volume under different UIDs — the console saw
+`999:99` and could not write its event log, failing with a `chmod: cannot
+access` error that never mentions permissions.
 
 The healthcheck makes that visible with nothing to remember:
 
