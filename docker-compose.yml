@@ -55,28 +55,6 @@ services:
     container_name: sql-console-lan
     restart: unless-stopped
     command: start-notebook.py --ServerApp.token='' --ServerApp.password=''
-    # week4_day2_afternoon (dbt) needs Snowflake credentials. They are passed
-    # THROUGH from your shell -- nothing is stored in this file, and every value
-    # defaults to empty so the console still starts for the other sessions.
-    #
-    # Set them in your own shell before `up`, e.g. in ~/.config/environment.d or
-    # a local .env file that is NOT committed:
-    #     export SNOWFLAKE_ACCOUNT=abc12345-xy67890
-    #     export SNOWFLAKE_USER=YOUR_USER
-    #     read -rs SNOWFLAKE_PASSWORD && export SNOWFLAKE_PASSWORD   # not echoed
-    #     export SNOWFLAKE_ROLE=SYSADMIN
-    #     export SNOWFLAKE_WAREHOUSE=COMPUTE_WH
-    #
-    # Leave them unset and the notebook's setup cell prompts instead, hiding the
-    # password with getpass. Either way the password never lands on disk: dbt
-    # reads it from the environment via profiles.yml's env_var().
-    environment:
-      SNOWFLAKE_ACCOUNT: "${SNOWFLAKE_ACCOUNT:-}"
-      SNOWFLAKE_USER: "${SNOWFLAKE_USER:-}"
-      SNOWFLAKE_PASSWORD: "${SNOWFLAKE_PASSWORD:-}"
-      SNOWFLAKE_ROLE: "${SNOWFLAKE_ROLE:-SYSADMIN}"
-      SNOWFLAKE_WAREHOUSE: "${SNOWFLAKE_WAREHOUSE:-COMPUTE_WH}"
-      SNOWFLAKE_DATABASE: "${SNOWFLAKE_DATABASE:-DEMO_DB}"
     # Rootless Podman maps your host user to a *different* UID inside the
     # container, so the ./exercises bind mount below would be read-only to
     # Jupyter and saving a notebook would fail with "Permission denied".
@@ -117,22 +95,11 @@ services:
       - ./week3_day3_afternoon/exercises:/home/jovyan/work/week3_day3_afternoon
       - ./week3_day4_morning/exercises:/home/jovyan/work/week3_day4_morning
       - ./week3_recap/exercises:/home/jovyan/work/week3_recap
-      # week 4 day 2 is dbt. The worksheets connect to the student's OWN
-      # Snowflake account and run dbt from the cells, so the image must carry
-      # dbt-core, dbt-snowflake and snowflake-connector-python (see
-      # jupyter-sql/Dockerfile) -- rebuild if `dbt --version` fails in 01. The
-      # data/ CSVs travel with the exercises so worksheet 02 can COPY-load them.
-      - ./week4_day2_afternoon/exercises:/home/jovyan/work/week4_day2_afternoon
-      # The dbt project, at its OWN top-level path rather than nested inside the
-      # mount above. Nesting a bind mount inside another makes the runtime create
-      # the mountpoint in the underlying filesystem -- i.e. it would leave empty
-      # dbt-project/ and snowflake-sql/ directories inside the host's
-      # week4_day2_afternoon/exercises/.
-      #
-      # It is here so the project can be parsed and linted locally (dbt is in the
-      # image) before it is uploaded to Snowflake. The snowflake-sql/ scripts are
-      # deliberately NOT mounted: they are pasted into a Snowsight worksheet, and
-      # nothing runs them here.
+      # week 4 day 2 is dbt, and it has NO worksheets: the day is SQL scripts you
+      # paste into Snowsight plus a dbt project you upload. Nothing there is
+      # opened in Jupyter. The project is mounted only so it can be parsed
+      # locally before upload -- `python3 scripts/check_dbt_project.py --parse`.
+      # snowflake-sql/ is deliberately not mounted; nothing runs it here.
       - ./week4_day2_afternoon/dbt-project:/home/jovyan/work/week4_dbt_project
       # ANSWERS ARE PUBLISHED TO EVERYONE. This console is shared across the
       # classroom LAN, so mounting solutions/ here means every student can read

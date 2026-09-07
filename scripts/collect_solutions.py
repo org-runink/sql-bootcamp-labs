@@ -36,7 +36,7 @@ CLASSES = [
     "week3_day3_afternoon",
     "week3_day4_morning",
     "week3_recap",
-    "week4_day2_afternoon",
+    "week4_day3_morning",
 ]
 
 SKIP_DIRS = {".ipynb_checkpoints", "__pycache__"}
@@ -51,14 +51,7 @@ SKIP_DIRS = {".ipynb_checkpoints", "__pycache__"}
 # snowflake-scripts/*.sql and labs/*.html by relative path, and its answer
 # quotes the file list it finds. Without them the published solution reports
 # a different number of files than its own text says.
-#
-# week4_day2_afternoon adds .yml: its solution ships a complete dbt project
-# under solutions/dbt-project/demo/, whose config is .yml (dbt_project.yml,
-# packages.yml, schema.yml, sources.yml) beside the .sql models. Carrying the
-# .sql without the .yml would mirror a project that cannot run. (.md is left
-# out on purpose: the top-level solutions/README.md is hand-written and would
-# otherwise be flagged as an orphan by --check.)
-KEEP_SUFFIXES = (".ipynb", ".csv", ".tsv", ".json", ".xlsx", ".sql", ".html", ".yml")
+KEEP_SUFFIXES = (".ipynb", ".csv", ".tsv", ".json", ".xlsx", ".sql", ".html")
 
 
 def sources():

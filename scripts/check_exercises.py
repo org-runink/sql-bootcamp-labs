@@ -50,7 +50,7 @@ CLASSES = {
     "week3_day3_afternoon": "python",
     "week3_day4_morning": "python",
     "week3_recap": "python",
-    "week4_day2_afternoon": "python",
+    "week4_day3_morning": "python",
 }
 
 MD_KEYS = ["cell_type", "id", "metadata", "source"]

@@ -175,11 +175,15 @@ sql-bootcamp-labs/
 │   ├── exercises/            #   01-03, thirty questions, all on ONE dataset
 │   │   └── data/bronze/      #     the same superstore landing zone as week3_day1
 │   └── solutions/            #   with the real output quoted
-├── week4_day2_afternoon/     # dbt: raw -> staging -> edw -> marts, ONE executable notebook
-│   ├── README.md             #   dbt concepts primer + the day; not executed here (needs Snowflake)
-│   ├── exercises/            #   dbt_lab.ipynb, 54 questions; snowflake-console/ the Snowsight SQL
-│   │                         #   data/ the two lab CSVs; wcd-originals/ the lab page
-│   └── solutions/            #   the runnable answers; dbt-project/demo/ is the finished project
+├── week4_day3_morning/       # Data governance (L01): six DISCUSSION worksheets, no code
+│   ├── README.md             #   how to teach it; 06 needs week4_day2's dbt project open
+│   ├── exercises/            #   01-06, markdown answer blocks throughout
+│   └── solutions/            #   discussion answers, not a marking scheme
+├── week4_day2_afternoon/     # dbt: raw -> staging -> edw -> marts. NO notebooks
+│   ├── README.md             #   the instructions, and a dbt concepts primer
+│   ├── snowflake-sql/        #   01-06, pasted into a Snowsight worksheet in order
+│   ├── dbt-project/demo/     #   the dbt project you upload to Snowflake
+│   └── data/                 #   the two lab CSVs, uploaded to a stage
 ├── Control_Flow_and_Iteration_Practice/   # the WeCloudData L05 zip, unpacked as shipped
 │                             #   same files also split under week2_day5_morning/wcd-originals/
 ├── solutions/                # ALL answers for all ten sessions, in one place (generated)
@@ -620,26 +624,41 @@ Go to your class's folder and start from its `README.md`:
   disappear, 03 is numbers that must not be averaged. Chosen from the deliberate
   errors the week's own worksheets end on, not by feel.
 
+- **[`week4_day3_morning/`](week4_day3_morning/README.md)** — **data
+  governance**, and the only **discussion** session in the course: six
+  worksheets, no dataset, no SQL, every answer space a markdown block. It opens
+  with the lecture's data-sharing story — five departments, one popular dataset,
+  copies everywhere — and asks what goes wrong before revealing the three risks.
+  Then governance vs management (02), data quality and bias and the employee
+  burnout-monitoring ethics case (03), GDPR/CCPA/PIPEDA/PIPL/POPIA and the DAMA
+  wheel (04), and the acquisition case study as a 30-40 minute design activity
+  (05). Worksheet 06 makes it concrete by opening **week4_day2_afternoon's dbt
+  project** and testing the lecture's claim that dbt supports governance —
+  finding documentation, tests, lineage and exposures in the files, then working
+  out what dbt does *not* cover: classification, access control, retention, and
+  anything outside its own boundary. Solutions are written as discussion
+  answers, not a marking scheme.
+
 - **[`week4_day2_afternoon/`](week4_day2_afternoon/README.md)** — **dbt**, the
-  first transformation-tool session: the WeCloudData *Create a dbt Project* lab
-  plus the *dbt Fundamentals* lecture, as **one executable notebook** of 54
-  questions. You build the full path **raw → staging → edw → marts**: sources and
-  staging (with a `merge` incremental), **seeds** that answer real business
-  requirements, **snapshots** (check *and* timestamp strategies), a **Type 6**
-  slowly-changing dimension and a **star schema** joined on surrogate keys, marts
-  with a Jinja pivot macro, **dbt-expectations** (Great-Expectations-style)
-  quality checks, **unit tests** for the SCD logic, **lineage** traced up and down
-  each layer, and a **MetricFlow semantic layer** whose saved queries export extra
-  data marts. Its README opens with a **dbt concepts primer** for students new to
-  the tool. The split: every direct Snowflake command (create database, create and
-  load the raw tables, inspect results) is a script in `snowflake-console/` run in
-  **Snowsight**; the notebook drives dbt. The lab image carries `dbt-core`,
-  `dbt-snowflake`, `dbt-metricflow`, `snowflake-connector-python` and `faker`; you
-  supply credentials via `SNOWFLAKE_*` env vars. This repo has no Snowflake
-  account, so the solution ships **runnable but not executed** (no stored output) —
-  though `dbt parse` and `mf validate-configs` are verified clean in the lab image.
-  The finished project is browsable under `solutions/dbt-project/demo/`, and the
-  two CSVs come from the lab's own `create_dbt_project_datasets.zip`.
+  first transformation-tool session, and the one day with **no notebooks**. It is
+  six SQL scripts you paste into a Snowsight worksheet in order, plus a dbt
+  project you upload to Snowflake and run there with `EXECUTE DBT PROJECT`. You
+  build the full path **raw → staging → EDW → marts**: staging with a `merge`
+  incremental, **seeds** that answer business requirements the source systems
+  cannot, **snapshots** (check *and* timestamp strategies), a **Type 6**
+  slowly-changing dimension and a **star schema** on surrogate keys, marts with a
+  Jinja pivot macro, custom generic tests, **unit tests** for the SCD logic, a
+  **MetricFlow semantic layer** whose saved queries export extra marts, lineage
+  in both directions, a scheduling `TASK`, and a teardown. Its README carries the
+  instructions, an error-to-cause table, and a dbt concepts primer.
+
+  The project depends on **no packages**, deliberately: Snowflake has no outbound
+  internet, so `dbt deps` cannot reach the dbt Hub and a `packages.yml` listing an
+  uninstalled package fails every command. Verified against **dbt 1.9.4 /
+  dbt-snowflake 1.9.2** in a Snowflake Workspace, where `compile` resolves the
+  whole project. `scripts/check_dbt_project.py` encodes the failures that only
+  appear at `run` time — ownership grants, the 1.9.4 test-argument form, Jinja in
+  comments — so they are caught on disk instead.
 
 Each folder holds `exercises/` and its matching `solutions/`, numbered in
 teaching order. The week2_day4_afternoon and week2_day5_morning sessions also carry a
