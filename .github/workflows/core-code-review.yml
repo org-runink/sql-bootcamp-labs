@@ -1,0 +1,52 @@
+name: CORE code review (caller)
+
+# TIDE's sovereign per-PR review: the self-hosted runner on the bare-metal box,
+# against the box's own coder model. No external AI, no Cloud Run. This repo has
+# no review logic of its own; it only calls the reusable workflow that
+# org-runink/tide owns and maintains.
+#
+# Added 2026-10-04 in the org-wide rollout. Before it, only pulse called the
+# reviewer, so PRs in this repo were never reviewed by anything.
+
+on:
+  issue_comment:
+    types: [created]
+  pull_request:
+    types: [opened, synchronize]
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+  checks: write
+  actions: write
+
+# One review per PR at a time. Each run makes a multi-minute CPU inference call
+# on the single shared model tier, so a burst of pushes to one PR would queue a
+# burst of reviews, all but the last against a commit nobody will look at again.
+#
+# The two triggers want OPPOSITE cancel semantics:
+#   - pull_request  -> cancel-in-progress TRUE. A review of a superseded commit
+#     posts findings against code that no longer exists.
+#   - issue_comment -> FALSE. A human explicitly asked; a second comment must not
+#     silently destroy the first answer.
+concurrency:
+  group: core-code-review-${{ github.event.issue.number || github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  review:
+    # PUBLIC REPO: the reviewer runs on a self-hosted runner with the App token, so a
+    # pull request from a FORK must never reach it -- that would run a stranger's code
+    # on the bare-metal box and expose the token. Two guards, one per trigger:
+    #   - pull_request: only when head and base are the SAME repository.
+    #   - issue_comment: only from someone with write access (OWNER / MEMBER /
+    #     COLLABORATOR), so a drive-by "@core_check" cannot spend the model tier.
+    if: >-
+      (github.event_name == 'pull_request' &&
+       github.event.pull_request.head.repo.full_name == github.repository) ||
+      (github.event.issue.pull_request != null &&
+       contains(github.event.comment.body, '@core_check') &&
+       contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association))
+    uses: org-runink/tide/.github/workflows/core-code-review.yml@main
+    secrets: inherit  # pragma: allowlist secret — standard reusable-workflow keyword, not a credential
